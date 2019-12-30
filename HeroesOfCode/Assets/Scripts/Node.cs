@@ -11,11 +11,6 @@ public class Node
     public int gCost, hCost;
     public Node parent;
 
-    private SpriteRenderer renderer;
-    private Color highlightColor = Color.yellow;
-    private Color defaultColor = new Color(1, 1, 0, .2f);
-
-    public Color Color { get; set; }
 
 
     public Node(bool walkable, Vector3 worldPosition, int gridX, int gridY)
@@ -24,16 +19,11 @@ public class Node
         this.worldPosition = worldPosition;
         this.gridX = gridX;
         this.gridY = gridY;
-        Color = defaultColor;
     }
 
     public int fCost
     {
         get { return gCost + hCost; }
-    }
-
-    void ChangeColor()
-    {
     }
 
     public override bool Equals(object obj)

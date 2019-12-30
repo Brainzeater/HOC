@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
@@ -20,6 +21,8 @@ public class Grid : MonoBehaviour
     private Node[,] grid;
     private Node lastHighlightedNode;
     [HideInInspector] public List<Node> path;
+    [HideInInspector] public List<GameObject> highlightedCellsList;
+    Color pathColor = new Color(0,0,0,.2f);
 
 
     void Start()
@@ -48,9 +51,8 @@ public class Grid : MonoBehaviour
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) +
                                      Vector3.up * (y * nodeDiameter + nodeRadius);
-                bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
-//                bool walkable = !(Physics.CheckBox(worldPoint, new Vector3(nodeRadius, nodeRadius, nodeRadius),
-//                    Quaternion.identity, unwalkableMask));
+                bool walkable = !(Physics2D.OverlapCircle(worldPoint, nodeRadius, unwalkableMask));
+                
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
         }
@@ -62,11 +64,14 @@ public class Grid : MonoBehaviour
         if (!cellInstance)
         {
             lastHighlightedNode = NodeFromWorldPoint(mousePosition);
-            cellInstance = Instantiate(cell,
-                new Vector3(lastHighlightedNode.worldPosition.x, lastHighlightedNode.worldPosition.y, 0),
-                Quaternion.identity);
+            if (lastHighlightedNode.walkable)
+            {
+                cellInstance = Instantiate(cell,
+                    new Vector3(lastHighlightedNode.worldPosition.x, lastHighlightedNode.worldPosition.y, 0),
+                    Quaternion.identity);
 
-            cellInstance.transform.parent = gameObject.transform;
+                cellInstance.transform.parent = gameObject.transform;
+            }
         }
         else
         {
@@ -157,12 +162,24 @@ public class Grid : MonoBehaviour
 
     public void HighlightPath()
     {
+        if (highlightedCellsList.Any())
+        {
+            foreach (GameObject o in highlightedCellsList)
+            {
+                Destroy(o);
+            }
+            highlightedCellsList.Clear();
+        }
         foreach (Node node in path)
         {
             GameObject pathCell = Instantiate(cell, new Vector3(node.worldPosition.x, node.worldPosition.y, 0),
                 Quaternion.identity);
 
             pathCell.transform.parent = gameObject.transform;
+            pathCell.GetComponent<SpriteRenderer>().color = pathColor;
+            
+            highlightedCellsList.Add(pathCell);
+
         }
     }
 }
