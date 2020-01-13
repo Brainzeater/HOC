@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -12,30 +13,28 @@ public class Grid : MonoBehaviour
 
     public int gridSizeX, gridSizeY;
 
-
-    //    public Transform player;
     public LayerMask unwalkableMask;
     private Vector2 gridWorldSize;
     public GameObject cell;
     private GameObject cellInstance;
     private Node[,] grid;
     private Node lastHighlightedNode;
+    private Pathfinding pathfinding;
     [HideInInspector] public List<Node> path;
     [HideInInspector] public List<GameObject> highlightedCellsList;
-    Color pathColor = new Color(0,0,0,.2f);
+    Color pathColor = new Color(0, 0, 0, .2f);
 
+    void Awake()
+    {
+        pathfinding = GetComponent<Pathfinding>();
+    }
 
     void Start()
     {
-//        nodeDiameter = node.transform.localScale.x;
         nodeDiameter = nodeRadius * 2;
-        //        nodeDiameter = nodeSprite.transform.localScale.x;
-        //        gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
-        //        gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
         gridWorldSize.x = gridSizeX * nodeDiameter;
         gridWorldSize.y = gridSizeY * nodeDiameter;
         GetComponent<BoxCollider2D>().size = gridWorldSize;
-        Debug.Log(gridWorldSize);
         CreateGrid();
     }
 
@@ -52,7 +51,7 @@ public class Grid : MonoBehaviour
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) +
                                      Vector3.up * (y * nodeDiameter + nodeRadius);
                 bool walkable = !(Physics2D.OverlapCircle(worldPoint, nodeRadius, unwalkableMask));
-                
+
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
         }
@@ -60,25 +59,40 @@ public class Grid : MonoBehaviour
 
     void OnMouseOver()
     {
-        Vector3 mousePosition = GetMousePosition();
-        if (!cellInstance)
+        if (!ConfirmCellMenu.confirmCellMenuIsOn)
         {
-            lastHighlightedNode = NodeFromWorldPoint(mousePosition);
-            if (lastHighlightedNode.walkable)
+            Vector3 mousePosition = GetMousePosition();
+            if (!cellInstance)
             {
-                cellInstance = Instantiate(cell,
-                    new Vector3(lastHighlightedNode.worldPosition.x, lastHighlightedNode.worldPosition.y, 0),
-                    Quaternion.identity);
+                lastHighlightedNode = NodeFromWorldPoint(mousePosition);
+                if (lastHighlightedNode.walkable)
+                {
+                    cellInstance = Instantiate(cell,
+                        new Vector3(lastHighlightedNode.worldPosition.x, lastHighlightedNode.worldPosition.y, 0),
+                        Quaternion.identity);
 
-                cellInstance.transform.parent = gameObject.transform;
+                    cellInstance.transform.parent = gameObject.transform;
+                }
             }
-        }
-        else
-        {
-            Node currentNode = NodeFromWorldPoint(mousePosition);
-            if (!lastHighlightedNode.Equals(currentNode))
+            else
             {
-                Destroy(cellInstance);
+                Node currentNode = NodeFromWorldPoint(mousePosition);
+                if (!lastHighlightedNode.Equals(currentNode))
+                {
+                    Destroy(cellInstance);
+                }
+            }
+
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Node targetNode = NodeFromWorldPoint(mousePosition);
+                if (targetNode.walkable)
+                {
+                    path = pathfinding.FindPath(targetNode, this);
+                    HighlightPath();
+                    GameEvents.current.CellSelected();
+                }
             }
         }
     }
@@ -90,13 +104,13 @@ public class Grid : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(v3);
     }
 
-    void OnMouseExit()
-    {
-        if (cellInstance)
-        {
-            Destroy(cellInstance);
-        }
-    }
+//    void OnMouseExit()
+//    {
+//        if (cellInstance)
+//        {
+//            Destroy(cellInstance);
+//        }
+//    }
 
     public List<Node> GetNeighbours(Node node)
     {
@@ -134,32 +148,6 @@ public class Grid : MonoBehaviour
         return grid[x, y];
     }
 
-//    void OnDrawGizmos()
-//    {
-//        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
-//        if (grid != null)
-//        {
-////            Node playerNode = NodeFromWorldPoint(player.position);
-//            foreach (Node n in grid)
-//            {
-//                Gizmos.color = (n.walkable) ? Color.white : Color.red;
-////                if (playerNode == n)
-////                {
-////                    Gizmos.color = Color.magenta;
-////                }
-//
-//                if (path != null)
-//                {
-//                    if (path.Contains(n))
-//                    {
-//                        Gizmos.color = Color.black;
-//                    }
-//                }
-//                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .01f));
-//            }
-//        }
-//    }
-
     public void HighlightPath()
     {
         if (highlightedCellsList.Any())
@@ -168,8 +156,10 @@ public class Grid : MonoBehaviour
             {
                 Destroy(o);
             }
+
             highlightedCellsList.Clear();
         }
+
         foreach (Node node in path)
         {
             GameObject pathCell = Instantiate(cell, new Vector3(node.worldPosition.x, node.worldPosition.y, 0),
@@ -177,9 +167,8 @@ public class Grid : MonoBehaviour
 
             pathCell.transform.parent = gameObject.transform;
             pathCell.GetComponent<SpriteRenderer>().color = pathColor;
-            
-            highlightedCellsList.Add(pathCell);
 
+            highlightedCellsList.Add(pathCell);
         }
     }
 }

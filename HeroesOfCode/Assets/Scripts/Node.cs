@@ -32,4 +32,9 @@ public class Node
         if (other == null) return false;
         return (this.gridX == other.gridX) && (this.gridY == other.gridY);
     }
+
+    public override string ToString()
+    {
+        return "Node: " + this.gridX + " " + this.gridY;
+    }
 }

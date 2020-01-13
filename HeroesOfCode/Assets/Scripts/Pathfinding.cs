@@ -6,26 +6,10 @@ using UnityEngine.Experimental.PlayerLoop;
 public class Pathfinding : MonoBehaviour
 {
     public Transform seeker;
-    private Transform target;
 
-    private Grid grid;
-
-    void Awake()
+    public List<Node> FindPath(Node targetNode, Grid grid)
     {
-        grid = GetComponent<Grid>();
-    }
-
-    void OnMouseDown()
-    {
-        Vector3 mousePosition = grid.GetMousePosition();
-        FindPath(seeker.position, mousePosition);
-        grid.HighlightPath();
-    }
-
-    void FindPath(Vector3 startPosition, Vector3 targetPosition)
-    {
-        Node startNode = grid.NodeFromWorldPoint(startPosition);
-        Node targetNode = grid.NodeFromWorldPoint(targetPosition);
+        Node startNode = grid.NodeFromWorldPoint(seeker.position);
 
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();
@@ -48,8 +32,7 @@ public class Pathfinding : MonoBehaviour
 
             if (currentNode == targetNode)
             {
-                RetracePath(startNode, targetNode);
-                return;
+                return RetracePath(startNode, targetNode);
             }
 
             foreach (Node neighbour in grid.GetNeighbours(currentNode))
@@ -70,6 +53,7 @@ public class Pathfinding : MonoBehaviour
                     {
                         openSet.Add(neighbour);
                     }
+
 //                    else
 //                    {
 //                        openSet.UpdateItem(neighbour);
@@ -77,9 +61,11 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+
+        return null;
     }
 
-    void RetracePath(Node startNode, Node endNode)
+    List<Node> RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
         Node currentNode = endNode;
@@ -92,7 +78,7 @@ public class Pathfinding : MonoBehaviour
 
         path.Reverse();
 
-        grid.path = path;
+        return path;
     }
 
     int GetDistance(Node nodeA, Node nodeB)
