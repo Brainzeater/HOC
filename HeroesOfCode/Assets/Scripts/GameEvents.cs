@@ -12,10 +12,27 @@ public class GameEvents : MonoBehaviour
         current = this;
     }
 
-    public event Action onCellSelected;
+    // Called when the next target cell is selected
+    public event Action OnCellSelected;
 
     public void CellSelected()
     {
-        onCellSelected?.Invoke();
+        OnCellSelected?.Invoke();
+    }
+
+    // Called when the chosen target cell is cancelled
+    public event Action OnCellCancelled;
+
+    public void CellCancelled()
+    {
+        OnCellCancelled?.Invoke();
+    }
+
+    // Called when the player's movement is over
+    public event Action OnMovementFinished;
+
+    public void MovementFinished()
+    {
+        OnMovementFinished?.Invoke();
     }
 }

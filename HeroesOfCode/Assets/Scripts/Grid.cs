@@ -22,11 +22,18 @@ public class Grid : MonoBehaviour
     private Pathfinding pathfinding;
     [HideInInspector] public List<Node> path;
     [HideInInspector] public List<GameObject> highlightedCellsList;
-    Color pathColor = new Color(0, 0, 0, .2f);
+    [HideInInspector] public Vector3[] worldPath;
+//    Color pathColor = new Color(0, 0, 0, .2f);
+    Color pathColor = new Color();
+
+//    Color pathColor = new Color;
 
     void Awake()
     {
         pathfinding = GetComponent<Pathfinding>();
+        //TODO: Find a better color
+        ColorUtility.TryParseHtmlString("#BAE3E1", out pathColor);
+        pathColor.a = .7f;
     }
 
     void Start()
@@ -35,6 +42,8 @@ public class Grid : MonoBehaviour
         gridWorldSize.x = gridSizeX * nodeDiameter;
         gridWorldSize.y = gridSizeY * nodeDiameter;
         GetComponent<BoxCollider2D>().size = gridWorldSize;
+        GameEvents.current.OnCellCancelled += ErasePathHighlight;
+        GameEvents.current.OnMovementFinished += ErasePathHighlight;
         CreateGrid();
     }
 
@@ -83,7 +92,6 @@ public class Grid : MonoBehaviour
                 }
             }
 
-
             if (Input.GetMouseButtonDown(0))
             {
                 Node targetNode = NodeFromWorldPoint(mousePosition);
@@ -91,8 +99,20 @@ public class Grid : MonoBehaviour
                 {
                     path = pathfinding.FindPath(targetNode, this);
                     HighlightPath();
+                    worldPath = pathfinding.SimplifyPath(path);
+                    foreach (Vector3 vector3 in worldPath)
+                    {
+                        print(vector3);
+                    }
+
                     GameEvents.current.CellSelected();
                 }
+            }
+
+            // To prevent automatic cell confirm when the cell is under confirm button
+            if (Input.GetMouseButtonUp(0))
+            {
+                //TODO: Complete mouseUp bugfix
             }
         }
     }
@@ -150,15 +170,14 @@ public class Grid : MonoBehaviour
 
     public void HighlightPath()
     {
-        if (highlightedCellsList.Any())
-        {
-            foreach (GameObject o in highlightedCellsList)
-            {
-                Destroy(o);
-            }
+        ErasePathHighlight();
 
-            highlightedCellsList.Clear();
-        }
+        // Highlighting player's cell
+        GameObject startCell = Instantiate(cell, new Vector3(pathfinding.seeker.position.x, pathfinding.seeker.position.y, 0),
+            Quaternion.identity);
+        startCell.transform.parent = gameObject.transform;
+        startCell.GetComponent<SpriteRenderer>().color = pathColor;
+        highlightedCellsList.Add(startCell);
 
         foreach (Node node in path)
         {
@@ -169,6 +188,20 @@ public class Grid : MonoBehaviour
             pathCell.GetComponent<SpriteRenderer>().color = pathColor;
 
             highlightedCellsList.Add(pathCell);
+        }
+
+    }
+
+    public void ErasePathHighlight()
+    {
+        if (highlightedCellsList.Any())
+        {
+            foreach (GameObject o in highlightedCellsList)
+            {
+                Destroy(o);
+            }
+
+            highlightedCellsList.Clear();
         }
     }
 }
