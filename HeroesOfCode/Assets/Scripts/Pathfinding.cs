@@ -5,8 +5,13 @@ using UnityEngine.Experimental.PlayerLoop;
 
 public class Pathfinding : MonoBehaviour
 {
+    // the world coordinates of the starting point of the path (which is a player's position)
     public Transform seeker;
 
+    private const int diagonalCost = 14;
+    private const int horizontalAndVerticalCost = 10;
+
+    // The implementation of the A* algorithm.
     public List<Node> FindPath(Node targetNode, Grid grid)
     {
         Node startNode = grid.NodeFromWorldPoint(seeker.position);
@@ -53,11 +58,6 @@ public class Pathfinding : MonoBehaviour
                     {
                         openSet.Add(neighbour);
                     }
-
-//                    else
-//                    {
-//                        openSet.UpdateItem(neighbour);
-//                    }
                 }
             }
         }
@@ -65,6 +65,7 @@ public class Pathfinding : MonoBehaviour
         return null;
     }
 
+    // Returns a shortest path as a list of nodes between the start node and the end node.
     List<Node> RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
@@ -81,34 +82,29 @@ public class Pathfinding : MonoBehaviour
         return path;
     }
 
+    // Returns a distance between the two nodes.
     int GetDistance(Node nodeA, Node nodeB)
     {
         int distanceX = Mathf.Abs(nodeA.gridX - nodeB.gridX);
         int distanceY = Mathf.Abs(nodeA.gridY - nodeB.gridY);
         if (distanceX > distanceY)
         {
-            return 14 * distanceY + 10 * (distanceX - distanceY);
+            return diagonalCost * distanceY + horizontalAndVerticalCost * (distanceX - distanceY);
         }
         else
         {
-            return 14 * distanceX + 10 * (distanceY - distanceX);
+            return diagonalCost * distanceX + horizontalAndVerticalCost * (distanceY - distanceX);
         }
     }
 
+    // Converts a list of nodes in the path to the array of world coordinates
+    // for the player object movement
     public Vector3[] SimplifyPath(List<Node> path)
     {
         List<Vector3> waypoints = new List<Vector3>();
-//        Vector2 directionOld = Vector2.zero;
 
         for (int i = 0; i < path.Count; i++)
         {
-//            Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
-//            if (directionNew != directionOld)
-//            {
-//                waypoints.Add(path[i].worldPosition);
-//            }
-//
-//            directionOld = directionNew;
             waypoints.Add(path[i].worldPosition);
         }
 
