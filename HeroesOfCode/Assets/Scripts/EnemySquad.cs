@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class EnemySquad : Squad
 {
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        base.Awake();
     }
 }

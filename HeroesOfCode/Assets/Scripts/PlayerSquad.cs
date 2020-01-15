@@ -10,9 +10,9 @@ public class PlayerSquad : Squad
 
     //    private bool usedActiveSkill;
     
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         unitHPText.text = unit.hp.ToString();
         unitDamageText.text = unit.damage.ToString();
     }
