@@ -21,4 +21,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public static void LoadMapScene()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

@@ -10,7 +10,6 @@ public class Squad : MonoBehaviour
 
     public int DealingDamage { get; set; }
 
-//    private int ReceivedDamage { get; set; }
     private int HP { get; set; }
     public bool IsDead { get; set; }
 
@@ -20,13 +19,13 @@ public class Squad : MonoBehaviour
 
     public virtual void Awake()
     {
-        SetNumberOfUnits();
+        DisplayNumberOfUnits();
         IsDead = false;
         CalculateDealingDamage();
         CalculateSquadHP();
     }
 
-    void SetNumberOfUnits()
+    void DisplayNumberOfUnits()
     {
         numberOfUnitsText.text = numberOfUnits.ToString();
     }
@@ -45,9 +44,7 @@ public class Squad : MonoBehaviour
     {
         if (!IsDead)
         {
-            print($"Received D is: {damage}\n");
             HP -= damage;
-            print($"Current HP is: {HP}\n");
             if (HP <= 0)
             {
                 // DIE
@@ -57,7 +54,7 @@ public class Squad : MonoBehaviour
             {
                 CalculateNumberOfUnitsFromHP();
                 CalculateDealingDamage();
-                SetNumberOfUnits();
+                DisplayNumberOfUnits();
             }
         }
     }
@@ -70,12 +67,22 @@ public class Squad : MonoBehaviour
             survivedUnits += 1;
         }
 
-        numberOfUnits = survivedUnits;
+        SetNumberOfUnits = survivedUnits;
         print($"{numberOfUnits} units survived\n");
     }
 
-    void SetSquadHP(int HP)
+    // Used when the Squad is created from the data
+    public void SetSquadHP(int HP)
     {
+        this.HP = HP;
+        CalculateNumberOfUnitsFromHP();
+        CalculateDealingDamage();
+        DisplayNumberOfUnits();
+    }
+
+    public int SetNumberOfUnits
+    {
+        set { this.numberOfUnits = value; }
     }
 
     void Die()
