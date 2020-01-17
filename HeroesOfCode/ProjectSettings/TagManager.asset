@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameData
+  - HighlightSquad
   layers:
   - Default
   - TransparentFX

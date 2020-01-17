@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum BattleState
 {
@@ -14,11 +13,6 @@ public enum BattleState
 
 public class BattleSystem : MonoBehaviour
 {
-    public GameObject playerSkeleton;
-    public GameObject playerKnightBlob;
-    public GameObject playerGoblin;
-    public GameObject playerShootingBlob;
-
     public GameObject enemyPrefab;
 
 //    public Transform playerBattlePosition;
@@ -27,7 +21,9 @@ public class BattleSystem : MonoBehaviour
     public GameObject playerArmyPosition;
     private Transform[] playerSquadPositionsArray;
 
-    private PlayerSquad player;
+    private GameData gameData;
+//    private List<GameData.UnitSquad> playerArmy;
+    private Squad currentPlayerSquad;
     private EnemySquad enemy;
 
     public BattleState state;
@@ -35,11 +31,12 @@ public class BattleSystem : MonoBehaviour
     private Queue<Squad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
 
-    
+
     void Start()
     {
         playerSquadPositionsArray = playerArmyPosition.GetComponentsInChildren<Transform>();
         playerArmyQueue = new Queue<Squad>();
+        gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
 
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
         state = BattleState.START;
@@ -50,60 +47,18 @@ public class BattleSystem : MonoBehaviour
 //    IEnumerator SetupBattle()
     void SetupBattle()
     {
-        int i = 0;
-        GameData data = GameObject.FindWithTag("GameData").GetComponent<GameData>();
-        List<GameData.UnitSquads> ARMY = data.playerArmy;
-        foreach (GameData.UnitSquads squad in ARMY)
+
+        int i = 1;
+        foreach (GameData.UnitSquad squad in gameData.playerArmy)
         {
-            print(squad.unitPrefab);
-            foreach (int currentHP in squad.HpOfSquadList)
-            {
-                GameObject playerGO = Instantiate(squad.unitPrefab, playerSquadPositionsArray[i + 1]);
-
-                player = playerGO.GetComponent<PlayerSquad>();
-                player.SetSquadHP(currentHP);
-                playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-                i++;
-            }
-
+            GameObject playerGO = Instantiate(squad.squadUnitPrefab, playerSquadPositionsArray[i]);
+            currentPlayerSquad = playerGO.GetComponent<PlayerSquad>();
+            currentPlayerSquad.ID = squad.SquadID;
+            // TODO: This is just ridiculous!
+            currentPlayerSquad.SetSquadHP(squad.SquadHp);
+            playerArmyQueue.Enqueue(currentPlayerSquad);
+            i++;
         }
-        // Pretty brute force, but safe
-//        foreach (int goblin in data.goblins)
-//        {
-//            GameObject playerGO = Instantiate(playerGoblin, playerSquadPositionsArray[i+1]);
-//            player = playerGO.GetComponent<PlayerSquad>();
-//            player.SetSquadHP(goblin);
-//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-//            i++;
-//        }
-//        foreach (int knightBlob in data.knightBlobs)
-//        {
-//            GameObject playerGO = Instantiate(playerKnightBlob, playerSquadPositionsArray[i + 1]);
-//            player = playerGO.GetComponent<PlayerSquad>();
-//            player.SetSquadHP(knightBlob);
-//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-//            i++;
-//        }
-//        foreach (int shootingBlob in data.shootingBlobs)
-//        {
-//            GameObject playerGO = Instantiate(playerShootingBlob, playerSquadPositionsArray[i + 1]);
-//            player = playerGO.GetComponent<PlayerSquad>();
-//            player.SetSquadHP(shootingBlob);
-//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-//            i++;
-//        }
-//        foreach (int skeleton in data.skeltons)
-//        {
-//            GameObject playerGO = Instantiate(playerSkeleton, playerSquadPositionsArray[i + 1]);
-//            player = playerGO.GetComponent<PlayerSquad>();
-//            player.SetSquadHP(skeleton);
-//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-//            i++;
-//        }
-
-
-        
-        //        GameObject playerGO = Instantiate(playerSkeleton, playerSquadPositionsArray[1]);
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattlePosition);
 //        player = playerGO.GetComponent<PlayerSquad>();
         enemy = enemyGO.GetComponent<EnemySquad>();
@@ -113,19 +68,31 @@ public class BattleSystem : MonoBehaviour
 //        print(player.DealingDamage);
 //        print(enemy.DealingDamage);
         state = BattleState.PLAYERTURN;
-//        PlayerTurn();
+        PlayerTurn();
     }
 
-//    void PlayerTurn()
-//    {
-//    }
+    void PlayerTurn()
+    {
+        foreach (Squad squad in playerArmyQueue)
+        {
+            print(squad);
+        }
+        currentPlayerSquad = playerArmyQueue.Dequeue();
+        while (currentPlayerSquad.IsDead)
+        {
+            currentPlayerSquad = playerArmyQueue.Dequeue();
+        }
+        currentPlayerSquad.HighlightSquad(true);
+    }
 
     public void OnTargetChosen()
     {
         if (state != BattleState.PLAYERTURN)
             return;
-        
-        enemy.ReceiveDamage(player.DealingDamage);
+
+        currentPlayerSquad.HighlightSquad(false);
+        playerArmyQueue.Enqueue(currentPlayerSquad);
+        enemy.ReceiveDamage(currentPlayerSquad.DealingDamage);
         if (enemy.IsDead)
         {
             state = BattleState.WON;
@@ -140,21 +107,28 @@ public class BattleSystem : MonoBehaviour
 
     void EnemyTurn()
     {
-        // Do we need any strategy here?!
 
         if (state != BattleState.ENEMYTURN)
             return;
-        player.ReceiveDamage(enemy.DealingDamage);
-        if (player.IsDead)
+        // Do we need any strategy here?!
+        currentPlayerSquad.ReceiveDamage(enemy.DealingDamage);
+
+        if (currentPlayerSquad.IsDead)
         {
+            print($"Id: {currentPlayerSquad.ID}");
+            gameData.playerArmy.RemoveAll(item => item.SquadID == currentPlayerSquad.ID);
+        }
+
+        if (gameData.playerArmy.Any())
+        {
+            state = BattleState.PLAYERTURN;
+            PlayerTurn();
+        }
+        else { 
             state = BattleState.LOST;
             EndBattle();
         }
-        else
-        {
-            state = BattleState.PLAYERTURN;
-//            PlayerTurn();
-        }
+        
     }
 
     void EndBattle()
@@ -164,11 +138,22 @@ public class BattleSystem : MonoBehaviour
             // If that was not the last knight, then
             // Destroy the defeated knight and Load Map
             // else Load WIN SCENE!
+            UpdateUnitSquadHP();
             SceneLoader.LoadMapScene();
         }
-        else if(state == BattleState.LOST)
+        else if (state == BattleState.LOST)
         {
             // Load GameOver Scene
+            print("YOU LOST");
+        }
+    }
+
+    void UpdateUnitSquadHP()
+    {
+        while (playerArmyQueue.Count > 0)
+        {
+            currentPlayerSquad = playerArmyQueue.Dequeue();
+            gameData.playerArmy.Find(item => item.SquadID == currentPlayerSquad.ID).SquadHp = currentPlayerSquad.HP;
         }
     }
 }

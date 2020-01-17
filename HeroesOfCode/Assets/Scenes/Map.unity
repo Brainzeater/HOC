@@ -22934,12 +22934,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerArmy:
-  - unitPrefab: {fileID: 4653501285523920420, guid: 9eeee50e181858844bb277ea42b2c486,
+  - squadUnitPrefab: {fileID: 4653501285523920420, guid: 9eeee50e181858844bb277ea42b2c486,
       type: 3}
-    unitsInSquadList: 640000004b000000
-  - unitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
+    squadUnits: 100
+  - squadUnitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
       type: 3}
-    unitsInSquadList: 64000000
-  - unitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
+    squadUnits: 10
+  - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
       type: 3}
-    unitsInSquadList: 5a000000
+    squadUnits: 50

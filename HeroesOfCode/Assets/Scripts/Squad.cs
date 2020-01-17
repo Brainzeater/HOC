@@ -10,10 +10,13 @@ public class Squad : MonoBehaviour
 
     public int DealingDamage { get; set; }
 
-    private int HP { get; set; }
+    public int HP { get; set; }
     public bool IsDead { get; set; }
 
     public TMP_Text numberOfUnitsText;
+
+    private const string highlightTag = "HighlightSquad";
+    public int ID { get; set; }
 
 //    private bool usedActiveSkill;
 
@@ -92,7 +95,31 @@ public class Squad : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Squad Destroyed");
+        Debug.Log(this + " destroyed");
+        gameObject.SetActive(false);
         IsDead = true;
+    }
+
+    public void HighlightSquad(bool enabled)
+    {
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.CompareTag(highlightTag))
+            {
+                child.gameObject.SetActive(enabled);
+            }
+            foreach (Transform grandChild in child.transform)
+            {
+                if (grandChild.CompareTag(highlightTag))
+                {
+                    grandChild.gameObject.SetActive(enabled);
+                }
+            }
+        }
+    }
+
+    public override string ToString()
+    {
+        return unit.name + " " + numberOfUnits + " " + HP;
     }
 }

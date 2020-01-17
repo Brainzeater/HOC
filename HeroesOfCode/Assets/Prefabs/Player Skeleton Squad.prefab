@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 8675387174335074093}
   m_Layer: 0
   m_Name: Highlight
-  m_TagString: Untagged
+  m_TagString: HighlightSquad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7945674768920053332
 Transform:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 4653501285523920423}
   - component: {fileID: 3459583153980366615}
   m_Layer: 0
-  m_Name: Player Squad
+  m_Name: Player Skeleton Squad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -482,11 +482,11 @@ GameObject:
   - component: {fileID: 2031607658469994461}
   m_Layer: 0
   m_Name: TextBG
-  m_TagString: Untagged
+  m_TagString: HighlightSquad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5819547079945589383
 Transform:
   m_ObjectHideFlags: 0
