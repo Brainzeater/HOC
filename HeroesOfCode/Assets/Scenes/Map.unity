@@ -22933,11 +22933,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac5dea3f78f1394fa9bc9dd4a13753d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goblins: 50000000
-  skeltons: 64000000
-  shootingBlobs: 32000000
-  knightBlobs: 0d000000
-  goblin: {fileID: 11400000, guid: 48459dc3016f8fd46a7a05384bd63717, type: 2}
-  skeleton: {fileID: 11400000, guid: b673ef42caef45e4080c332701728eeb, type: 2}
-  shootingBlob: {fileID: 11400000, guid: be05681d5c6bec54d969fe06593c4822, type: 2}
-  knightBlob: {fileID: 11400000, guid: 34b4ac1a85701f7458fb8d64a4e53159, type: 2}
+  playerArmy:
+  - unitPrefab: {fileID: 4653501285523920420, guid: 9eeee50e181858844bb277ea42b2c486,
+      type: 3}
+    unitsInSquadList: 640000004b000000
+  - unitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
+      type: 3}
+    unitsInSquadList: 64000000
+  - unitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
+      type: 3}
+    unitsInSquadList: 5a000000

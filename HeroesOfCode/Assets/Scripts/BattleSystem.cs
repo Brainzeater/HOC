@@ -12,8 +12,6 @@ public enum BattleState
     LOST
 }
 
-
-
 public class BattleSystem : MonoBehaviour
 {
     public GameObject playerSkeleton;
@@ -54,38 +52,57 @@ public class BattleSystem : MonoBehaviour
     {
         int i = 0;
         GameData data = GameObject.FindWithTag("GameData").GetComponent<GameData>();
-        foreach (int goblin in data.goblins)
+        List<GameData.UnitSquads> ARMY = data.playerArmy;
+        foreach (GameData.UnitSquads squad in ARMY)
         {
-            GameObject playerGO = Instantiate(playerGoblin, playerSquadPositionsArray[i+1]);
-            player = playerGO.GetComponent<PlayerSquad>();
-            player.SetSquadHP(goblin);
-            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-            i++;
+            print(squad.unitPrefab);
+            foreach (int currentHP in squad.HpOfSquadList)
+            {
+                GameObject playerGO = Instantiate(squad.unitPrefab, playerSquadPositionsArray[i + 1]);
+
+                player = playerGO.GetComponent<PlayerSquad>();
+                player.SetSquadHP(currentHP);
+                playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
+                i++;
+            }
+
         }
-        foreach (int knightBlob in data.knightBlobs)
-        {
-            GameObject playerGO = Instantiate(playerKnightBlob, playerSquadPositionsArray[i + 1]);
-            player = playerGO.GetComponent<PlayerSquad>();
-            player.SetSquadHP(knightBlob);
-            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-            i++;
-        }
-        foreach (int shootingBlob in data.shootingBlobs)
-        {
-            GameObject playerGO = Instantiate(playerShootingBlob, playerSquadPositionsArray[i + 1]);
-            player = playerGO.GetComponent<PlayerSquad>();
-            player.SetSquadHP(shootingBlob);
-            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-            i++;
-        }
-        foreach (int skeleton in data.skeltons)
-        {
-            GameObject playerGO = Instantiate(playerSkeleton, playerSquadPositionsArray[i + 1]);
-            player = playerGO.GetComponent<PlayerSquad>();
-            player.SetSquadHP(skeleton);
-            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
-            i++;
-        }
+        // Pretty brute force, but safe
+//        foreach (int goblin in data.goblins)
+//        {
+//            GameObject playerGO = Instantiate(playerGoblin, playerSquadPositionsArray[i+1]);
+//            player = playerGO.GetComponent<PlayerSquad>();
+//            player.SetSquadHP(goblin);
+//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
+//            i++;
+//        }
+//        foreach (int knightBlob in data.knightBlobs)
+//        {
+//            GameObject playerGO = Instantiate(playerKnightBlob, playerSquadPositionsArray[i + 1]);
+//            player = playerGO.GetComponent<PlayerSquad>();
+//            player.SetSquadHP(knightBlob);
+//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
+//            i++;
+//        }
+//        foreach (int shootingBlob in data.shootingBlobs)
+//        {
+//            GameObject playerGO = Instantiate(playerShootingBlob, playerSquadPositionsArray[i + 1]);
+//            player = playerGO.GetComponent<PlayerSquad>();
+//            player.SetSquadHP(shootingBlob);
+//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
+//            i++;
+//        }
+//        foreach (int skeleton in data.skeltons)
+//        {
+//            GameObject playerGO = Instantiate(playerSkeleton, playerSquadPositionsArray[i + 1]);
+//            player = playerGO.GetComponent<PlayerSquad>();
+//            player.SetSquadHP(skeleton);
+//            playerArmyQueue.Enqueue(playerGO.GetComponent<PlayerSquad>());
+//            i++;
+//        }
+
+
+        
         //        GameObject playerGO = Instantiate(playerSkeleton, playerSquadPositionsArray[1]);
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattlePosition);
 //        player = playerGO.GetComponent<PlayerSquad>();

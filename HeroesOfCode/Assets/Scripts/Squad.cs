@@ -85,6 +85,11 @@ public class Squad : MonoBehaviour
         set { this.numberOfUnits = value; }
     }
 
+    public Unit GetUnit
+    {
+        get { return unit; }
+    }
+
     void Die()
     {
         Debug.Log("Squad Destroyed");

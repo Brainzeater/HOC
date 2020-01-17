@@ -1988,6 +1988,10 @@ MonoBehaviour:
   skeltons: 64000000
   shootingBlobs: 32000000
   knightBlobs: 0d000000
+  goblin: {fileID: 11400000, guid: 48459dc3016f8fd46a7a05384bd63717, type: 2}
+  skeleton: {fileID: 11400000, guid: b673ef42caef45e4080c332701728eeb, type: 2}
+  shootingBlob: {fileID: 11400000, guid: be05681d5c6bec54d969fe06593c4822, type: 2}
+  knightBlob: {fileID: 11400000, guid: 34b4ac1a85701f7458fb8d64a4e53159, type: 2}
 --- !u!4 &898076646
 Transform:
   m_ObjectHideFlags: 0
