@@ -120,6 +120,6 @@ public class Squad : MonoBehaviour
 
     public override string ToString()
     {
-        return unit.name + " " + numberOfUnits + " " + HP;
+        return unit.name + " " + numberOfUnits + " " + HP + " " + ID;
     }
 }

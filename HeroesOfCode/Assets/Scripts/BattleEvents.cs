@@ -6,7 +6,7 @@ using UnityEngine;
 public class BattleEvents : MonoBehaviour
 {
     public static BattleEvents current;
-//    public BattleSystem battleSystem;
+    public int SelectedTargetID { get; set; }
 
     private void Awake()
     {
@@ -16,9 +16,9 @@ public class BattleEvents : MonoBehaviour
     // Called when the next target cell is selected
     public event Action OnTargetSelected;
 
-    public void TargetSelected(int targetIndex)
+    public void TargetSelected(int targetID)
     {
-//        battleSystem.
+        SelectedTargetID = targetID;
         OnTargetSelected?.Invoke();
     }
 }

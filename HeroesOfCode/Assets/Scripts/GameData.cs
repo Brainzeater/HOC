@@ -38,26 +38,30 @@ public class GameData : MonoBehaviour
     public int EnemyArmiesLeft { get; set; }
     private const int enemyArmiesMaxCount = 3;
 
+    [Header("Enemy Army 1")] public List<UnitSquad> enemyArmy1;
+    [Header("Enemy Army 2")] public List<UnitSquad> enemyArmy2;
+    [Header("Enemy Army 3")] public List<UnitSquad> enemyArmy3;
+
     void Awake()
     {
+        // This object should be unique in a scene
         GameObject[] objs = GameObject.FindGameObjectsWithTag("GameData");
-
         if (objs.Length > 1)
         {
             Destroy(this.gameObject);
         }
-
         DontDestroyOnLoad(this.gameObject);
 
         EnemyArmiesLeft = enemyArmiesMaxCount;
 
-        InitPlayerArmy();
+        InitArmy(playerArmy);
+        InitArmy(enemyArmy1);
     }
 
-    void InitPlayerArmy()
+    void InitArmy(List<UnitSquad> army)
     {
-        if (playerArmy.Any())
-            foreach (UnitSquad squad in playerArmy)
+        if (army.Any())
+            foreach (UnitSquad squad in army)
             {
                 squad.CalculateSquadHp();
             }

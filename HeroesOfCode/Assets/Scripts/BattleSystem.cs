@@ -13,29 +13,31 @@ public enum BattleState
 
 public class BattleSystem : MonoBehaviour
 {
-    public GameObject enemyPrefab;
-
-//    public Transform playerBattlePosition;
-    public Transform enemyBattlePosition;
+    public BattleState state;
 
     public GameObject playerArmyPosition;
     private Transform[] playerSquadPositionsArray;
+    public GameObject enemyArmyPosition;
+    private Transform[] enemySquadPositionsArray;
 
     private GameData gameData;
-//    private List<GameData.UnitSquad> playerArmy;
-    private Squad currentPlayerSquad;
-    private EnemySquad enemy;
-
-    public BattleState state;
-
+    
     private Queue<Squad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
+    private List<Squad> enemyArmyList;
+
+    private Squad currentPlayerSquad;
+    private Squad currentEnemySquad;
 
 
     void Start()
     {
         playerSquadPositionsArray = playerArmyPosition.GetComponentsInChildren<Transform>();
         playerArmyQueue = new Queue<Squad>();
+
+        enemySquadPositionsArray = enemyArmyPosition.GetComponentsInChildren<Transform>();
+        enemyArmyQueue = new Queue<Squad>();
+
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
 
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
@@ -52,21 +54,34 @@ public class BattleSystem : MonoBehaviour
         foreach (GameData.UnitSquad squad in gameData.playerArmy)
         {
             GameObject playerGO = Instantiate(squad.squadUnitPrefab, playerSquadPositionsArray[i]);
-            currentPlayerSquad = playerGO.GetComponent<PlayerSquad>();
+            currentPlayerSquad = playerGO.GetComponent<Squad>();
             currentPlayerSquad.ID = squad.SquadID;
             // TODO: This is just ridiculous!
             currentPlayerSquad.SetSquadHP(squad.SquadHp);
             playerArmyQueue.Enqueue(currentPlayerSquad);
             i++;
         }
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattlePosition);
-//        player = playerGO.GetComponent<PlayerSquad>();
-        enemy = enemyGO.GetComponent<EnemySquad>();
+//        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattlePosition);
+//        enemy = enemyGO.GetComponent<EnemySquad>();
+
+        i = 1;
+        foreach (GameData.UnitSquad squad in gameData.enemyArmy1)
+        {
+            GameObject enemyGO = Instantiate(squad.squadUnitPrefab, enemySquadPositionsArray[i]);
+            currentEnemySquad = enemyGO.GetComponent<Squad>();
+            currentEnemySquad.ID = squad.SquadID;
+            // TODO: This is just ridiculous!
+            currentEnemySquad.SetSquadHP(squad.SquadHp);
+            enemyArmyQueue.Enqueue(currentEnemySquad);
+            i++;
+        }
+
+        enemyArmyList = enemyArmyQueue.ToList();
 
 
-//        yield return new WaitForSeconds(1f);
-//        print(player.DealingDamage);
-//        print(enemy.DealingDamage);
+        //        yield return new WaitForSeconds(1f);
+        //        print(player.DealingDamage);
+        //        print(enemy.DealingDamage);
         state = BattleState.PLAYERTURN;
         PlayerTurn();
     }
@@ -92,16 +107,21 @@ public class BattleSystem : MonoBehaviour
 
         currentPlayerSquad.HighlightSquad(false);
         playerArmyQueue.Enqueue(currentPlayerSquad);
-        enemy.ReceiveDamage(currentPlayerSquad.DealingDamage);
-        if (enemy.IsDead)
+
+        currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
+        currentEnemySquad.ReceiveDamage(currentPlayerSquad.DealingDamage);
+        if (currentEnemySquad.IsDead)
         {
-            state = BattleState.WON;
-            EndBattle();
+            gameData.enemyArmy1.RemoveAll(item => item.SquadID == currentEnemySquad.ID);
+        }
+        if (gameData.enemyArmy1.Any()) {
+            state = BattleState.ENEMYTURN;
+            EnemyTurn();
         }
         else
         {
-            state = BattleState.ENEMYTURN;
-            EnemyTurn();
+            state = BattleState.WON;
+            EndBattle();
         }
     }
 
@@ -110,8 +130,13 @@ public class BattleSystem : MonoBehaviour
 
         if (state != BattleState.ENEMYTURN)
             return;
+        currentEnemySquad = enemyArmyQueue.Dequeue();
+        while (currentEnemySquad.IsDead)
+        {
+            currentEnemySquad = enemyArmyQueue.Dequeue();
+        }
         // Do we need any strategy here?!
-        currentPlayerSquad.ReceiveDamage(enemy.DealingDamage);
+        currentPlayerSquad.ReceiveDamage(currentEnemySquad.DealingDamage);
 
         if (currentPlayerSquad.IsDead)
         {
@@ -121,6 +146,8 @@ public class BattleSystem : MonoBehaviour
 
         if (gameData.playerArmy.Any())
         {
+
+            enemyArmyQueue.Enqueue(currentEnemySquad);
             state = BattleState.PLAYERTURN;
             PlayerTurn();
         }

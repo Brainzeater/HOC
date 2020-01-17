@@ -30,8 +30,7 @@ public class SelectTarget : MonoBehaviour
         if (!Selected)
         {
             Selected = false;
-
-            BattleEvents.current.TargetSelected(1);
+            BattleEvents.current.TargetSelected(gameObject.GetComponentInParent<Squad>().ID);
         }
     }
 }
