@@ -19,6 +19,8 @@ public class SceneLoader : MonoBehaviour
 
     public static void LoadBattleScene()
     {
+        ConfirmCellMenu.confirmCellMenuIsOn = false;
+        // TODO: There's other stuff to be finished here before loading. Save player's position!
         SceneManager.LoadScene(1);
     }
 

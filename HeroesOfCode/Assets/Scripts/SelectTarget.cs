@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+// Highlights selected enemy squad and tells its ID
 public class SelectTarget : MonoBehaviour
 {
     private SpriteRenderer highlight;

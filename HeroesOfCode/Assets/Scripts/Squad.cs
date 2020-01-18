@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class Squad : MonoBehaviour
@@ -33,14 +31,14 @@ public class Squad : MonoBehaviour
         numberOfUnitsText.text = numberOfUnits.ToString();
     }
 
-    void CalculateSquadHP()
-    {
-        HP = numberOfUnits * unit.hp;
-    }
-
     void CalculateDealingDamage()
     {
         DealingDamage = numberOfUnits * unit.damage;
+    }
+
+    void CalculateSquadHP()
+    {
+        HP = numberOfUnits * unit.hp;
     }
 
     public void ReceiveDamage(int damage)
@@ -62,6 +60,9 @@ public class Squad : MonoBehaviour
         }
     }
 
+    // Shows the number of alive units in the squad.
+    // Used to update the number of units after taking damage
+    // and before loading any battle.
     void CalculateNumberOfUnitsFromHP()
     {
         int survivedUnits = HP / unit.hp;
@@ -71,10 +72,9 @@ public class Squad : MonoBehaviour
         }
 
         SetNumberOfUnits = survivedUnits;
-        print($"{numberOfUnits} units survived\n");
     }
 
-    // Used when the Squad is created from the data
+    // Used when the Squad is created from the Game Data
     public void SetSquadHP(int HP)
     {
         this.HP = HP;
@@ -100,6 +100,7 @@ public class Squad : MonoBehaviour
         IsDead = true;
     }
 
+    // Activates Squad's background highlight and "Active Skill" button
     public void HighlightSquad(bool enabled)
     {
         foreach (Transform child in gameObject.transform)
@@ -108,8 +109,10 @@ public class Squad : MonoBehaviour
             {
                 child.gameObject.SetActive(enabled);
             }
+
             foreach (Transform grandChild in child.transform)
             {
+                // TODO: Highlight only in case the active skill wasn't used
                 if (grandChild.CompareTag(highlightTag))
                 {
                     grandChild.gameObject.SetActive(enabled);

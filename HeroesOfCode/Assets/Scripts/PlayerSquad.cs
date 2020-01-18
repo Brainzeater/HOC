@@ -9,7 +9,7 @@ public class PlayerSquad : Squad
     public TMP_Text unitDamageText;
 
     //    private bool usedActiveSkill;
-    
+
     public override void Awake()
     {
         base.Awake();

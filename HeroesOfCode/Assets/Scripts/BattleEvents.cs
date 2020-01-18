@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleEvents : MonoBehaviour
@@ -13,7 +11,7 @@ public class BattleEvents : MonoBehaviour
         current = this;
     }
 
-    // Called when the next target cell is selected
+    // Called when the next target squad is selected
     public event Action OnTargetSelected;
 
     public void TargetSelected(int targetID)

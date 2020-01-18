@@ -21,7 +21,7 @@ public class BattleSystem : MonoBehaviour
     private Transform[] enemySquadPositionsArray;
 
     private GameData gameData;
-    
+
     private Queue<Squad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
     private List<Squad> enemyArmyList;
@@ -49,7 +49,6 @@ public class BattleSystem : MonoBehaviour
 //    IEnumerator SetupBattle()
     void SetupBattle()
     {
-
         int i = 1;
         foreach (GameData.UnitSquad squad in gameData.playerArmy)
         {
@@ -88,33 +87,41 @@ public class BattleSystem : MonoBehaviour
 
     void PlayerTurn()
     {
-        foreach (Squad squad in playerArmyQueue)
-        {
-            print(squad);
-        }
+        // Get the next player squad from the Queue
         currentPlayerSquad = playerArmyQueue.Dequeue();
+        // Cleaning the queue from the dead squads
         while (currentPlayerSquad.IsDead)
         {
             currentPlayerSquad = playerArmyQueue.Dequeue();
         }
+        // Highlight current squad
         currentPlayerSquad.HighlightSquad(true);
     }
 
+    // Called when the player selects the target enemy to hit
     public void OnTargetChosen()
     {
         if (state != BattleState.PLAYERTURN)
             return;
 
+        // Unhighlight current squad and put it at the end of the Queue
         currentPlayerSquad.HighlightSquad(false);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
+        // Find an enemy squad that takes damage and updates its hp
         currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
         currentEnemySquad.ReceiveDamage(currentPlayerSquad.DealingDamage);
+        
+        // Remove enemy squad from the game data in case it's dead
         if (currentEnemySquad.IsDead)
         {
             gameData.enemyArmy1.RemoveAll(item => item.SquadID == currentEnemySquad.ID);
         }
-        if (gameData.enemyArmy1.Any()) {
+
+        // The battle goes on if an enemy still has squads.
+        // Otherwise, the player won this battle.
+        if (gameData.enemyArmy1.Any())
+        {
             state = BattleState.ENEMYTURN;
             EnemyTurn();
         }
@@ -127,7 +134,6 @@ public class BattleSystem : MonoBehaviour
 
     void EnemyTurn()
     {
-
         if (state != BattleState.ENEMYTURN)
             return;
         currentEnemySquad = enemyArmyQueue.Dequeue();
@@ -135,27 +141,26 @@ public class BattleSystem : MonoBehaviour
         {
             currentEnemySquad = enemyArmyQueue.Dequeue();
         }
-        // Do we need any strategy here?!
+        
+        // TODO: AI or minimal strategy
         currentPlayerSquad.ReceiveDamage(currentEnemySquad.DealingDamage);
 
         if (currentPlayerSquad.IsDead)
         {
-            print($"Id: {currentPlayerSquad.ID}");
             gameData.playerArmy.RemoveAll(item => item.SquadID == currentPlayerSquad.ID);
         }
 
         if (gameData.playerArmy.Any())
         {
-
             enemyArmyQueue.Enqueue(currentEnemySquad);
             state = BattleState.PLAYERTURN;
             PlayerTurn();
         }
-        else { 
+        else
+        {
             state = BattleState.LOST;
             EndBattle();
         }
-        
     }
 
     void EndBattle()
@@ -175,6 +180,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // Save each squad's hp in the Game Data
     void UpdateUnitSquadHP()
     {
         while (playerArmyQueue.Count > 0)
