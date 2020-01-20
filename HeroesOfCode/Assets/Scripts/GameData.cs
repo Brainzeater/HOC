@@ -42,6 +42,7 @@ public class GameData : MonoBehaviour
     [Header("Player Army")] public List<UnitSquad> playerArmy;
 
     private const int enemyArmiesMaxCount = 3;
+
     // and methods for them
     public int EnemyArmiesLeft { get; set; }
 

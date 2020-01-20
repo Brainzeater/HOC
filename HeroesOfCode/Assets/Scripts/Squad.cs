@@ -13,7 +13,6 @@ public class Squad : MonoBehaviour
 
     public TMP_Text numberOfUnitsText;
 
-    private const string highlightTag = "HighlightSquad";
     public int ID { get; set; }
 
     public virtual void Awake()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.XR.WSA.Persistence;
 
 public class PlayerSquad : Squad
 {
@@ -11,14 +12,14 @@ public class PlayerSquad : Squad
     public GameObject highlightBackground;
     public GameObject activeSkillButton;
     public GameObject regularHitButton;
-    private bool usedActiveSkill;
+    public bool UsedActiveSkill { get; set; }
 
     public override void Awake()
     {
         base.Awake();
         unitHPText.text = unit.hp.ToString();
         unitDamageText.text = unit.damage.ToString();
-        usedActiveSkill = false;
+        UsedActiveSkill = false;
         //        if(GetUnit.hasActiveSkill)
     }
 
@@ -29,7 +30,7 @@ public class PlayerSquad : Squad
 
         if (GetUnit.hasActiveSkill)
         {
-            if (!usedActiveSkill)
+            if (!UsedActiveSkill)
             {
                 activeSkillButton.SetActive(enabled);
             }
@@ -58,9 +59,5 @@ public class PlayerSquad : Squad
     public void EnableRegularHitButton()
     {
         regularHitButton.SetActive(true);
-    }
-
-    public void Heal()
-    {
     }
 }

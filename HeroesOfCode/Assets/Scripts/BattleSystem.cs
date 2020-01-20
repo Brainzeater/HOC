@@ -25,7 +25,7 @@ public class BattleSystem : MonoBehaviour
 
     private Queue<PlayerSquad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
-    private List<PlayerSquad> playerArmyList;
+    private List<Squad> playerSquadsToHealList;
     private List<Squad> enemyArmyList;
 
     private PlayerSquad currentPlayerSquad;
@@ -36,6 +36,7 @@ public class BattleSystem : MonoBehaviour
     {
         playerSquadPositionsArray = playerArmyPosition.GetComponentsInChildren<Transform>();
         playerArmyQueue = new Queue<PlayerSquad>();
+        playerSquadsToHealList = new List<Squad>();
 
         enemySquadPositionsArray = enemyArmyPosition.GetComponentsInChildren<Transform>();
         enemyArmyQueue = new Queue<Squad>();
@@ -43,6 +44,9 @@ public class BattleSystem : MonoBehaviour
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
 
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
+        // Active Skills
+        BattleEvents.current.OnTargetSelected += OnHeal;
+
         BattleEvents.current.OnActiveSkillSelected += OnActiveSkill;
         BattleEvents.current.OnRegularHitSelected += OnRegularHit;
 
@@ -81,7 +85,6 @@ public class BattleSystem : MonoBehaviour
         }
 
         // TODO: Better Update it each time as it might contain dead squads
-        playerArmyList = playerArmyQueue.ToList();
         enemyArmyList = enemyArmyQueue.ToList();
 
 
@@ -103,11 +106,12 @@ public class BattleSystem : MonoBehaviour
         {
             currentPlayerSquad = playerArmyQueue.Dequeue();
         }
+
         // Highlight current squad
         currentPlayerSquad.HighlightSquad(true);
     }
 
-    // Called when the player selects the target enemy to hit
+    // Activates when the player selects the target enemy to deal regular hit
     public void OnTargetChosen()
     {
         if (state != BattleState.PlayerRegularTurn)
@@ -122,7 +126,7 @@ public class BattleSystem : MonoBehaviour
         // Find an enemy squad that takes damage and updates its hp
         currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
         currentEnemySquad.ReceiveDamage(currentPlayerSquad.DealingDamage);
-        
+
         // Remove enemy squad from the game data in case it's dead
         if (currentEnemySquad.IsDead)
         {
@@ -143,16 +147,19 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // Activates when the player presses Active Skill button
     public void OnActiveSkill()
     {
         currentPlayerSquad.EnableRegularHitButton();
         currentPlayerSquad.DisableActiveSkillButton();
         state = BattleState.PlayerActiveSkill;
-        
+
         switch (currentPlayerSquad.GetUnit.activeSkill)
         {
+            // Allow selecting player's squads to heal
             case ActiveSkill.Heal:
-
+                ToggleArmyToSelect(enemyArmyList, false);
+                ToggleArmyToSelect(playerSquadsToHealList, true);
                 break;
             case ActiveSkill.IncreasedDamage:
 
@@ -163,11 +170,55 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // Activates when the player exits Active Skill without using it
     public void OnRegularHit()
     {
         currentPlayerSquad.EnableActiveSkillButton();
         currentPlayerSquad.DisableRegularHitButton();
+
+        // Unihighlight player's squads if the player exited from Heal
+        if (currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.Heal)
+        {
+            ToggleArmyToSelect(enemyArmyList, true);
+            ToggleArmyToSelect(playerSquadsToHealList, false);
+        }
+
         state = BattleState.PlayerRegularTurn;
+    }
+
+    // Healing Active Skill
+    void OnHeal()
+    {
+        if (state != BattleState.PlayerActiveSkill)
+            return;
+
+        // Disable buttons
+        currentPlayerSquad.DisableRegularHitButton();
+        currentPlayerSquad.UsedActiveSkill = true;
+        ToggleArmyToSelect(playerSquadsToHealList, false);
+
+        // Unhighlight current squad and put it at the end of the Queue
+        currentPlayerSquad.HighlightSquad(false);
+        playerArmyQueue.Enqueue(currentPlayerSquad);
+        // Find an player squad that restores hp and updates its hp
+        Squad playerSquadToHeal = playerSquadsToHealList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
+
+        int selectedSquadMaxHp = gameData.playerArmy.Find(item => item.SquadID == playerSquadToHeal.ID).SquadHp;
+        // TODO: Tune this thing. It should be Unit's HP
+        int healHP = (int) Mathf.Round(selectedSquadMaxHp * Unit.healPercent);
+//        print(playerSquadToHeal.HP);
+//        print(healHP);
+        playerSquadToHeal.ReceiveDamage(-healHP);
+//        print(playerSquadToHeal.HP);
+
+        // Not to overheal the Squad
+        if (playerSquadToHeal.HP > selectedSquadMaxHp)
+        {
+            playerSquadToHeal.SetSquadHP(selectedSquadMaxHp);
+        }
+
+        state = BattleState.EnemyTurn;
+        EnemyTurn();
     }
 
     void EnemyTurn()
@@ -179,13 +230,21 @@ public class BattleSystem : MonoBehaviour
         {
             currentEnemySquad = enemyArmyQueue.Dequeue();
         }
-        
-        // TODO: AI or minimal strategy
-        currentPlayerSquad.ReceiveDamage(currentEnemySquad.DealingDamage);
 
-        if (currentPlayerSquad.IsDead)
+        // TODO: Find out, who hits me when I kill him!
+        print(currentEnemySquad);
+        // TODO: AI or minimal strategy
+        Squad playerSquadToHit = currentPlayerSquad;
+        playerSquadToHit.ReceiveDamage(currentEnemySquad.DealingDamage);
+
+        if (playerSquadToHit.IsDead)
         {
-            gameData.playerArmy.RemoveAll(item => item.SquadID == currentPlayerSquad.ID);
+            gameData.playerArmy.RemoveAll(item => item.SquadID == playerSquadToHit.ID);
+            playerSquadsToHealList.RemoveAll(item => item.ID == playerSquadToHit.ID);
+        }
+        else
+        {
+            playerSquadsToHealList.Add(playerSquadToHit);
         }
 
         if (gameData.playerArmy.Any())

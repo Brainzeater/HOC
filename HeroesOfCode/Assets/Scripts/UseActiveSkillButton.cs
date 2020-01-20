@@ -6,6 +6,7 @@ public class UseActiveSkillButton : MonoBehaviour
 {
     private SpriteRenderer highlight;
     public bool activateRegularHit;
+
     void Awake()
     {
         highlight = GetComponent<SpriteRenderer>();
@@ -25,7 +26,7 @@ public class UseActiveSkillButton : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(!activateRegularHit)
+        if (!activateRegularHit)
         {
             BattleEvents.current.ActiveSkill();
         }

@@ -26,9 +26,19 @@ public class SelectTarget : MonoBehaviour
                 highlight.enabled = false;
     }
 
+    void OnMouseOver()
+    {
+        if (Active)
+            if (!highlight.enabled)
+                highlight.enabled = true;
+    }
+
     void OnMouseDown()
     {
         if (Active)
+        {
+            highlight.enabled = false;
             BattleEvents.current.TargetSelected(gameObject.GetComponentInParent<Squad>().ID);
+        }
     }
 }
