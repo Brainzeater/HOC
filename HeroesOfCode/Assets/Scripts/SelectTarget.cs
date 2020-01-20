@@ -4,32 +4,31 @@
 public class SelectTarget : MonoBehaviour
 {
     private SpriteRenderer highlight;
-    [HideInInspector] public bool Selected { get; set; }
+    [HideInInspector] public bool Active { get; set; }
 
-    void Start()
+    void Awake()
     {
         highlight = GetComponent<SpriteRenderer>();
-        Selected = false;
+        Active = false;
     }
 
     void OnMouseEnter()
     {
-        if (!highlight.enabled)
-            highlight.enabled = true;
+        if (Active)
+            if (!highlight.enabled)
+                highlight.enabled = true;
     }
 
     void OnMouseExit()
     {
-        if (highlight.enabled)
-            highlight.enabled = false;
+        if (Active)
+            if (highlight.enabled)
+                highlight.enabled = false;
     }
 
     void OnMouseDown()
     {
-        if (!Selected)
-        {
-            Selected = false;
+        if (Active)
             BattleEvents.current.TargetSelected(gameObject.GetComponentInParent<Squad>().ID);
-        }
     }
 }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public enum BattleState
 {
-    START,
-    PLAYERTURN,
-    ENEMYTURN,
-    WON,
-    LOST
+    Start,
+    PlayerRegularTurn,
+    PlayerActiveSkill,
+    EnemyTurn,
+    Won,
+    Lost
 }
 
 public class BattleSystem : MonoBehaviour
@@ -22,18 +23,19 @@ public class BattleSystem : MonoBehaviour
 
     private GameData gameData;
 
-    private Queue<Squad> playerArmyQueue;
+    private Queue<PlayerSquad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
+    private List<PlayerSquad> playerArmyList;
     private List<Squad> enemyArmyList;
 
-    private Squad currentPlayerSquad;
+    private PlayerSquad currentPlayerSquad;
     private Squad currentEnemySquad;
 
 
     void Start()
     {
         playerSquadPositionsArray = playerArmyPosition.GetComponentsInChildren<Transform>();
-        playerArmyQueue = new Queue<Squad>();
+        playerArmyQueue = new Queue<PlayerSquad>();
 
         enemySquadPositionsArray = enemyArmyPosition.GetComponentsInChildren<Transform>();
         enemyArmyQueue = new Queue<Squad>();
@@ -41,7 +43,10 @@ public class BattleSystem : MonoBehaviour
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
 
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
-        state = BattleState.START;
+        BattleEvents.current.OnActiveSkillSelected += OnActiveSkill;
+        BattleEvents.current.OnRegularHitSelected += OnRegularHit;
+
+        state = BattleState.Start;
 //        StartCoroutine(SetupBattle());
         SetupBattle();
     }
@@ -53,7 +58,7 @@ public class BattleSystem : MonoBehaviour
         foreach (GameData.UnitSquad squad in gameData.playerArmy)
         {
             GameObject playerGO = Instantiate(squad.squadUnitPrefab, playerSquadPositionsArray[i]);
-            currentPlayerSquad = playerGO.GetComponent<Squad>();
+            currentPlayerSquad = playerGO.GetComponent<PlayerSquad>();
             currentPlayerSquad.ID = squad.SquadID;
             // TODO: This is just ridiculous!
             currentPlayerSquad.SetSquadHP(squad.SquadHp);
@@ -75,18 +80,22 @@ public class BattleSystem : MonoBehaviour
             i++;
         }
 
+        // TODO: Better Update it each time as it might contain dead squads
+        playerArmyList = playerArmyQueue.ToList();
         enemyArmyList = enemyArmyQueue.ToList();
 
 
         //        yield return new WaitForSeconds(1f);
         //        print(player.DealingDamage);
         //        print(enemy.DealingDamage);
-        state = BattleState.PLAYERTURN;
+        state = BattleState.PlayerRegularTurn;
         PlayerTurn();
     }
 
     void PlayerTurn()
     {
+        ToggleArmyToSelect(enemyArmyList, true);
+
         // Get the next player squad from the Queue
         currentPlayerSquad = playerArmyQueue.Dequeue();
         // Cleaning the queue from the dead squads
@@ -101,8 +110,10 @@ public class BattleSystem : MonoBehaviour
     // Called when the player selects the target enemy to hit
     public void OnTargetChosen()
     {
-        if (state != BattleState.PLAYERTURN)
+        if (state != BattleState.PlayerRegularTurn)
             return;
+
+        ToggleArmyToSelect(enemyArmyList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
         currentPlayerSquad.HighlightSquad(false);
@@ -122,19 +133,46 @@ public class BattleSystem : MonoBehaviour
         // Otherwise, the player won this battle.
         if (gameData.enemyArmy1.Any())
         {
-            state = BattleState.ENEMYTURN;
+            state = BattleState.EnemyTurn;
             EnemyTurn();
         }
         else
         {
-            state = BattleState.WON;
+            state = BattleState.Won;
             EndBattle();
         }
     }
 
+    public void OnActiveSkill()
+    {
+        currentPlayerSquad.EnableRegularHitButton();
+        currentPlayerSquad.DisableActiveSkillButton();
+        state = BattleState.PlayerActiveSkill;
+        
+        switch (currentPlayerSquad.GetUnit.activeSkill)
+        {
+            case ActiveSkill.Heal:
+
+                break;
+            case ActiveSkill.IncreasedDamage:
+
+                break;
+            case ActiveSkill.DamageAll:
+
+                break;
+        }
+    }
+
+    public void OnRegularHit()
+    {
+        currentPlayerSquad.EnableActiveSkillButton();
+        currentPlayerSquad.DisableRegularHitButton();
+        state = BattleState.PlayerRegularTurn;
+    }
+
     void EnemyTurn()
     {
-        if (state != BattleState.ENEMYTURN)
+        if (state != BattleState.EnemyTurn)
             return;
         currentEnemySquad = enemyArmyQueue.Dequeue();
         while (currentEnemySquad.IsDead)
@@ -153,19 +191,19 @@ public class BattleSystem : MonoBehaviour
         if (gameData.playerArmy.Any())
         {
             enemyArmyQueue.Enqueue(currentEnemySquad);
-            state = BattleState.PLAYERTURN;
+            state = BattleState.PlayerRegularTurn;
             PlayerTurn();
         }
         else
         {
-            state = BattleState.LOST;
+            state = BattleState.Lost;
             EndBattle();
         }
     }
 
     void EndBattle()
     {
-        if (state == BattleState.WON)
+        if (state == BattleState.Won)
         {
             // If that was not the last knight, then
             // Destroy the defeated knight and Load Map
@@ -173,7 +211,7 @@ public class BattleSystem : MonoBehaviour
             UpdateUnitSquadHP();
             SceneLoader.LoadMapScene();
         }
-        else if (state == BattleState.LOST)
+        else if (state == BattleState.Lost)
         {
             // Load GameOver Scene
             print("YOU LOST");
@@ -187,6 +225,15 @@ public class BattleSystem : MonoBehaviour
         {
             currentPlayerSquad = playerArmyQueue.Dequeue();
             gameData.playerArmy.Find(item => item.SquadID == currentPlayerSquad.ID).SquadHp = currentPlayerSquad.HP;
+        }
+    }
+
+    // Activate/Deactivate army for selection
+    void ToggleArmyToSelect(List<Squad> army, bool active)
+    {
+        foreach (Squad squad in army)
+        {
+            squad.gameObject.GetComponentInChildren<SelectTarget>().Active = active;
         }
     }
 }

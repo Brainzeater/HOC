@@ -16,8 +16,6 @@ public class Squad : MonoBehaviour
     private const string highlightTag = "HighlightSquad";
     public int ID { get; set; }
 
-//    private bool usedActiveSkill;
-
     public virtual void Awake()
     {
         DisplayNumberOfUnits();
@@ -98,27 +96,6 @@ public class Squad : MonoBehaviour
         Debug.Log(this + " destroyed");
         gameObject.SetActive(false);
         IsDead = true;
-    }
-
-    // Activates Squad's background highlight and "Active Skill" button
-    public void HighlightSquad(bool enabled)
-    {
-        foreach (Transform child in gameObject.transform)
-        {
-            if (child.CompareTag(highlightTag))
-            {
-                child.gameObject.SetActive(enabled);
-            }
-
-            foreach (Transform grandChild in child.transform)
-            {
-                // TODO: Highlight only in case the active skill wasn't used
-                if (grandChild.CompareTag(highlightTag))
-                {
-                    grandChild.gameObject.SetActive(enabled);
-                }
-            }
-        }
     }
 
     public override string ToString()
