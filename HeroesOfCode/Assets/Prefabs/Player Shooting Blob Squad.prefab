@@ -224,5 +224,35 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 245447448264405182, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0843
+      objectReference: {fileID: 0}
+    - target: {fileID: 245447448264405182, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3822
+      objectReference: {fileID: 0}
+    - target: {fileID: 245447448264405182, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.372899
+      objectReference: {fileID: 0}
+    - target: {fileID: 245447448264405182, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8327448
+      objectReference: {fileID: 0}
+    - target: {fileID: 745714998742049284, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -68.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 745714998742049284, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9eeee50e181858844bb277ea42b2c486, type: 3}

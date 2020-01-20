@@ -19,4 +19,35 @@ public class BattleEvents : MonoBehaviour
         SelectedTargetID = targetID;
         OnTargetSelected?.Invoke();
     }
+
+    // Called when the player uses active skill
+    public event Action OnActiveSkillSelected;
+
+    public void ActiveSkill()
+    {
+        OnActiveSkillSelected?.Invoke();
+    }
+
+    // Called when the player returns to regular hit
+    public event Action OnRegularHitSelected;
+
+    public void RegularHit()
+    {
+        OnRegularHitSelected?.Invoke();
+    }
+
+    // Called when the player selects target with "Damage All"
+    public event Action OnDamageAllHighlight;
+
+    public void HighlightAll()
+    {
+        OnDamageAllHighlight?.Invoke();
+    }
+
+    public event Action OnDamageAllSquads;
+
+    public void DamageAllSquads()
+    {
+        OnDamageAllSquads?.Invoke();
+    }
 }

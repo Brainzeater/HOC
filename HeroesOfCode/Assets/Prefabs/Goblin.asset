@@ -15,3 +15,5 @@ MonoBehaviour:
   name: Goblin
   hp: 5
   damage: 2
+  hasActiveSkill: 1
+  activeSkill: 1

@@ -1572,22 +1572,22 @@ MonoBehaviour:
   - squadUnitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
       type: 3}
     squadUnits: 10
-  - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
+  - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
       type: 3}
     squadUnits: 50
-  - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
+  - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
       type: 3}
     squadUnits: 50
   enemyArmy1:
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   enemyArmy2: []
   enemyArmy3: []
 --- !u!4 &898076646

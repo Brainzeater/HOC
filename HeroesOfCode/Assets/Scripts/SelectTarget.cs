@@ -4,32 +4,85 @@
 public class SelectTarget : MonoBehaviour
 {
     private SpriteRenderer highlight;
-    [HideInInspector] public bool Selected { get; set; }
+    [HideInInspector] public bool Active { get; set; }
+    [HideInInspector] public bool DamageAll { get; set; }
+    private Color defaultColor;
+    private Color damageAllColor;
 
-    void Start()
+    void Awake()
     {
         highlight = GetComponent<SpriteRenderer>();
-        Selected = false;
+        Active = false;
+
+        defaultColor = highlight.color;
+        damageAllColor = Color.red;
+        damageAllColor.a = .4f;
+        BattleEvents.current.OnDamageAllHighlight += HighlightAll;
+        DamageAll = false;
     }
 
     void OnMouseEnter()
     {
-        if (!highlight.enabled)
-            highlight.enabled = true;
+        if (Active)
+            if (DamageAll)
+            {
+                BattleEvents.current.HighlightAll();
+            }
+            else if (!highlight.enabled)
+                highlight.enabled = true;
     }
 
     void OnMouseExit()
     {
-        if (highlight.enabled)
-            highlight.enabled = false;
+        if (Active)
+            if (DamageAll)
+            {
+                BattleEvents.current.HighlightAll();
+            }
+            else if (highlight.enabled)
+                highlight.enabled = false;
+    }
+
+    void OnMouseOver()
+    {
+        if (Active)
+            if (!highlight.enabled)
+                highlight.enabled = true;
     }
 
     void OnMouseDown()
     {
-        if (!Selected)
+        if (Active)
         {
-            Selected = false;
-            BattleEvents.current.TargetSelected(gameObject.GetComponentInParent<Squad>().ID);
+            highlight.enabled = false;
+            if (!DamageAll)
+            {
+                BattleEvents.current.TargetSelected(gameObject.GetComponentInParent<Squad>().ID);
+            }
+            else
+            {
+                BattleEvents.current.DamageAllSquads();
+            }
         }
+    }
+
+    public void DamageAllSetup()
+    {
+        highlight.color = damageAllColor;
+        Active = true;
+        DamageAll = true;
+    }
+
+    public void FinishDamageAll()
+    {
+        highlight.enabled = false;
+        highlight.color = defaultColor;
+        Active = false;
+        DamageAll = false;
+    }
+
+    void HighlightAll()
+    {
+        highlight.enabled = !highlight.enabled;
     }
 }
