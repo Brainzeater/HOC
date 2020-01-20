@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7394001666499618410}
   - component: {fileID: 1436234812114492651}
   m_Layer: 0
-  m_Name: Select Highlight
-  m_TagString: SelectHighlight
+  m_Name: Select Highlight Heal
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

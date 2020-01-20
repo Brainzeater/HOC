@@ -26,6 +26,7 @@ public class BattleSystem : MonoBehaviour
     private Queue<PlayerSquad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
     private List<Squad> playerSquadsToHealList;
+    private List<PlayerSquad> playerArmyList;
     private List<Squad> enemyArmyList;
 
     private PlayerSquad currentPlayerSquad;
@@ -49,6 +50,7 @@ public class BattleSystem : MonoBehaviour
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
         // Active Skills
         BattleEvents.current.OnTargetSelected += OnHeal;
+        BattleEvents.current.OnDamageAllSquads += OnDamageAll;
 
         BattleEvents.current.OnActiveSkillSelected += OnActiveSkill;
         BattleEvents.current.OnRegularHitSelected += OnRegularHit;
@@ -74,8 +76,6 @@ public class BattleSystem : MonoBehaviour
             playerArmyQueue.Enqueue(currentPlayerSquad);
             i++;
         }
-//        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattlePosition);
-//        enemy = enemyGO.GetComponent<EnemySquad>();
 
         i = 1;
         foreach (GameData.UnitSquad squad in gameData.enemyArmy1)
@@ -91,6 +91,8 @@ public class BattleSystem : MonoBehaviour
 
         // TODO: Better Update it each time as it might contain dead squads
         enemyArmyList = enemyArmyQueue.ToList();
+
+        playerArmyList = playerArmyQueue.ToList();
 
 
         //        yield return new WaitForSeconds(1f);
@@ -143,6 +145,7 @@ public class BattleSystem : MonoBehaviour
             }
         }
 
+        // Disable enemy squad choosing
         ToggleArmyToSelect(enemyArmyList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
@@ -153,31 +156,25 @@ public class BattleSystem : MonoBehaviour
         currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
         currentEnemySquad.ReceiveDamage(dealingDamage);
 
-        // Remove enemy squad from the game data in case it's dead
-        if (currentEnemySquad.IsDead)
+        state = NextBattleStateForPlayerTurn(currentEnemySquad);
+        switch (state)
         {
-            gameData.enemyArmy1.RemoveAll(item => item.SquadID == currentEnemySquad.ID);
-        }
-
-        // The battle goes on if an enemy still has squads.
-        // Otherwise, the player won this battle.
-        if (gameData.enemyArmy1.Any())
-        {
-            state = BattleState.EnemyTurn;
-            EnemyTurn();
-        }
-        else
-        {
-            state = BattleState.Won;
-            EndBattle();
+            case BattleState.EnemyTurn:
+                EnemyTurn();
+                break;
+            case BattleState.Won:
+                EndBattle();
+                break;
         }
     }
 
     // Activates when the player presses Active Skill button
     public void OnActiveSkill()
     {
+        // Display correct button
         currentPlayerSquad.EnableRegularHitButton();
         currentPlayerSquad.DisableActiveSkillButton();
+
         state = BattleState.PlayerActiveSkill;
 
         switch (currentPlayerSquad.GetUnit.activeSkill)
@@ -187,11 +184,9 @@ public class BattleSystem : MonoBehaviour
                 ToggleArmyToSelect(enemyArmyList, false);
                 ToggleArmyToSelect(playerSquadsToHealList, true);
                 break;
-            case ActiveSkill.IncreasedDamage:
-
-                break;
             case ActiveSkill.DamageAll:
-
+                print("DAMAGE ALL");
+                DamageAllPreset();
                 break;
         }
     }
@@ -199,14 +194,22 @@ public class BattleSystem : MonoBehaviour
     // Activates when the player exits Active Skill without using it
     public void OnRegularHit()
     {
+        // Display correct button
         currentPlayerSquad.EnableActiveSkillButton();
         currentPlayerSquad.DisableRegularHitButton();
 
-        // Unihighlight player's squads if the player exited from Heal
-        if (currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.Heal)
+        switch (currentPlayerSquad.GetUnit.activeSkill)
         {
-            ToggleArmyToSelect(enemyArmyList, true);
-            ToggleArmyToSelect(playerSquadsToHealList, false);
+            // Unihighlight player's squads if the player exited from Heal
+            case (ActiveSkill.Heal):
+                ToggleArmyToSelect(enemyArmyList, true);
+                ToggleArmyToSelect(playerSquadsToHealList, false);
+                break;
+            // Unable highlighting all squads
+            case (ActiveSkill.DamageAll):
+                DamageAllFinish();
+                ToggleArmyToSelect(enemyArmyList, true);
+                break;
         }
 
         state = BattleState.PlayerRegularTurn;
@@ -215,7 +218,7 @@ public class BattleSystem : MonoBehaviour
     // Healing Active Skill
     void OnHeal()
     {
-        if (!(state == BattleState.PlayerActiveSkill && 
+        if (!(state == BattleState.PlayerActiveSkill &&
               currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.Heal))
             return;
 
@@ -248,6 +251,53 @@ public class BattleSystem : MonoBehaviour
         EnemyTurn();
     }
 
+    // Damage All Active Skill
+    void OnDamageAll()
+    {
+        if (!(state == BattleState.PlayerActiveSkill &&
+              currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.DamageAll))
+            return;
+        DamageAllFinish();
+        currentPlayerSquad.DisableRegularHitButton();
+        currentPlayerSquad.UsedActiveSkill = true;
+        int dealingDamage = Unit.fixedDamageAll;
+
+        // Unhighlight current squad and put it at the end of the Queue
+        currentPlayerSquad.HighlightSquad(false, 0);
+        playerArmyQueue.Enqueue(currentPlayerSquad);
+
+        foreach (Squad playerSquad in playerArmyList.ToList())
+        {
+            playerSquad.ReceiveDamage(dealingDamage);
+            state = NextBattleStateForEnemyTurn(playerSquad);
+        }
+
+        switch (state)
+        {
+            case BattleState.PlayerRegularTurn:
+                foreach (Squad squad in enemyArmyList.ToList())
+                {
+                    squad.ReceiveDamage(dealingDamage);
+                    state = NextBattleStateForPlayerTurn(squad);
+                }
+
+                switch (state)
+                {
+                    case BattleState.EnemyTurn:
+                        EnemyTurn();
+                        break;
+                    case BattleState.Won:
+                        EndBattle();
+                        break;
+                }
+
+                break;
+            case BattleState.Lost:
+                EndBattle();
+                break;
+        }
+    }
+
     void EnemyTurn()
     {
         if (state != BattleState.EnemyTurn)
@@ -264,10 +314,49 @@ public class BattleSystem : MonoBehaviour
         Squad playerSquadToHit = currentPlayerSquad;
         playerSquadToHit.ReceiveDamage(currentEnemySquad.DealingDamage);
 
+        enemyArmyQueue.Enqueue(currentEnemySquad);
+
+        state = NextBattleStateForEnemyTurn(playerSquadToHit);
+        switch (state)
+        {
+            case BattleState.Lost:
+                EndBattle();
+                break;
+            case BattleState.PlayerRegularTurn:
+                PlayerTurn();
+                break;
+        }
+    }
+
+    BattleState NextBattleStateForPlayerTurn(Squad enemySquadToHit)
+    {
+        // Remove enemy squad from the list in case it's dead
+        if (enemySquadToHit.IsDead)
+        {
+            enemyArmyList.RemoveAll(item => item.ID == enemySquadToHit.ID);
+            //            enemyArmyList.RemoveAll(item => item.IsDead);
+        }
+
+        // The battle goes on if an enemy still has squads.
+        // Otherwise, the player won this battle.
+        if (enemyArmyList.Any())
+        {
+            return BattleState.EnemyTurn;
+        }
+        else
+        {
+            return BattleState.Won;
+        }
+    }
+
+
+    BattleState NextBattleStateForEnemyTurn(Squad playerSquadToHit)
+    {
         if (playerSquadToHit.IsDead)
         {
             gameData.playerArmy.RemoveAll(item => item.SquadID == playerSquadToHit.ID);
             playerSquadsToHealList.RemoveAll(item => item.ID == playerSquadToHit.ID);
+            playerArmyList.RemoveAll(item => item.ID == playerSquadToHit.ID);
         }
         else
         {
@@ -276,14 +365,11 @@ public class BattleSystem : MonoBehaviour
 
         if (gameData.playerArmy.Any())
         {
-            enemyArmyQueue.Enqueue(currentEnemySquad);
-            state = BattleState.PlayerRegularTurn;
-            PlayerTurn();
+            return BattleState.PlayerRegularTurn;
         }
         else
         {
-            state = BattleState.Lost;
-            EndBattle();
+            return BattleState.Lost;
         }
     }
 
@@ -294,6 +380,9 @@ public class BattleSystem : MonoBehaviour
             // If that was not the last knight, then
             // Destroy the defeated knight and Load Map
             // else Load WIN SCENE!
+
+            // TODO: Destroy in a better way?
+            gameData.enemyArmy1.Clear();
             UpdateUnitSquadHP();
             SceneLoader.LoadMapScene();
         }
@@ -320,6 +409,32 @@ public class BattleSystem : MonoBehaviour
         foreach (Squad squad in army)
         {
             squad.gameObject.GetComponentInChildren<SelectTarget>().Active = active;
+        }
+    }
+
+    void DamageAllPreset()
+    {
+        foreach (Squad squad in enemyArmyList)
+        {
+            squad.gameObject.GetComponentInChildren<SelectTarget>().DamageAllSetup();
+        }
+
+        foreach (PlayerSquad squad in playerArmyList)
+        {
+            squad.gameObject.GetComponentInChildren<SelectTarget>().DamageAllSetup();
+        }
+    }
+
+    void DamageAllFinish()
+    {
+        foreach (Squad squad in enemyArmyList)
+        {
+            squad.gameObject.GetComponentInChildren<SelectTarget>().FinishDamageAll();
+        }
+
+        foreach (PlayerSquad squad in playerArmyList)
+        {
+            squad.gameObject.GetComponentInChildren<SelectTarget>().FinishDamageAll();
         }
     }
 }

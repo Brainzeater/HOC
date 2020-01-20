@@ -35,4 +35,19 @@ public class BattleEvents : MonoBehaviour
     {
         OnRegularHitSelected?.Invoke();
     }
+
+    // Called when the player selects target with "Damage All"
+    public event Action OnDamageAllHighlight;
+
+    public void HighlightAll()
+    {
+        OnDamageAllHighlight?.Invoke();
+    }
+
+    public event Action OnDamageAllSquads;
+
+    public void DamageAllSquads()
+    {
+        OnDamageAllSquads?.Invoke();
+    }
 }

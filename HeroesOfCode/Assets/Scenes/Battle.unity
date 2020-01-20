@@ -1581,13 +1581,13 @@ MonoBehaviour:
   enemyArmy1:
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 22
   enemyArmy2: []
   enemyArmy3: []
 --- !u!4 &898076646
