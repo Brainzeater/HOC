@@ -24,15 +24,23 @@ public class PlayerSquad : Squad
     }
 
     // Activates Squad's background highlight and "Active Skill" button
-    public void HighlightSquad(bool enabled)
+    public void HighlightSquad(bool enabled, int lastDealtDamage)
     {
         highlightBackground.SetActive(enabled);
-
+        unitHPText.gameObject.SetActive(enabled);
+        unitDamageText.gameObject.SetActive(enabled);
         if (GetUnit.hasActiveSkill)
         {
             if (!UsedActiveSkill)
             {
-                activeSkillButton.SetActive(enabled);
+                if (base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0)
+                {
+                    DisableActiveSkillButton();
+                }
+                else
+                {
+                    activeSkillButton.SetActive(enabled);
+                }
             }
             else
             {

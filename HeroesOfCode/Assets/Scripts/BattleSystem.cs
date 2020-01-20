@@ -31,6 +31,9 @@ public class BattleSystem : MonoBehaviour
     private PlayerSquad currentPlayerSquad;
     private Squad currentEnemySquad;
 
+    // For "Increased Damage" active skill
+    private int lastDealtDamage;
+
 
     void Start()
     {
@@ -49,6 +52,8 @@ public class BattleSystem : MonoBehaviour
 
         BattleEvents.current.OnActiveSkillSelected += OnActiveSkill;
         BattleEvents.current.OnRegularHitSelected += OnRegularHit;
+
+        lastDealtDamage = 0;
 
         state = BattleState.Start;
 //        StartCoroutine(SetupBattle());
@@ -108,24 +113,45 @@ public class BattleSystem : MonoBehaviour
         }
 
         // Highlight current squad
-        currentPlayerSquad.HighlightSquad(true);
+        currentPlayerSquad.HighlightSquad(true, lastDealtDamage);
     }
 
-    // Activates when the player selects the target enemy to deal regular hit
+    // Activates when the player selects the target enemy to deal regular hit or active skill "Increased Damage"
     public void OnTargetChosen()
     {
+        int dealingDamage = 0;
         if (state != BattleState.PlayerRegularTurn)
-            return;
+            if (!(state == BattleState.PlayerActiveSkill &&
+                  currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.IncreasedDamage))
+            {
+                return;
+            }
+            else
+            {
+                // When the player chose to use "Increased Damage"
+                currentPlayerSquad.DisableRegularHitButton();
+                currentPlayerSquad.UsedActiveSkill = true;
+                dealingDamage = Unit.increasedConstant + Unit.increasedCoefficient * lastDealtDamage;
+            }
+        else
+        {
+            // When the player uses regular hit
+            dealingDamage = currentPlayerSquad.DealingDamage;
+            if (currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.IncreasedDamage)
+            {
+                lastDealtDamage = dealingDamage;
+            }
+        }
 
         ToggleArmyToSelect(enemyArmyList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
-        currentPlayerSquad.HighlightSquad(false);
+        currentPlayerSquad.HighlightSquad(false, 0);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
         // Find an enemy squad that takes damage and updates its hp
         currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
-        currentEnemySquad.ReceiveDamage(currentPlayerSquad.DealingDamage);
+        currentEnemySquad.ReceiveDamage(dealingDamage);
 
         // Remove enemy squad from the game data in case it's dead
         if (currentEnemySquad.IsDead)
@@ -189,7 +215,8 @@ public class BattleSystem : MonoBehaviour
     // Healing Active Skill
     void OnHeal()
     {
-        if (state != BattleState.PlayerActiveSkill)
+        if (!(state == BattleState.PlayerActiveSkill && 
+              currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.Heal))
             return;
 
         // Disable buttons
@@ -198,7 +225,7 @@ public class BattleSystem : MonoBehaviour
         ToggleArmyToSelect(playerSquadsToHealList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
-        currentPlayerSquad.HighlightSquad(false);
+        currentPlayerSquad.HighlightSquad(false, 0);
         playerArmyQueue.Enqueue(currentPlayerSquad);
         // Find an player squad that restores hp and updates its hp
         Squad playerSquadToHeal = playerSquadsToHealList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
