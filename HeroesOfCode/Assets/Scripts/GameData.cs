@@ -46,9 +46,13 @@ public class GameData : MonoBehaviour
     // and methods for them
     public int EnemyArmiesLeft { get; set; }
 
-    [Header("Enemy Army 1")] public List<UnitSquad> enemyArmy1;
-    [Header("Enemy Army 2")] public List<UnitSquad> enemyArmy2;
-    [Header("Enemy Army 3")] public List<UnitSquad> enemyArmy3;
+    public int CurrentEnemyArmyIndex { get; set; }
+
+//    [Header("Enemy Army 1")] public List<UnitSquad> enemyArmy1;
+//    [Header("Enemy Army 2")] public List<UnitSquad> enemyArmy2;
+//    [Header("Enemy Army 3")] public List<UnitSquad> enemyArmy3;
+
+    public List<GameObject> enemyArmyList;
 
     void Awake()
     {
@@ -63,9 +67,14 @@ public class GameData : MonoBehaviour
 
         EnemyArmiesLeft = enemyArmiesMaxCount;
 
-        // Initial set up for the armies
         InitArmy(playerArmy);
-        InitArmy(enemyArmy1);
+    }
+
+    public void InitializeBattleArmies()
+    {
+        List<UnitSquad> currentEnemy = GetCurrentEnemyArmy().army;
+        InitArmy(currentEnemy);
+        print(CurrentEnemyArmyIndex);
     }
 
     void InitArmy(List<UnitSquad> army)
@@ -75,5 +84,18 @@ public class GameData : MonoBehaviour
             {
                 squad.CalculateSquadHp();
             }
+    }
+
+    public EnemyArmy GetCurrentEnemyArmy()
+    {
+        return enemyArmyList
+            .Find(item => item.gameObject.GetComponent<EnemyArmy>().armyIndex == CurrentEnemyArmyIndex)
+            .gameObject.GetComponent<EnemyArmy>();
+    }
+
+    public void DestroyCurrentEnemyArmy()
+    {
+        enemyArmyList
+            .RemoveAll(item => item.GetComponent<EnemyArmy>().armyIndex == CurrentEnemyArmyIndex);
     }
 }

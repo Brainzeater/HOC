@@ -15,3 +15,5 @@ MonoBehaviour:
   name: Skeleton
   hp: 10
   damage: 1
+  hasActiveSkill: 0
+  activeSkill: 0

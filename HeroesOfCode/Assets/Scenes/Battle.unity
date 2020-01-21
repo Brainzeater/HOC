@@ -1552,7 +1552,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &898076645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1572,24 +1572,16 @@ MonoBehaviour:
   - squadUnitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
       type: 3}
     squadUnits: 10
-  - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
-      type: 3}
-    squadUnits: 50
   - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
       type: 3}
     squadUnits: 50
-  enemyArmy1:
-  - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+  - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
       type: 3}
-    squadUnits: 22
-  - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
-      type: 3}
-    squadUnits: 22
-  - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
-      type: 3}
-    squadUnits: 22
-  enemyArmy2: []
-  enemyArmy3: []
+    squadUnits: 50
+  enemyArmyList:
+  - {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
+  - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
+  - {fileID: 6836164490496678696, guid: 98c5409aad0ac8145aaeb7a4152aa3c8, type: 3}
 --- !u!4 &898076646
 Transform:
   m_ObjectHideFlags: 0

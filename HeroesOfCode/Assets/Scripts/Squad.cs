@@ -92,7 +92,6 @@ public class Squad : MonoBehaviour
 
     void Die()
     {
-        Debug.Log(this + " destroyed");
         gameObject.SetActive(false);
         IsDead = true;
     }

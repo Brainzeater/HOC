@@ -78,7 +78,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         i = 1;
-        foreach (GameData.UnitSquad squad in gameData.enemyArmy1)
+        foreach (GameData.UnitSquad squad in gameData.GetCurrentEnemyArmy().army)
         {
             GameObject enemyGO = Instantiate(squad.squadUnitPrefab, enemySquadPositionsArray[i]);
             currentEnemySquad = enemyGO.GetComponent<Squad>();
@@ -381,8 +381,7 @@ public class BattleSystem : MonoBehaviour
             // Destroy the defeated knight and Load Map
             // else Load WIN SCENE!
 
-            // TODO: Destroy in a better way?
-            gameData.enemyArmy1.Clear();
+            gameData.DestroyCurrentEnemyArmy();
             UpdateUnitSquadHP();
             SceneLoader.LoadMapScene();
         }
