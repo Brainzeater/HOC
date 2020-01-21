@@ -6,7 +6,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float speed;
-    
+
     int targetIndex;
 
     public Vector3[] Path { set; get; }
@@ -45,5 +45,11 @@ public class Movement : MonoBehaviour
             //TODO: Destroy past cell
             yield return null;
         }
+    }
+
+    public void SetSpeed()
+    {
+        // TODO: Put colliders on the map which will trigger an event
+        // TODO: causing this method to increase or decrease current movement speed.
     }
 }

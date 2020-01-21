@@ -232,7 +232,7 @@ MonoBehaviour:
   army:
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
-    squadUnits: 50
+    squadUnits: 25
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
     squadUnits: 25
