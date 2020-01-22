@@ -70,23 +70,23 @@ PrefabInstance:
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: armyIndex
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.data[3].squadUnitPrefab
       value: 
-      objectReference: {fileID: 1000128609056518624, guid: 9a387274130551847a42d88038c19d64,
+      objectReference: {fileID: 2413366883906364630, guid: 727feb7bb6c7bc44b92dda9559876d89,
         type: 3}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.data[3].squadUnits
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
@@ -97,18 +97,40 @@ PrefabInstance:
         type: 3}
       propertyPath: army.Array.data[1].squadUnitPrefab
       value: 
-      objectReference: {fileID: 5551061031721341492, guid: 4a06e9769bb7f644a8d1870c12b7c5cf,
+      objectReference: {fileID: 1000128609056518624, guid: 9a387274130551847a42d88038c19d64,
         type: 3}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.data[2].squadUnitPrefab
       value: 
-      objectReference: {fileID: 2413366883906364630, guid: 727feb7bb6c7bc44b92dda9559876d89,
+      objectReference: {fileID: 5551061031721341492, guid: 4a06e9769bb7f644a8d1870c12b7c5cf,
         type: 3}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.data[2].squadUnits
-      value: 10
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[0].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[1].squadUnits
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[4].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[4].squadUnits
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6391981832189368606, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
