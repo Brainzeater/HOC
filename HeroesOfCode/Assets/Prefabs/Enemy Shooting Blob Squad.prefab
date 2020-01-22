@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Shooting Blob
+      value: Enemy Shooting Blob Squad
       objectReference: {fileID: 0}
     - target: {fileID: 4653501285523920423, guid: c10fc3e95b76cf04b92b867f189d0dd5,
         type: 3}
@@ -119,5 +119,12 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4506363870238745412, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 11400000, guid: be05681d5c6bec54d969fe06593c4822,
+        type: 2}
+    m_RemovedComponents:
+    - {fileID: 3928393433361870768, guid: c10fc3e95b76cf04b92b867f189d0dd5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c10fc3e95b76cf04b92b867f189d0dd5, type: 3}
