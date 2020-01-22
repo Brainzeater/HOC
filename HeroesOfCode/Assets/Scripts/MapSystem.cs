@@ -6,7 +6,7 @@ public class MapSystem : MonoBehaviour
 {
     private GameData gameData;
 
-    void Start()
+    void Awake()
     {
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
         foreach (GameObject armyPrefab in gameData.enemyArmyList)
