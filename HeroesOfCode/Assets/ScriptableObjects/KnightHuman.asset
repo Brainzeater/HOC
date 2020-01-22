@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KnightHuman
   m_EditorClassIdentifier: 
   name: KnightHuman
-  hp: 5
-  damage: 2
+  hp: 10
+  damage: 3
   hasActiveSkill: 1
   activeSkill: 1

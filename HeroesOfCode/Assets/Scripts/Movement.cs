@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
 
     public Vector3[] Path { set; get; }
 
-    private const float radius = 0.05f;
+    private const float radius = 0.01f;
 
     // Starts a coroutine that moves the player object.
     public void BeginMovement(Vector3[] path)

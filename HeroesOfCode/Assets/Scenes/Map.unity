@@ -37928,17 +37928,16 @@ MonoBehaviour:
     squadUnits: 100
   - squadUnitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
       type: 3}
-    squadUnits: 10
+    squadUnits: 50
   - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
       type: 3}
-    squadUnits: 50
+    squadUnits: 25
   - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
       type: 3}
     squadUnits: 50
   enemyArmyList:
   - {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
-  - {fileID: 6836164490496678696, guid: 98c5409aad0ac8145aaeb7a4152aa3c8, type: 3}
   playerSpawnPosition: {fileID: 390739235}
 --- !u!1 &2075252744
 GameObject:
