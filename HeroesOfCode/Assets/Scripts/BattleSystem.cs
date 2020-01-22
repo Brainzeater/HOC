@@ -383,7 +383,7 @@ public class BattleSystem : MonoBehaviour
 
             gameData.DestroyCurrentEnemyArmy();
             UpdateUnitSquadHP();
-            SceneLoader.LoadMapScene();
+            FindObjectOfType<SceneLoader>().LoadMapScene();
         }
         else if (state == BattleState.Lost)
         {
