@@ -7,8 +7,8 @@ public class ConfirmCellMenu : MonoBehaviour
 {
     public static bool confirmCellMenuIsOn = false;
     public GameObject ConfirmCellUI;
-    public GameObject Player;
     public GameObject AStar;
+    public GameObject Player { get; set; }
 
     void Start()
     {

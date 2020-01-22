@@ -5,11 +5,20 @@ using UnityEngine;
 // A script that makes the player object move along the path.
 public class Movement : MonoBehaviour
 {
-    public float speed;
-    
+    public float defaultSpeed;
+    public float increasedSpeed;
+    public float decreasedSpeed;
+
+    private float speed;
+
     int targetIndex;
 
+    public LayerMask roadMask;
+    public LayerMask iceMask;
+
     public Vector3[] Path { set; get; }
+
+    private const float radius = 0.01f;
 
     // Starts a coroutine that moves the player object.
     public void BeginMovement(Vector3[] path)
@@ -41,9 +50,31 @@ public class Movement : MonoBehaviour
                 currentWaypoint = Path[targetIndex];
             }
 
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+            transform.position =
+                Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
             //TODO: Destroy past cell
             yield return null;
+        }
+    }
+
+    void Start()
+    {
+        speed = defaultSpeed;
+    }
+
+    void Update()
+    {
+        if (Physics2D.OverlapCircle(gameObject.transform.position, radius, roadMask))
+        {
+            speed = increasedSpeed;
+        }
+        else if(Physics2D.OverlapCircle(gameObject.transform.position, radius, iceMask))
+        {
+            speed = decreasedSpeed;
+        }
+        else
+        {
+            speed = defaultSpeed;
         }
     }
 }

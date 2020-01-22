@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 001dd17c8080a0e45ad6ca9dbdb536c0, type: 3}
-  m_Name: Goblin
+  m_Name: KnightHuman
   m_EditorClassIdentifier: 
-  name: Goblin
-  hp: 5
-  damage: 2
+  name: KnightHuman
+  hp: 10
+  damage: 3
   hasActiveSkill: 1
   activeSkill: 1

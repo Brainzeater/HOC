@@ -54,6 +54,8 @@ public class GameData : MonoBehaviour
 
     public List<GameObject> enemyArmyList;
 
+    public Transform playerSpawnPosition;
+
     void Awake()
     {
         // This object should be unique in a scene
@@ -95,6 +97,7 @@ public class GameData : MonoBehaviour
 
     public void DestroyCurrentEnemyArmy()
     {
+        playerSpawnPosition = GetCurrentEnemyArmy().spawnPosition;
         enemyArmyList
             .RemoveAll(item => item.GetComponent<EnemyArmy>().armyIndex == CurrentEnemyArmyIndex);
     }

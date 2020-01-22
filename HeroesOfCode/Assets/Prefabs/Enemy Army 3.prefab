@@ -67,6 +67,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6423403690496373560, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.095
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423403690496373561, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.size
@@ -81,22 +91,66 @@ PrefabInstance:
         type: 3}
       propertyPath: army.Array.data[3].squadUnitPrefab
       value: 
-      objectReference: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+      objectReference: {fileID: 2413366883906364630, guid: 727feb7bb6c7bc44b92dda9559876d89,
         type: 3}
     - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: army.Array.data[3].squadUnits
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[0].squadUnits
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[1].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 2413366883906364630, guid: 727feb7bb6c7bc44b92dda9559876d89,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[2].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 1000128609056518624, guid: 9a387274130551847a42d88038c19d64,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[2].squadUnits
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[0].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[1].squadUnits
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[4].squadUnitPrefab
+      value: 
+      objectReference: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
+        type: 3}
+      propertyPath: army.Array.data[4].squadUnits
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6391981832189368606, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.5
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 6391981832189368606, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10
+      value: -8.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7529455325110537476, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
