@@ -107,7 +107,7 @@ public class Grid : MonoBehaviour
 
             // The A* algorithm is executed to calculate the shortest path to the target cell
             // as long as it's walkable
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 Node targetNode = NodeFromWorldPoint(mousePosition);
                 if (targetNode.walkable)
@@ -121,10 +121,12 @@ public class Grid : MonoBehaviour
             }
 
             // To prevent automatic cell confirm when the cell is under confirm button
-            if (Input.GetMouseButtonUp(0))
-            {
-                //TODO: Complete mouseUp bugfix
-            }
+//            if (Input.GetMouseButtonUp(0))
+//            {
+//                print("MouseUp");
+//                //TODO: Complete mouseUp bugfix
+//                GameEvents.current.UIClickable();
+//            }
         }
     }
 
