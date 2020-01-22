@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1049388479849568450
+--- !u!1001 &5995561365407948904
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Army 2
+      value: Enemy Army 4
       objectReference: {fileID: 0}
     - target: {fileID: 6423403691248980485, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
@@ -77,43 +77,15 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
-        type: 3}
-      propertyPath: army.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
-        type: 3}
-      propertyPath: armyIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
-        type: 3}
-      propertyPath: army.Array.data[0].squadUnits
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
-        type: 3}
-      propertyPath: army.Array.data[0].squadUnitPrefab
-      value: 
-      objectReference: {fileID: 5551061031721341492, guid: 4a06e9769bb7f644a8d1870c12b7c5cf,
-        type: 3}
-    - target: {fileID: 6017652721403068047, guid: f0fdbb7de2c91c048b1d409146cc93f4,
-        type: 3}
-      propertyPath: army.Array.data[1].squadUnitPrefab
-      value: 
-      objectReference: {fileID: 2413366883906364630, guid: 727feb7bb6c7bc44b92dda9559876d89,
-        type: 3}
     - target: {fileID: 6391981832189368606, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.5
+      value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 6391981832189368606, guid: f0fdbb7de2c91c048b1d409146cc93f4,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: -10.5
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7529455325110537476, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}

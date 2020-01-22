@@ -95,7 +95,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad21188876dc9e49bbc42fd7830d9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  defaultSpeed: 5
+  increasedSpeed: 7
+  decreasedSpeed: 3
+  roadMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  iceMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!1 &7286869492693581147
 GameObject:
   m_ObjectHideFlags: 0
