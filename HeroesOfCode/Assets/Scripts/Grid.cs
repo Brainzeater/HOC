@@ -93,7 +93,7 @@ public class Grid : MonoBehaviour
             {
                 lastHighlightedNode = NodeFromWorldPoint(mousePosition);
                 // Prevents from highlighting player's cell
-                bool playerNode = NodeFromWorldPoint(pathfinding.seeker.position).Equals(lastHighlightedNode);
+                bool playerNode = NodeFromWorldPoint(pathfinding.Seeker.position).Equals(lastHighlightedNode);
                 if (lastHighlightedNode.walkable && !playerNode)
                 {
                     cellInstance = Instantiate(cell,
@@ -121,7 +121,7 @@ public class Grid : MonoBehaviour
             {
                 Node targetNode = NodeFromWorldPoint(mousePosition);
                 // Prevents from clicking on player's cell
-                bool playerNode = NodeFromWorldPoint(pathfinding.seeker.position).Equals(targetNode);
+                bool playerNode = NodeFromWorldPoint(pathfinding.Seeker.position).Equals(targetNode);
                 if (targetNode.walkable && !playerNode)
                 {
                     path = pathfinding.FindPath(targetNode, this);
@@ -198,7 +198,7 @@ public class Grid : MonoBehaviour
 
         // Highlighting player's cell
         GameObject startCell = Instantiate(cell,
-            new Vector3(pathfinding.seeker.position.x, pathfinding.seeker.position.y, 0),
+            new Vector3(pathfinding.Seeker.position.x, pathfinding.Seeker.position.y, 0),
             Quaternion.identity);
         startCell.transform.parent = gameObject.transform;
         startCell.GetComponent<SpriteRenderer>().color = pathColor;

@@ -6,7 +6,7 @@ using UnityEngine.Experimental.PlayerLoop;
 public class Pathfinding : MonoBehaviour
 {
     // the world coordinates of the starting point of the path (which is a player's position)
-    public Transform seeker;
+    public Transform Seeker { get; set; }
 
     private const int diagonalCost = 14;
     private const int horizontalAndVerticalCost = 10;
@@ -14,7 +14,7 @@ public class Pathfinding : MonoBehaviour
     // The implementation of the A* algorithm.
     public List<Node> FindPath(Node targetNode, Grid grid)
     {
-        Node startNode = grid.NodeFromWorldPoint(seeker.position);
+        Node startNode = grid.NodeFromWorldPoint(Seeker.position);
 
         List<Node> openSet = new List<Node>();
         HashSet<Node> closedSet = new HashSet<Node>();

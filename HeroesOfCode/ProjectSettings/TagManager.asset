@@ -8,6 +8,8 @@ TagManager:
   - HighlightSquad
   - SelectHighlight
   - ActiveSkill
+  - Grid
+  - ConfirmCellMenu
   layers:
   - Default
   - TransparentFX
