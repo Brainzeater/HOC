@@ -5,6 +5,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+    public String playOnStart;
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        Play("Soundtrack");
+        Play(playOnStart);
     }
 
     public void Play(string name)

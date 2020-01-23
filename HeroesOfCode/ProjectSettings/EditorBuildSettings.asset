@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Battle.unity
     guid: f61d8da5ef1845e4fb4962f84b6392f3
   - enabled: 1
-    path: Assets/Scenes/Game Over Scene.unity
+    path: Assets/Scenes/Bad Ending Scene.unity
     guid: 9c4843b1644c216458796946209fc530
   m_configObjects: {}
