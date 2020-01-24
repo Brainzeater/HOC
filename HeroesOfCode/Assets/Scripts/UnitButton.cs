@@ -20,14 +20,21 @@ public class UnitButton : MonoBehaviour
             highlight.enabled = false;
     }
 
-//    public void SelectUnit()
-//    {
-//        print(unit.name);
-//        FindObjectOfType<ArmyManager>().UpdateSlots(); 
-//    }
-
     public void SelectSkeleton()
     {
         FindObjectOfType<ArmyManager>().AddSquad(UnitNames.Skeleton);
+    }
+
+    public void SelectKnightHuman()
+    {
+        FindObjectOfType<ArmyManager>().AddSquad(UnitNames.KnightHuman);
+    }
+    public void SelectKnightBlob()
+    {
+        FindObjectOfType<ArmyManager>().AddSquad(UnitNames.KnightBlob);
+    }
+    public void SelectShootingBlob()
+    {
+        FindObjectOfType<ArmyManager>().AddSquad(UnitNames.ShootingBlob);
     }
 }
