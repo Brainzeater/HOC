@@ -6,7 +6,8 @@ using UnityEngine;
 public class GameData : MonoBehaviour
 {
     // TODO: Up to 5 squads in total;
-    private const int playerMaxArmySize = 5;
+    [HideInInspector]
+    public const int playerMaxArmySize = 5;
 
     // Holds the Data about each squad in the army throughout the whole Game
     [Serializable]
