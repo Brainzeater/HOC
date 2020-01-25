@@ -70,7 +70,11 @@ public class ArmyManager : MonoBehaviour
 
     void AddNewSquadGameObject(GameObject squadType, UnitNames unitName)
     {
-        GameData.UnitSquad newSquad = new GameData.UnitSquad(unitName);
+//        GameData.UnitSquad newSquad = new GameData.UnitSquad(unitName);
+        GameData.UnitSquad newSquad = new GameData.UnitSquad()
+        {
+            unitName = unitName
+        };
 
         GameObject squadGameObject = Instantiate(squadType, slotsArray[squadPrefabs.Count + 1]);
 //        newSquad.squadUnitPrefab = squadGameObject;

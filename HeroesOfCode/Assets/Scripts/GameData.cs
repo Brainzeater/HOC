@@ -28,10 +28,10 @@ public class GameData : MonoBehaviour
 
         public UnitNames unitName;
 
-//        public UnitSquad()
-        public UnitSquad(UnitNames unitName)
+        public UnitSquad()
+//        public UnitSquad(UnitNames unitName)
         {
-            this.unitName = unitName;
+//            this.unitName = unitName;
             SquadID = UnitSquadID;
             UnitSquadID++;
         }
