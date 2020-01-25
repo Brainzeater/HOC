@@ -57,6 +57,8 @@ public class GameData : MonoBehaviour
 
     public Transform playerSpawnPosition;
 
+
+
     void Awake()
     {
         // This object should be unique in a scene
@@ -70,6 +72,7 @@ public class GameData : MonoBehaviour
 
         EnemyArmiesLeft = enemyArmiesMaxCount;
 
+        // TODO: Let Army Manager call this method
         InitArmy(playerArmy);
     }
 

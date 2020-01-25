@@ -22,8 +22,16 @@ public class ArmyManager : MonoBehaviour
     public GameObject slots;
     private Transform[] slotsArray;
 
+    public GameObject armyMenu;
+    public GameObject mainMenu;
+
 //    private List<GameData.UnitSquad> squads;
     private List<GameObject> squadPrefabs;
+
+//    void Awake()
+//    {
+//
+//    }
 
     void Start()
     {
@@ -52,7 +60,6 @@ public class ArmyManager : MonoBehaviour
                     AddNewSquadGameObject(skeleton);
                     break;
                 case UnitNames.KnightHuman:
-                    print("HUMAN");
                     AddNewSquadGameObject(knightHuman);
                     break;
                 case UnitNames.KnightBlob:
@@ -89,5 +96,32 @@ public class ArmyManager : MonoBehaviour
         squadPrefabs.Add(squadGameObject);
         squadGameObject.GetComponentInChildren<DeleteSquadButton>().ID = newSquad.SquadID;
         print($"New ID = {newSquad.SquadID}");
+    }
+
+    public void SetDefaultArmy()
+    {
+        foreach (GameObject prefab in squadPrefabs)
+        {
+            Destroy(prefab);
+        }
+
+        squadPrefabs.Clear();
+
+        AddNewSquadGameObject(skeleton);
+        AddNewSquadGameObject(knightHuman);
+        AddNewSquadGameObject(knightBlob);
+        AddNewSquadGameObject(shootingBlob);
+    }
+
+    public void EnableArmyMenu()
+    {
+        mainMenu.SetActive(false);
+        armyMenu.SetActive(true);
+    }
+
+    public void DisableArmyMenu()
+    {
+        armyMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }
