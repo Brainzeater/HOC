@@ -397,6 +397,7 @@ public class BattleSystem : MonoBehaviour
             {
                 print("YOU WON!");
                 // TODO: Load Good Ending Scene
+                FindObjectOfType<SceneLoader>().LoadGoodEndingScene();
             }
         }
         else if (state == BattleState.Lost)

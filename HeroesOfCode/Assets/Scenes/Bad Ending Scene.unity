@@ -152,7 +152,7 @@ MonoBehaviour:
   sounds:
   - name: BadEnding
     clip: {fileID: 8300000, guid: 991639828747bb9408183d8045da9ac7, type: 3}
-    volume: 0.68
+    volume: 1
     loop: 0
     source: {fileID: 0}
   playOnStart: BadEnding
@@ -2863,7 +2863,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
