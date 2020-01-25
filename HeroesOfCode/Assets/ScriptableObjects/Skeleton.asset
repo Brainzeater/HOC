@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Skeleton
   hp: 10
   damage: 1
+  defaultNumber: 100
   hasActiveSkill: 0
   activeSkill: 0

@@ -13,6 +13,7 @@ public class Unit : ScriptableObject
     public new string name;
     public int hp;
     public int damage;
+    public int defaultNumber;
     public bool hasActiveSkill;
     public ActiveSkill activeSkill;
 

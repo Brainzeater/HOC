@@ -26994,7 +26994,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &728759660
 BoxCollider2D:
@@ -27221,7 +27221,7 @@ Transform:
   - {fileID: 1408994055}
   - {fileID: 1185539074}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &813684962
 GameObject:
@@ -29667,6 +29667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 7286869492659606488, guid: b586a2fd7f3c87c41a26ec78f76e60af,
     type: 3}
+  playerSpawnPosition: {fileID: 390739235}
 --- !u!4 &1123785705
 Transform:
   m_ObjectHideFlags: 0
@@ -29679,7 +29680,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1135443968
 GameObject:
@@ -33798,7 +33799,7 @@ RectTransform:
   m_Children:
   - {fileID: 266633478}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -34098,7 +34099,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1606568590
 MonoBehaviour:
@@ -34156,7 +34157,7 @@ Transform:
   - {fileID: 1266808175}
   - {fileID: 2047674054}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1646792557
 GameObject:
@@ -34522,7 +34523,7 @@ Transform:
   - {fileID: 371151653}
   - {fileID: 148353686}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1732446316
 GameObject:
@@ -37951,7 +37952,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2072810220
 MonoBehaviour:
@@ -37965,19 +37966,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac5dea3f78f1394fa9bc9dd4a13753d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skeleton: {fileID: 0}
+  knightHuman: {fileID: 0}
+  knightBlob: {fileID: 0}
+  shootingBlob: {fileID: 0}
   playerArmy:
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: 9eeee50e181858844bb277ea42b2c486,
       type: 3}
     squadUnits: 100
+    unitName: 0
   - squadUnitPrefab: {fileID: 2499224576399002334, guid: 2f3461b7c96575f4b8352a3f8acf34eb,
       type: 3}
     squadUnits: 50
+    unitName: 0
   - squadUnitPrefab: {fileID: 3537155639889063052, guid: c064fc94d6f8e514ea39e2e233ddce1c,
       type: 3}
     squadUnits: 25
+    unitName: 0
   - squadUnitPrefab: {fileID: 8684917128401680375, guid: b45534c3dd02a8c47868be67ba30e59b,
       type: 3}
     squadUnits: 50
+    unitName: 0
   enemyArmyList:
   - {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}

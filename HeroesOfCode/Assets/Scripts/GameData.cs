@@ -6,8 +6,7 @@ using UnityEngine;
 public class GameData : MonoBehaviour
 {
     // TODO: Up to 5 squads in total;
-    [HideInInspector]
-    public const int playerMaxArmySize = 5;
+    [HideInInspector] public const int playerMaxArmySize = 5;
 
     // Holds the Data about each squad in the army throughout the whole Game
     [Serializable]
@@ -27,8 +26,12 @@ public class GameData : MonoBehaviour
         [HideInInspector] public int SquadHp { get; set; }
         [HideInInspector] public int SquadID { get; set; }
 
-        public UnitSquad()
+        public UnitNames unitName;
+
+//        public UnitSquad()
+        public UnitSquad(UnitNames unitName)
         {
+            this.unitName = unitName;
             SquadID = UnitSquadID;
             UnitSquadID++;
         }
@@ -40,6 +43,11 @@ public class GameData : MonoBehaviour
         }
     }
 
+    public GameObject skeleton;
+    public GameObject knightHuman;
+    public GameObject knightBlob;
+    public GameObject shootingBlob;
+
     [Header("Player Army")] public List<UnitSquad> playerArmy;
 
     private const int enemyArmiesMaxCount = 3;
@@ -49,14 +57,10 @@ public class GameData : MonoBehaviour
 
     public int CurrentEnemyArmyIndex { get; set; }
 
-//    [Header("Enemy Army 1")] public List<UnitSquad> enemyArmy1;
-//    [Header("Enemy Army 2")] public List<UnitSquad> enemyArmy2;
-//    [Header("Enemy Army 3")] public List<UnitSquad> enemyArmy3;
-
     public List<GameObject> enemyArmyList;
 
+    [HideInInspector]
     public Transform playerSpawnPosition;
-
 
 
     void Awake()
@@ -72,7 +76,32 @@ public class GameData : MonoBehaviour
 
         EnemyArmiesLeft = enemyArmiesMaxCount;
 
-        // TODO: Let Army Manager call this method
+        // TODO: This might be called to load custom army during development
+//        InitArmy(playerArmy);
+    }
+
+    // Called by ArmyManager after player army confirmation
+    public void InitializePlayerArmy()
+    {
+        foreach (UnitSquad squad in playerArmy)
+        {
+            switch (squad.unitName)
+            {
+                case UnitNames.Skeleton:
+                    squad.squadUnitPrefab = skeleton;
+                    break;
+                case UnitNames.KnightHuman:
+                    squad.squadUnitPrefab = knightHuman;
+                    break;
+                case UnitNames.KnightBlob:
+                    squad.squadUnitPrefab = knightBlob;
+                    break;
+                case UnitNames.ShootingBlob:
+                    squad.squadUnitPrefab = shootingBlob;
+                    break;
+            }
+        }
+
         InitArmy(playerArmy);
     }
 
