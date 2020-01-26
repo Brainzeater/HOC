@@ -1665,7 +1665,6 @@ MonoBehaviour:
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
   - {fileID: 6836164490496678696, guid: 98c5409aad0ac8145aaeb7a4152aa3c8, type: 3}
   playerSpawnPosition: {fileID: 0}
-  gameIsOver: 0
 --- !u!4 &898076646
 Transform:
   m_ObjectHideFlags: 0
@@ -4129,6 +4128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1774229927}
   - component: {fileID: 1774229928}
+  - component: {fileID: 1774229929}
   m_Layer: 0
   m_Name: Knight Idle
   m_TagString: Untagged
@@ -4188,17 +4188,37 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: e675d7bc777bebc44847760710ace697, type: 3}
+  m_Sprite: {fileID: -4437071881994959361, guid: 74f0f40a2d391b443ba9ac8bb3350f7d,
+    type: 3}
   m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.84, y: 0.84}
+  m_Size: {x: 2.0487804, y: 2.0487804}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1774229929
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774229926}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9ca58c85a0ea1f24cb18ce23dc02f2d9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1821578379
 GameObject:
   m_ObjectHideFlags: 0
