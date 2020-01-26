@@ -48,8 +48,8 @@ public class BattleSystem : MonoBehaviour
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
         if (gameData.enemyArmyList.Count == 1)
         {
+            FindObjectOfType<SceneLoader>().SetFinalBattleMusic();
             print("FINAL BATTLE");
-            // TODO: Set Audio to EPIC
         }
 
 
