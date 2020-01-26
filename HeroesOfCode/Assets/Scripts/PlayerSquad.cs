@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.XR.WSA.Persistence;
 
 public class PlayerSquad : Squad
 {

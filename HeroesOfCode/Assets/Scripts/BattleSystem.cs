@@ -49,7 +49,6 @@ public class BattleSystem : MonoBehaviour
         if (gameData.enemyArmyList.Count == 1)
         {
             FindObjectOfType<SceneLoader>().SetFinalBattleMusic();
-            print("FINAL BATTLE");
         }
 
 

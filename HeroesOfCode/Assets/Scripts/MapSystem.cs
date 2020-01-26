@@ -13,7 +13,7 @@ public class MapSystem : MonoBehaviour
     void Awake()
     {
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
-        if(gameData.playerSpawnPosition.Equals(null))
+        if(gameData.playerSpawnPosition == null)
         {
             gameData.playerSpawnPosition = playerSpawnPosition;
         }

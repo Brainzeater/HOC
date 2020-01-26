@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour
     private AudioManager audioManager;
 
     //    void Awake()
+    [HideInInspector] public bool FinalBattle;
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class SceneLoader : MonoBehaviour
             audioManager.FinishAudioSource();
 
         audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
+        
     }
 
     IEnumerator loadCurrentScene()
@@ -64,7 +66,7 @@ public class SceneLoader : MonoBehaviour
 
     public void SetFinalBattleMusic()
     {
-        audioManager.currentBackgroundMusic.source.Stop();
+        audioManager.FinishAudioSource();
         audioManager.SetBackgroundMusicAndPlayIt("FinalBattle");
     }
 
