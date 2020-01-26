@@ -7374,6 +7374,8 @@ MonoBehaviour:
   enemyArmyList:
   - {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
+  - {fileID: 6836164490496678696, guid: 98c5409aad0ac8145aaeb7a4152aa3c8, type: 3}
+  - {fileID: 725080451209130606, guid: 20bcf032b225d0a41a7bc65106a76134, type: 3}
   playerSpawnPosition: {fileID: 0}
 --- !u!4 &1555040572
 Transform:
