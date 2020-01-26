@@ -6377,7 +6377,7 @@ MonoBehaviour:
   sounds:
   - name: StartScene
     clip: {fileID: 8300000, guid: e44fa51419cd4a447af5877039330586, type: 3}
-    volume: 1
+    volume: 0.5
     loop: 1
     source: {fileID: 0}
   - name: Theme
@@ -6387,22 +6387,22 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Duel
     clip: {fileID: 8300000, guid: 2129f80efcae02a4aaba4d3d7f31265a, type: 3}
-    volume: 1
+    volume: 0.5
     loop: 1
     source: {fileID: 0}
   - name: FinalBattle
     clip: {fileID: 8300000, guid: 4ab7ec1a25523ff41a0dcf8c5cae493d, type: 3}
-    volume: 1
+    volume: 0.5
     loop: 1
     source: {fileID: 0}
   - name: GoodEnding
     clip: {fileID: 8300000, guid: b164293a7ad3ec54d936cd8faa8cf600, type: 3}
-    volume: 1
+    volume: 0.5
     loop: 1
     source: {fileID: 0}
   - name: BadEnding
     clip: {fileID: 8300000, guid: 991639828747bb9408183d8045da9ac7, type: 3}
-    volume: 1
+    volume: 0.5
     loop: 1
     source: {fileID: 0}
   currentBackgroundMusic:
@@ -11014,6 +11014,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: backgroundMusicName
+      value: StartScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: fadeInSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8708848414080082301, guid: 2a393bec8bfc54144b44ad1fbc31218d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11068,16 +11078,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: backgroundMusicName
-      value: StartScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: fadeInSpeed
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a393bec8bfc54144b44ad1fbc31218d, type: 3}

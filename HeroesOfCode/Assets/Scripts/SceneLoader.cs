@@ -21,9 +21,9 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(loadCurrentScene());
         audioManager = FindObjectOfType<AudioManager>();
 
-        Debug.Log(audioManager.currentBackgroundMusic.name);
+//        Debug.Log(audioManager.currentBackgroundMusic.name);
         // TODO: CHECK
-        if (audioManager.currentBackgroundMusic.name != null)
+        if (audioManager.currentBackgroundMusic != null)
             audioManager.FinishAudioSource();
 
         audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
