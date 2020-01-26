@@ -28305,6 +28305,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: waitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: fadeInSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: backgroundMusicName
+      value: Theme
+      objectReference: {fileID: 0}
     - target: {fileID: 8708848414080082301, guid: 2a393bec8bfc54144b44ad1fbc31218d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28359,21 +28374,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: waitTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: fadeInSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: backgroundMusicName
-      value: Theme
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a393bec8bfc54144b44ad1fbc31218d, type: 3}
@@ -38060,7 +38060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2072810219
 Transform:
   m_ObjectHideFlags: 0
@@ -38112,6 +38112,7 @@ MonoBehaviour:
   - {fileID: 6423403691248980486, guid: f0fdbb7de2c91c048b1d409146cc93f4, type: 3}
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
   playerSpawnPosition: {fileID: 390739235}
+  gameIsOver: 0
 --- !u!1 &2075252744
 GameObject:
   m_ObjectHideFlags: 0

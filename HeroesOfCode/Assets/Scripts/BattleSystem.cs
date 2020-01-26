@@ -388,7 +388,7 @@ public class BattleSystem : MonoBehaviour
             // else Load WIN SCENE!
 
             gameData.DestroyCurrentEnemyArmy();
-            if(gameData.enemyArmyList.Count != 0)
+            if (gameData.enemyArmyList.Count != 0)
             {
                 UpdateUnitSquadHP();
                 FindObjectOfType<SceneLoader>().LoadMapScene();
@@ -397,6 +397,8 @@ public class BattleSystem : MonoBehaviour
             {
                 print("YOU WON!");
                 // TODO: Load Good Ending Scene
+//                gameData.gameIsOver = true;
+                gameData.GameOver();
                 FindObjectOfType<SceneLoader>().LoadGoodEndingScene();
             }
         }
@@ -404,6 +406,8 @@ public class BattleSystem : MonoBehaviour
         {
             // Load GameOver Scene
             print("YOU LOST");
+            //            gameData.gameIsOver = true;
+            gameData.GameOver();
             FindObjectOfType<SceneLoader>().LoadBadEndingScene();
         }
     }

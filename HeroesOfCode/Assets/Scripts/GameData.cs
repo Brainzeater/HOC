@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameData : MonoBehaviour
 {
@@ -50,17 +51,13 @@ public class GameData : MonoBehaviour
 
     [Header("Player Army")] public List<UnitSquad> playerArmy;
 
-    private const int enemyArmiesMaxCount = 3;
-
-    // and methods for them
-    public int EnemyArmiesLeft { get; set; }
-
     public int CurrentEnemyArmyIndex { get; set; }
 
     public List<GameObject> enemyArmyList;
 
-    [HideInInspector]
-    public Transform playerSpawnPosition;
+    [HideInInspector] public Transform playerSpawnPosition;
+
+//    public bool gameIsOver;
 
 
     void Awake()
@@ -72,12 +69,13 @@ public class GameData : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+//        gameIsOver = false;
         DontDestroyOnLoad(this.gameObject);
 
-        EnemyArmiesLeft = enemyArmiesMaxCount;
+//        SceneManager.sceneLoaded += OnSceneLoaded;
 
         // TODO: This might be called to load custom army during development
-//        InitArmy(playerArmy);
+        //        InitArmy(playerArmy);
     }
 
     // Called by ArmyManager after player army confirmation
@@ -133,5 +131,13 @@ public class GameData : MonoBehaviour
         playerSpawnPosition = GetCurrentEnemyArmy().spawnPosition;
         enemyArmyList
             .RemoveAll(item => item.GetComponent<EnemyArmy>().armyIndex == CurrentEnemyArmyIndex);
+    }
+
+    public void GameOver()
+    {
+        if (this.gameObject != null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

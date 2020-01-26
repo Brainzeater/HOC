@@ -132,6 +132,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
+        type: 3}
+      propertyPath: backgroundMusicName
+      value: Duel
+      objectReference: {fileID: 0}
     - target: {fileID: 8708848414080082301, guid: 2a393bec8bfc54144b44ad1fbc31218d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -186,11 +191,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8708848414080082300, guid: 2a393bec8bfc54144b44ad1fbc31218d,
-        type: 3}
-      propertyPath: backgroundMusicName
-      value: Duel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a393bec8bfc54144b44ad1fbc31218d, type: 3}
@@ -1626,7 +1626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &898076645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1665,6 +1665,7 @@ MonoBehaviour:
   - {fileID: 6319868440597629636, guid: 119dae332c8c81846b06cb9e30b71531, type: 3}
   - {fileID: 6836164490496678696, guid: 98c5409aad0ac8145aaeb7a4152aa3c8, type: 3}
   playerSpawnPosition: {fileID: 0}
+  gameIsOver: 0
 --- !u!4 &898076646
 Transform:
   m_ObjectHideFlags: 0

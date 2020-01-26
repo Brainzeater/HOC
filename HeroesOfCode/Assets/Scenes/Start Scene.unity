@@ -6392,18 +6392,18 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: FinalBattle
     clip: {fileID: 8300000, guid: 4ab7ec1a25523ff41a0dcf8c5cae493d, type: 3}
-    volume: 0.5
+    volume: 0.4
     loop: 1
     source: {fileID: 0}
   - name: GoodEnding
     clip: {fileID: 8300000, guid: b164293a7ad3ec54d936cd8faa8cf600, type: 3}
     volume: 0.5
-    loop: 1
+    loop: 0
     source: {fileID: 0}
   - name: BadEnding
     clip: {fileID: 8300000, guid: 991639828747bb9408183d8045da9ac7, type: 3}
     volume: 0.5
-    loop: 1
+    loop: 0
     source: {fileID: 0}
   currentBackgroundMusic:
     name: 
