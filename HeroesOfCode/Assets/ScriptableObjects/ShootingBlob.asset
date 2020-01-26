@@ -15,5 +15,6 @@ MonoBehaviour:
   name: ShootingBlob
   hp: 8
   damage: 2
+  defaultNumber: 75
   hasActiveSkill: 1
   activeSkill: 0

@@ -10,6 +10,7 @@ TagManager:
   - ActiveSkill
   - Grid
   - ConfirmCellMenu
+  - AudioManager
   layers:
   - Default
   - TransparentFX

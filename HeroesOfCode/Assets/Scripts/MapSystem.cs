@@ -8,9 +8,15 @@ public class MapSystem : MonoBehaviour
 
     private GameData gameData;
 
+    public Transform playerSpawnPosition;
+
     void Awake()
     {
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
+        if(gameData.playerSpawnPosition.Equals(null))
+        {
+            gameData.playerSpawnPosition = playerSpawnPosition;
+        }
 
         GameObject player = Instantiate(playerPrefab, gameData.playerSpawnPosition.position, Quaternion.identity);
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>().Target = player.transform;

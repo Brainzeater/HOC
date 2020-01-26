@@ -46,6 +46,12 @@ public class BattleSystem : MonoBehaviour
         enemyArmyQueue = new Queue<Squad>();
 
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
+        if (gameData.enemyArmyList.Count == 1)
+        {
+            FindObjectOfType<SceneLoader>().SetFinalBattleMusic();
+            print("FINAL BATTLE");
+        }
+
 
         BattleEvents.current.OnTargetSelected += OnTargetChosen;
         // Active Skills
@@ -382,13 +388,27 @@ public class BattleSystem : MonoBehaviour
             // else Load WIN SCENE!
 
             gameData.DestroyCurrentEnemyArmy();
-            UpdateUnitSquadHP();
-            SceneLoader.LoadMapScene();
+            if (gameData.enemyArmyList.Count != 0)
+            {
+                UpdateUnitSquadHP();
+                FindObjectOfType<SceneLoader>().LoadMapScene();
+            }
+            else
+            {
+                print("YOU WON!");
+                // TODO: Load Good Ending Scene
+//                gameData.gameIsOver = true;
+                gameData.GameOver();
+                FindObjectOfType<SceneLoader>().LoadGoodEndingScene();
+            }
         }
         else if (state == BattleState.Lost)
         {
             // Load GameOver Scene
             print("YOU LOST");
+            //            gameData.gameIsOver = true;
+            gameData.GameOver();
+            FindObjectOfType<SceneLoader>().LoadBadEndingScene();
         }
     }
 
