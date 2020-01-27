@@ -20,4 +20,9 @@ public class SquadAnimationEvents : MonoBehaviour
     {
         squad.FinishMoveOfSquadWhoHitMe();
     }
+
+    public void FinishHeal()
+    {
+        FindObjectOfType<BattleSystem>().FinishHeal();
+    }
 }

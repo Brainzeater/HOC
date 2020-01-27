@@ -653,6 +653,7 @@ MonoBehaviour:
   unitDamageText: {fileID: 3980743207706524808}
   highlightBackground: {fileID: 1529951073347674362}
   activeSkillButton: {fileID: 7629695234104682179}
+  activeSkillText: {fileID: 503139069469063611}
   regularHitButton: {fileID: 8227891612148743221}
 --- !u!1 &4653501285631096358
 GameObject:

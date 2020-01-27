@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class BattleSystem : MonoBehaviour
 
     private Queue<PlayerSquad> playerArmyQueue;
     private Queue<Squad> enemyArmyQueue;
-    private List<Squad> playerSquadsToHealList;
+
     private List<PlayerSquad> playerArmyList;
     private List<Squad> enemyArmyList;
 
@@ -34,9 +35,14 @@ public class BattleSystem : MonoBehaviour
     private Squad currentEnemySquad;
     private PlayerSquad playerSquadToHit;
 
+    private List<Squad> playerSquadsToHealList;
+    private Squad playerSquadToHeal;
+
     // For "Increased Damage" active skill
-    private int lastDealtDamage;
     private int currentDealingDamage;
+
+    private bool increased;
+    public bool damageAll;
 
 
     void Start()
@@ -63,14 +69,14 @@ public class BattleSystem : MonoBehaviour
         BattleEvents.current.OnActiveSkillSelected += OnActiveSkill;
         BattleEvents.current.OnRegularHitSelected += OnRegularHit;
 
-        lastDealtDamage = 0;
+        increased = false;
+        damageAll = false;
+        
 
         state = BattleState.Start;
-//        StartCoroutine(SetupBattle());
         SetupBattle();
     }
-
-//    IEnumerator SetupBattle()
+    
     void SetupBattle()
     {
         int i = 1;
@@ -102,10 +108,6 @@ public class BattleSystem : MonoBehaviour
 
         playerArmyList = playerArmyQueue.ToList();
 
-
-        //        yield return new WaitForSeconds(1f);
-        //        print(player.DealingDamage);
-        //        print(enemy.DealingDamage);
         state = BattleState.PlayerRegularTurn;
         PlayerTurn();
     }
@@ -123,7 +125,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         // Highlight current squad
-        currentPlayerSquad.HighlightSquad(true, lastDealtDamage);
+        currentPlayerSquad.HighlightSquad(true, currentPlayerSquad.LastDealtDamage);
     }
 
     // Activates when the player selects the target enemy to deal regular hit or active skill "Increased Damage"
@@ -141,16 +143,14 @@ public class BattleSystem : MonoBehaviour
                 // When the player chose to use "Increased Damage"
                 currentPlayerSquad.DisableRegularHitButton();
                 currentPlayerSquad.UsedActiveSkill = true;
-                currentDealingDamage = Unit.increasedConstant + Unit.increasedCoefficient * lastDealtDamage;
+                currentDealingDamage = Unit.increasedConstant +
+                                       Unit.increasedCoefficient * currentPlayerSquad.LastDealtDamage;
+                increased = true;
             }
         else
         {
             // When the player uses regular hit
             currentDealingDamage = currentPlayerSquad.DealingDamage;
-            if (currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.IncreasedDamage)
-            {
-                lastDealtDamage = currentDealingDamage;
-            }
         }
 
         // Disable enemy squad choosing
@@ -166,14 +166,19 @@ public class BattleSystem : MonoBehaviour
         currentPlayerSquad.DealingDamage = currentDealingDamage;
         currentPlayerSquad.Opponent = currentEnemySquad;
         Debug.Log("Player attacks");
-        currentPlayerSquad.Attack();
+        if (!increased)
+        {
+            currentPlayerSquad.Attack();
+        }
+        else
+        {
+            increased = false;
+            currentPlayerSquad.DealIncreasedDamage();
+        }
     }
 
     public void FinishPlayerTurn()
     {
-        // Update enemy squad's hp
-//        currentEnemySquad.ReceiveDamage(currentDealingDamage);
-
         state = NextBattleStateForPlayerTurn(currentEnemySquad);
         switch (state)
         {
@@ -248,16 +253,19 @@ public class BattleSystem : MonoBehaviour
         // Unhighlight current squad and put it at the end of the Queue
         currentPlayerSquad.HighlightSquad(false, 0);
         playerArmyQueue.Enqueue(currentPlayerSquad);
+
+        currentPlayerSquad.Heal();
+    }
+
+    public void FinishHeal()
+    {
         // Find an player squad that restores hp and updates its hp
-        Squad playerSquadToHeal = playerSquadsToHealList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
+        playerSquadToHeal = playerSquadsToHealList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
 
         int selectedSquadMaxHp = gameData.playerArmy.Find(item => item.SquadID == playerSquadToHeal.ID).SquadHp;
         // TODO: Tune this thing. It should be Unit's HP
         int healHP = (int) Mathf.Round(selectedSquadMaxHp * Unit.healPercent);
-//        print(playerSquadToHeal.HP);
-//        print(healHP);
-        playerSquadToHeal.ReceiveDamage(-healHP);
-//        print(playerSquadToHeal.HP);
+        playerSquadToHeal.IncreaseHP(healHP);
 
         // Not to overheal the Squad
         if (playerSquadToHeal.HP > selectedSquadMaxHp)
@@ -278,39 +286,48 @@ public class BattleSystem : MonoBehaviour
         DamageAllFinish();
         currentPlayerSquad.DisableRegularHitButton();
         currentPlayerSquad.UsedActiveSkill = true;
-        int dealingDamage = Unit.fixedDamageAll;
+        currentDealingDamage = Unit.fixedDamageAll;
 
         // Unhighlight current squad and put it at the end of the Queue
         currentPlayerSquad.HighlightSquad(false, 0);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
+        damageAll = true;
+
         foreach (Squad playerSquad in playerArmyList.ToList())
         {
-            playerSquad.ReceiveDamage(dealingDamage);
+            playerSquad.ReceiveDamage(currentDealingDamage);
             state = NextBattleStateForEnemyTurn(playerSquad);
         }
+
 
         switch (state)
         {
             case BattleState.PlayerRegularTurn:
                 foreach (Squad squad in enemyArmyList.ToList())
                 {
-                    squad.ReceiveDamage(dealingDamage);
+                    squad.ReceiveDamage(currentDealingDamage);
                     state = NextBattleStateForPlayerTurn(squad);
                 }
 
-                switch (state)
-                {
-                    case BattleState.EnemyTurn:
-                        EnemyTurn();
-                        break;
-                    case BattleState.Won:
-                        EndBattle();
-                        break;
-                }
-
+                StartCoroutine(WaitAfterDamageAll(1.2f));
                 break;
             case BattleState.Lost:
+                EndBattle();
+                break;
+        }
+    }
+
+    void ChangeStateAfterDamageAll()
+    {
+        Debug.Log("Checking the state");
+        switch (state)
+        {
+            case BattleState.EnemyTurn:
+                damageAll = false;
+                EnemyTurn();
+                break;
+            case BattleState.Won:
                 EndBattle();
                 break;
         }
@@ -327,9 +344,6 @@ public class BattleSystem : MonoBehaviour
         }
 
         enemyArmyQueue.Enqueue(currentEnemySquad);
-        // TODO: Find out, who hits me when I kill him!
-        print(currentEnemySquad);
-
 
         // TODO: AI or minimal strategy
 //        Squad playerSquadToHit = currentPlayerSquad;
@@ -341,8 +355,6 @@ public class BattleSystem : MonoBehaviour
 
     public void FinishEnemyTurn()
     {
-//        playerSquadToHit.ReceiveDamage(currentEnemySquad.DealingDamage);
-
         state = NextBattleStateForEnemyTurn(playerSquadToHit);
         switch (state)
         {
@@ -361,7 +373,6 @@ public class BattleSystem : MonoBehaviour
         if (enemySquadToHit.IsDead)
         {
             enemyArmyList.RemoveAll(item => item.ID == enemySquadToHit.ID);
-            //            enemyArmyList.RemoveAll(item => item.IsDead);
         }
 
         // The battle goes on if an enemy still has squads.
@@ -417,17 +428,13 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 print("YOU WON!");
-                // TODO: Load Good Ending Scene
-//                gameData.gameIsOver = true;
                 gameData.GameOver();
                 FindObjectOfType<SceneLoader>().LoadGoodEndingScene();
             }
         }
         else if (state == BattleState.Lost)
         {
-            // Load GameOver Scene
             print("YOU LOST");
-            //            gameData.gameIsOver = true;
             gameData.GameOver();
             FindObjectOfType<SceneLoader>().LoadBadEndingScene();
         }
@@ -476,5 +483,11 @@ public class BattleSystem : MonoBehaviour
         {
             squad.gameObject.GetComponentInChildren<SelectTarget>().FinishDamageAll();
         }
+    }
+
+    IEnumerator WaitAfterDamageAll(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        ChangeStateAfterDamageAll();
     }
 }

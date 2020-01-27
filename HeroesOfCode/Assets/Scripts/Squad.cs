@@ -32,12 +32,12 @@ public class Squad : MonoBehaviour
         animator.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
     }
 
-    void DisplayNumberOfUnits()
+    protected void DisplayNumberOfUnits()
     {
         numberOfUnitsText.text = numberOfUnits.ToString();
     }
 
-    void CalculateDealingDamage()
+    protected void CalculateDealingDamage()
     {
         DealingDamage = numberOfUnits * unit.damage;
     }
@@ -67,7 +67,7 @@ public class Squad : MonoBehaviour
     // Shows the number of alive units in the squad.
     // Used to update the number of units after taking damage
     // and before loading any battle.
-    void CalculateNumberOfUnitsFromHP()
+    protected void CalculateNumberOfUnitsFromHP()
     {
         int survivedUnits = HP / unit.hp;
         if (HP % unit.hp != 0)
@@ -106,13 +106,16 @@ public class Squad : MonoBehaviour
         animator.SetTrigger("Hit");
     }
 
+    public void IncreaseHP(int hp)
+    {
+        HP += hp;
+        CalculateNumberOfUnitsFromHP();
+        CalculateDealingDamage();
+        DisplayNumberOfUnits();
+    }
     void Die()
     {
-//        numberOfUnitsText.SetText("0");
         numberOfUnitsText.enabled = false;
-//        StartCoroutine(DeathAnimation());
-//        gameObject.SetActive(false);
-
         animator.SetBool("IsDead", true);
         IsDead = true;
     }
@@ -127,64 +130,23 @@ public class Squad : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 
-    public void DealDamage()
+    public virtual void DealDamage()
     {
-        // Play attack animation
         Opponent.ReceiveDamage(this.DealingDamage);
-        //
+        // Because it might be improved by Increased Damage
         CalculateDealingDamage();
-        // Recalculate Dealing Damage
     }
 
     public virtual void FinishMoveOfSquadWhoHitMe()
     {
-        Debug.Log($"{this} finishes player's move");
-        FindObjectOfType<BattleSystem>().FinishPlayerTurn();
+        if (!FindObjectOfType<BattleSystem>().damageAll)
+        {
+            Debug.Log($"{this} finishes player's move");
+            FindObjectOfType<BattleSystem>().FinishPlayerTurn();
+        }
+        else
+        {
+            Debug.Log($"{this} waits for damage all to finish");
+        }
     }
-//
-//    public virtual void PlayAttackAnimation(Squad playerSquadToHit)
-//    {
-//        StartCoroutine(AttackAnimation(playerSquadToHit));
-//    }
-//
-//    IEnumerator AttackAnimation(Squad playerSquadToHit)
-//    {
-//        animator.SetTrigger("Attack");
-//
-//
-//        //Wait until Animator is done playing
-//        print(animator.GetCurrentAnimatorStateInfo(0).length);
-//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-//        // TODO: Why multiplied by 2?
-////        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 2);
-//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-//
-//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
-//
-//        playerSquadToHit.animator.SetTrigger("Hit");
-//
-//        yield return new WaitForSeconds(playerSquadToHit.animator.GetCurrentAnimatorStateInfo(0).length);
-//
-//        FindObjectOfType<BattleSystem>().FinishEnemyTurn(playerSquadToHit);
-//    }
-//
-////    public void PlayDeathAnimation()
-////    {
-////        StartCoroutine(DeathAnimation());
-////    }
-//
-//    IEnumerator DeathAnimation()
-//    {
-//        animator.SetBool("IsDead", true);
-//
-//
-//        //Wait until Animator is done playing
-//        print(animator.GetCurrentAnimatorStateInfo(0).length);
-//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-//        // TODO: Why multiplied by 2?
-//        //        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 2);
-//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-//
-//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
-//    }
 }

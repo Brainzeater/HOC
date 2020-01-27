@@ -10,8 +10,11 @@ public class PlayerSquad : Squad
 
     public GameObject highlightBackground;
     public GameObject activeSkillButton;
+    public TMP_Text activeSkillText;
+
     public GameObject regularHitButton;
     public bool UsedActiveSkill { get; set; }
+    public int LastDealtDamage { get; set; }
 
     public override void Awake()
     {
@@ -19,7 +22,19 @@ public class PlayerSquad : Squad
         unitHPText.text = unit.hp.ToString();
         unitDamageText.text = unit.damage.ToString();
         UsedActiveSkill = false;
-        //        if(GetUnit.hasActiveSkill)
+        LastDealtDamage = 0;
+        switch (base.GetUnit.activeSkill)
+        {
+            case ActiveSkill.IncreasedDamage:
+                activeSkillText.text = "Heavy Hit";
+                break;
+            case ActiveSkill.DamageAll:
+                activeSkillText.text = "Hit All";
+                break;
+            case ActiveSkill.Heal:
+                activeSkillText.text = "Heal";
+                break;
+        }
     }
 
     // Activates Squad's background highlight and "Active Skill" button
@@ -68,34 +83,39 @@ public class PlayerSquad : Squad
         regularHitButton.SetActive(true);
     }
 
+    public override void DealDamage()
+    {
+        Opponent.ReceiveDamage(this.DealingDamage);
+        this.LastDealtDamage = this.DealingDamage;
+        // Because it might be improved by Increased Damage
+        CalculateDealingDamage();
+    }
     public override void FinishMoveOfSquadWhoHitMe()
     {
-        Debug.Log($"{this} finishes enemy's move");
-        FindObjectOfType<BattleSystem>().FinishEnemyTurn();
+        if(!FindObjectOfType<BattleSystem>().damageAll)
+        {
+            Debug.Log($"{this} finishes enemy's move");
+            FindObjectOfType<BattleSystem>().FinishEnemyTurn();
+        }
+        else
+        {
+            Debug.Log($"{this} waits for damage all to finish");
+        }
     }
 
-//    public override void PlayAttackAnimation(Squad enemySquadToHit)
-//    {
-//        StartCoroutine(AttackAnimation(enemySquadToHit));
-//    }
-//
-//    IEnumerator AttackAnimation(Squad enemySquadToHit)
-//    {
-//
-//        animator.SetTrigger("Attack");
-//
-//        //Wait until Animator is done playing
-//        print(animator.GetCurrentAnimatorStateInfo(0).length);
-//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-//        // TODO: Why multiplied by 2?
-//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-//
-//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
-//
-//        enemySquadToHit.animator.SetTrigger("Hit");
-//
-//        yield return new WaitForSeconds(enemySquadToHit.animator.GetCurrentAnimatorStateInfo(0).length);
-//        
-//        FindObjectOfType<BattleSystem>().FinishPlayerTurn();
-//    }
+    public void DealIncreasedDamage()
+    {
+        animator.SetTrigger("Increased");
+    }
+
+    public void Heal()
+    {
+        animator.SetTrigger("Heal");
+    }
+
+
+    public void DamageAll()
+    {
+        animator.SetTrigger("DamageAll");
+    }
 }
