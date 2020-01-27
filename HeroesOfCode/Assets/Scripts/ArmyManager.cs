@@ -81,7 +81,6 @@ public class ArmyManager : MonoBehaviour
 //        newSquad.squadUnits = squadGameObject.GetComponent<Squad>().numberOfUnits;
         squadPrefabs.Add(squadGameObject);
         squadGameObject.GetComponentInChildren<DeleteSquadButton>().ID = newSquad.SquadID;
-        print($"New ID = {newSquad.SquadID}");
 
         army.Add(newSquad);
     }

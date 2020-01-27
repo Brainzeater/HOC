@@ -30,10 +30,13 @@ public class BattleSystem : MonoBehaviour
     private List<Squad> enemyArmyList;
 
     private PlayerSquad currentPlayerSquad;
+
     private Squad currentEnemySquad;
+    private PlayerSquad playerSquadToHit;
 
     // For "Increased Damage" active skill
     private int lastDealtDamage;
+    private int currentDealingDamage;
 
 
     void Start()
@@ -126,7 +129,7 @@ public class BattleSystem : MonoBehaviour
     // Activates when the player selects the target enemy to deal regular hit or active skill "Increased Damage"
     public void OnTargetChosen()
     {
-        int dealingDamage = 0;
+        currentDealingDamage = 0;
         if (state != BattleState.PlayerRegularTurn)
             if (!(state == BattleState.PlayerActiveSkill &&
                   currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.IncreasedDamage))
@@ -138,15 +141,15 @@ public class BattleSystem : MonoBehaviour
                 // When the player chose to use "Increased Damage"
                 currentPlayerSquad.DisableRegularHitButton();
                 currentPlayerSquad.UsedActiveSkill = true;
-                dealingDamage = Unit.increasedConstant + Unit.increasedCoefficient * lastDealtDamage;
+                currentDealingDamage = Unit.increasedConstant + Unit.increasedCoefficient * lastDealtDamage;
             }
         else
         {
             // When the player uses regular hit
-            dealingDamage = currentPlayerSquad.DealingDamage;
+            currentDealingDamage = currentPlayerSquad.DealingDamage;
             if (currentPlayerSquad.GetUnit.activeSkill == ActiveSkill.IncreasedDamage)
             {
-                lastDealtDamage = dealingDamage;
+                lastDealtDamage = currentDealingDamage;
             }
         }
 
@@ -157,9 +160,19 @@ public class BattleSystem : MonoBehaviour
         currentPlayerSquad.HighlightSquad(false, 0);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
-        // Find an enemy squad that takes damage and updates its hp
+        // Find an enemy squad that takes damage
         currentEnemySquad = enemyArmyList.Find(item => item.ID == BattleEvents.current.SelectedTargetID);
-        currentEnemySquad.ReceiveDamage(dealingDamage);
+
+        currentPlayerSquad.DealingDamage = currentDealingDamage;
+        currentPlayerSquad.Opponent = currentEnemySquad;
+        Debug.Log("Player attacks");
+        currentPlayerSquad.Attack();
+    }
+
+    public void FinishPlayerTurn()
+    {
+        // Update enemy squad's hp
+//        currentEnemySquad.ReceiveDamage(currentDealingDamage);
 
         state = NextBattleStateForPlayerTurn(currentEnemySquad);
         switch (state)
@@ -205,7 +218,7 @@ public class BattleSystem : MonoBehaviour
 
         switch (currentPlayerSquad.GetUnit.activeSkill)
         {
-            // Unihighlight player's squads if the player exited from Heal
+            // Unhighlight player's squads if the player exited from Heal
             case (ActiveSkill.Heal):
                 ToggleArmyToSelect(enemyArmyList, true);
                 ToggleArmyToSelect(playerSquadsToHealList, false);
@@ -313,13 +326,22 @@ public class BattleSystem : MonoBehaviour
             currentEnemySquad = enemyArmyQueue.Dequeue();
         }
 
+        enemyArmyQueue.Enqueue(currentEnemySquad);
         // TODO: Find out, who hits me when I kill him!
         print(currentEnemySquad);
-        // TODO: AI or minimal strategy
-        Squad playerSquadToHit = currentPlayerSquad;
-        playerSquadToHit.ReceiveDamage(currentEnemySquad.DealingDamage);
 
-        enemyArmyQueue.Enqueue(currentEnemySquad);
+
+        // TODO: AI or minimal strategy
+//        Squad playerSquadToHit = currentPlayerSquad;
+        playerSquadToHit = currentPlayerSquad;
+
+        currentEnemySquad.Opponent = playerSquadToHit;
+        currentEnemySquad.Attack();
+    }
+
+    public void FinishEnemyTurn()
+    {
+//        playerSquadToHit.ReceiveDamage(currentEnemySquad.DealingDamage);
 
         state = NextBattleStateForEnemyTurn(playerSquadToHit);
         switch (state)

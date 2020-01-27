@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: facef38c93b0edc47888f930e65f2a4e
+guid: 3e92847b421c5c744a7450bd07c06092
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 354184876246168668
-    second: blob minion walk_0
+      213: -273567318796562241
+    second: Skeleton Hit_0
   - first:
-      213: 6384850404701506732
-    second: blob minion walk_1
+      213: 4277271011309529139
+    second: Skeleton Hit_1
   - first:
-      213: -3987707988396358275
-    second: blob minion walk_2
+      213: -1537884627087384292
+    second: Skeleton Hit_2
   - first:
-      213: 7020510795705785216
-    second: blob minion walk_3
+      213: 8452754394787171160
+    second: Skeleton Hit_3
   - first:
-      213: 370223631202372579
-    second: blob minion walk_4
+      213: 6079654374805429708
+    second: Skeleton Hit_4
   - first:
-      213: -8012592800478544740
-    second: blob minion walk_5
+      213: 3860408454011024614
+    second: Skeleton Hit_5
   - first:
-      213: -7058924086534126899
-    second: blob minion walk_6
+      213: -8501204524192146682
+    second: Skeleton Hit_6
   - first:
-      213: -8254870576524124302
-    second: blob minion walk_7
+      213: -8738580348800268814
+    second: Skeleton Hit_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -158,13 +158,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blob minion walk_0
+      name: Skeleton Hit_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +172,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 509fcf1e49ac0b74fa577f8c9d00e51c
-      internalID: 354184876246168668
+      spriteID: 66439a8c1dc3bab45a93f4384c5fc1c7
+      internalID: -273567318796562241
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_1
+      name: Skeleton Hit_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 30
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33991b4445c72974e9a4165a1a6904b9
-      internalID: 6384850404701506732
+      spriteID: ca0e65f4edda7204ebec309aeb1b5c4b
+      internalID: 4277271011309529139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_2
+      name: Skeleton Hit_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 60
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f88ecdcabfc4ae40b6c4ed3a4cd6a17
-      internalID: -3987707988396358275
+      spriteID: 4351fe06c0143bd46a1eaa0cb9a377ad
+      internalID: -1537884627087384292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_3
+      name: Skeleton Hit_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 90
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +235,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38cb652528cdd2741804b7ad6680e4a7
-      internalID: 7020510795705785216
+      spriteID: 87f64f595f73ada4cac784c74f2eb890
+      internalID: 8452754394787171160
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_4
+      name: Skeleton Hit_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 120
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,20 +256,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4642e784b5d89564499d97f6d4474598
-      internalID: 370223631202372579
+      spriteID: 67e0b2bc49cf0384bbc1cccc9c014a8f
+      internalID: 6079654374805429708
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_5
+      name: Skeleton Hit_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 150
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -277,20 +277,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfad6e4a6b4646a4b8cb8f4760c68864
-      internalID: -8012592800478544740
+      spriteID: 7eb724c9fb283c34695b538adcb2ee47
+      internalID: 3860408454011024614
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_6
+      name: Skeleton Hit_6
       rect:
         serializedVersion: 2
-        x: 480
+        x: 180
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,20 +298,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e7f28b27fec1949afc3c726f189b41
-      internalID: -7058924086534126899
+      spriteID: dee222d74cf88de48ad3283e1146f0f1
+      internalID: -8501204524192146682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_7
+      name: Skeleton Hit_7
       rect:
         serializedVersion: 2
-        x: 560
+        x: 210
         y: 0
-        width: 80
-        height: 80
+        width: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -319,8 +319,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c461b134f374b479d78c6cc5eed05d
-      internalID: -8254870576524124302
+      spriteID: 5f06a3b2656527a4b9546414c3194ed1
+      internalID: -8738580348800268814
       vertices: []
       indices: 
       edges: []

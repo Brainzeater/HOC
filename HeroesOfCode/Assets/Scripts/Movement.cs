@@ -63,7 +63,6 @@ public class Movement : MonoBehaviour
 
 //            print(currentWaypoint - transform.position);
             direction = (currentWaypoint - transform.position);
-            print($"x: {detectDirection(direction.x)} y: {detectDirection(direction.y)}");
             animator.SetFloat("HorizontalSpeed", detectDirection(direction.x) - animationSpeedModifier);
             animator.SetFloat("VerticalSpeed", detectDirection(direction.y) - animationSpeedModifier);
             transform.position =

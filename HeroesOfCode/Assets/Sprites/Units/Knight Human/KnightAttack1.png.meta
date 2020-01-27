@@ -1,31 +1,40 @@
 fileFormatVersion: 2
-guid: facef38c93b0edc47888f930e65f2a4e
+guid: c9841a812ccefbd4a8aeea773e90c43c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 354184876246168668
-    second: blob minion walk_0
+      213: -6108125272676665255
+    second: KnightAttack1_0
   - first:
-      213: 6384850404701506732
-    second: blob minion walk_1
+      213: 1416220149979378322
+    second: KnightAttack1_1
   - first:
-      213: -3987707988396358275
-    second: blob minion walk_2
+      213: -6597068830747574343
+    second: KnightAttack1_2
   - first:
-      213: 7020510795705785216
-    second: blob minion walk_3
+      213: -9158457060527270344
+    second: KnightAttack1_3
   - first:
-      213: 370223631202372579
-    second: blob minion walk_4
+      213: -1295911254268373496
+    second: KnightAttack1_4
   - first:
-      213: -8012592800478544740
-    second: blob minion walk_5
+      213: -7739209358166263462
+    second: KnightAttack1_5
   - first:
-      213: -7058924086534126899
-    second: blob minion walk_6
+      213: -8448781657103606196
+    second: KnightAttack1_6
   - first:
-      213: -8254870576524124302
-    second: blob minion walk_7
+      213: -3797272791973470426
+    second: KnightAttack1_7
+  - first:
+      213: 6570240404334464838
+    second: KnightAttack1_8
+  - first:
+      213: -5817041472855642434
+    second: KnightAttack1_9
+  - first:
+      213: -4980697531072786328
+    second: KnightAttack1_10
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -69,7 +78,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 40
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -158,13 +167,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blob minion walk_0
+      name: KnightAttack1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,20 +181,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 509fcf1e49ac0b74fa577f8c9d00e51c
-      internalID: 354184876246168668
+      spriteID: 059ecfd73faa1de459941b3b7582cf30
+      internalID: -6108125272676665255
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_1
+      name: KnightAttack1_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 144
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,20 +202,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33991b4445c72974e9a4165a1a6904b9
-      internalID: 6384850404701506732
+      spriteID: ca16909aecc4d434a98d1fa0ce0d1d0c
+      internalID: 1416220149979378322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_2
+      name: KnightAttack1_2
       rect:
         serializedVersion: 2
-        x: 160
+        x: 288
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +223,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f88ecdcabfc4ae40b6c4ed3a4cd6a17
-      internalID: -3987707988396358275
+      spriteID: ab3859d4b304d5344b48927e264901b0
+      internalID: -6597068830747574343
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_3
+      name: KnightAttack1_3
       rect:
         serializedVersion: 2
-        x: 240
+        x: 432
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,20 +244,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38cb652528cdd2741804b7ad6680e4a7
-      internalID: 7020510795705785216
+      spriteID: 885b3a8bdcc7449499737a0f3f3989c5
+      internalID: -9158457060527270344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_4
+      name: KnightAttack1_4
       rect:
         serializedVersion: 2
-        x: 320
+        x: 576
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -256,20 +265,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4642e784b5d89564499d97f6d4474598
-      internalID: 370223631202372579
+      spriteID: 285cc37c3a966ea48800acb14d0552e4
+      internalID: -1295911254268373496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_5
+      name: KnightAttack1_5
       rect:
         serializedVersion: 2
-        x: 400
+        x: 720
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -277,20 +286,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfad6e4a6b4646a4b8cb8f4760c68864
-      internalID: -8012592800478544740
+      spriteID: ff54a78154bafa54291ccb0831515ae2
+      internalID: -7739209358166263462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_6
+      name: KnightAttack1_6
       rect:
         serializedVersion: 2
-        x: 480
+        x: 864
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -298,20 +307,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e7f28b27fec1949afc3c726f189b41
-      internalID: -7058924086534126899
+      spriteID: eab798bf3575d7547b6b14df1924ba70
+      internalID: -8448781657103606196
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_7
+      name: KnightAttack1_7
       rect:
         serializedVersion: 2
-        x: 560
+        x: 1008
         y: 0
-        width: 80
-        height: 80
+        width: 144
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -319,8 +328,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c461b134f374b479d78c6cc5eed05d
-      internalID: -8254870576524124302
+      spriteID: 6f762b079e31a2e44ae71f086336d1e6
+      internalID: -3797272791973470426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightAttack1_8
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 144
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8416b0fd0bb949f46ada3e64d8f31550
+      internalID: 6570240404334464838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightAttack1_9
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 0
+        width: 144
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56f3db0f2f5c16949aab80b904245c15
+      internalID: -5817041472855642434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KnightAttack1_10
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 144
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e73e77d9126c0844b8fe3d1260836680
+      internalID: -4980697531072786328
       vertices: []
       indices: 
       edges: []

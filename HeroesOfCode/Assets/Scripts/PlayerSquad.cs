@@ -67,4 +67,35 @@ public class PlayerSquad : Squad
     {
         regularHitButton.SetActive(true);
     }
+
+    public override void FinishMoveOfSquadWhoHitMe()
+    {
+        Debug.Log($"{this} finishes enemy's move");
+        FindObjectOfType<BattleSystem>().FinishEnemyTurn();
+    }
+
+//    public override void PlayAttackAnimation(Squad enemySquadToHit)
+//    {
+//        StartCoroutine(AttackAnimation(enemySquadToHit));
+//    }
+//
+//    IEnumerator AttackAnimation(Squad enemySquadToHit)
+//    {
+//
+//        animator.SetTrigger("Attack");
+//
+//        //Wait until Animator is done playing
+//        print(animator.GetCurrentAnimatorStateInfo(0).length);
+//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+//        // TODO: Why multiplied by 2?
+//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+//
+//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
+//
+//        enemySquadToHit.animator.SetTrigger("Hit");
+//
+//        yield return new WaitForSeconds(enemySquadToHit.animator.GetCurrentAnimatorStateInfo(0).length);
+//        
+//        FindObjectOfType<BattleSystem>().FinishPlayerTurn();
+//    }
 }

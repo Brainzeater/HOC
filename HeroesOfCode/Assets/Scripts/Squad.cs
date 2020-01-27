@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Squad : MonoBehaviour
@@ -15,12 +16,20 @@ public class Squad : MonoBehaviour
 
     public int ID { get; set; }
 
+    [HideInInspector] public Animator animator;
+
+    public Squad Opponent { get; set; }
+
     public virtual void Awake()
     {
         DisplayNumberOfUnits();
         IsDead = false;
         CalculateDealingDamage();
         CalculateSquadHP();
+        animator = GetComponentInChildren<Animator>();
+        // Makes animations start from a random frame
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        animator.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
     }
 
     void DisplayNumberOfUnits()
@@ -50,9 +59,7 @@ public class Squad : MonoBehaviour
             }
             else
             {
-                CalculateNumberOfUnitsFromHP();
-                CalculateDealingDamage();
-                DisplayNumberOfUnits();
+                TakeHit();
             }
         }
     }
@@ -90,9 +97,22 @@ public class Squad : MonoBehaviour
         get { return unit; }
     }
 
+    void TakeHit()
+    {
+        Debug.Log($"{this} is taking hit");
+        CalculateNumberOfUnitsFromHP();
+        CalculateDealingDamage();
+        DisplayNumberOfUnits();
+        animator.SetTrigger("Hit");
+    }
+
     void Die()
     {
-        gameObject.SetActive(false);
+        numberOfUnitsText.SetText("0");
+//        StartCoroutine(DeathAnimation());
+//        gameObject.SetActive(false);
+
+        animator.SetBool("IsDead", true);
         IsDead = true;
     }
 
@@ -100,4 +120,70 @@ public class Squad : MonoBehaviour
     {
         return unit.name + " " + numberOfUnits + " " + HP + " " + ID;
     }
+
+    public void Attack()
+    {
+        animator.SetTrigger("Attack");
+    }
+
+    public void DealDamage()
+    {
+        // Play attack animation
+        Opponent.ReceiveDamage(this.DealingDamage);
+        //
+        CalculateDealingDamage();
+        // Recalculate Dealing Damage
+    }
+
+    public virtual void FinishMoveOfSquadWhoHitMe()
+    {
+        Debug.Log($"{this} finishes player's move");
+        FindObjectOfType<BattleSystem>().FinishPlayerTurn();
+    }
+//
+//    public virtual void PlayAttackAnimation(Squad playerSquadToHit)
+//    {
+//        StartCoroutine(AttackAnimation(playerSquadToHit));
+//    }
+//
+//    IEnumerator AttackAnimation(Squad playerSquadToHit)
+//    {
+//        animator.SetTrigger("Attack");
+//
+//
+//        //Wait until Animator is done playing
+//        print(animator.GetCurrentAnimatorStateInfo(0).length);
+//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+//        // TODO: Why multiplied by 2?
+////        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 2);
+//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+//
+//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
+//
+//        playerSquadToHit.animator.SetTrigger("Hit");
+//
+//        yield return new WaitForSeconds(playerSquadToHit.animator.GetCurrentAnimatorStateInfo(0).length);
+//
+//        FindObjectOfType<BattleSystem>().FinishEnemyTurn(playerSquadToHit);
+//    }
+//
+////    public void PlayDeathAnimation()
+////    {
+////        StartCoroutine(DeathAnimation());
+////    }
+//
+//    IEnumerator DeathAnimation()
+//    {
+//        animator.SetBool("IsDead", true);
+//
+//
+//        //Wait until Animator is done playing
+//        print(animator.GetCurrentAnimatorStateInfo(0).length);
+//        print(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+//        // TODO: Why multiplied by 2?
+//        //        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length * 2);
+//        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+//
+//        //        +anim.GetCurrentAnimatorStateInfo(0).normalizedTime
+//    }
 }

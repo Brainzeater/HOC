@@ -1,31 +1,37 @@
 fileFormatVersion: 2
-guid: facef38c93b0edc47888f930e65f2a4e
+guid: d12de87b1d009f24080ea98f9f17ce2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 354184876246168668
-    second: blob minion walk_0
+      213: -8374819182846138733
+    second: blob minion death_0
   - first:
-      213: 6384850404701506732
-    second: blob minion walk_1
+      213: -5591323211939203128
+    second: blob minion death_1
   - first:
-      213: -3987707988396358275
-    second: blob minion walk_2
+      213: -1748596797229513886
+    second: blob minion death_2
   - first:
-      213: 7020510795705785216
-    second: blob minion walk_3
+      213: 5597917747660099572
+    second: blob minion death_3
   - first:
-      213: 370223631202372579
-    second: blob minion walk_4
+      213: 4788519775655755193
+    second: blob minion death_4
   - first:
-      213: -8012592800478544740
-    second: blob minion walk_5
+      213: -4571096612840384268
+    second: blob minion death_5
   - first:
-      213: -7058924086534126899
-    second: blob minion walk_6
+      213: -4469390802759046827
+    second: blob minion death_6
   - first:
-      213: -8254870576524124302
-    second: blob minion walk_7
+      213: -7301086300161180458
+    second: blob minion death_7
+  - first:
+      213: 1445886781553722407
+    second: blob minion death_8
+  - first:
+      213: -4988992896443518785
+    second: blob minion death_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -158,7 +164,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: blob minion walk_0
+      name: blob minion death_0
       rect:
         serializedVersion: 2
         x: 0
@@ -172,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 509fcf1e49ac0b74fa577f8c9d00e51c
-      internalID: 354184876246168668
+      spriteID: 1abf565b60df91548bdf3be186c10fe6
+      internalID: -8374819182846138733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_1
+      name: blob minion death_1
       rect:
         serializedVersion: 2
         x: 80
@@ -193,14 +199,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33991b4445c72974e9a4165a1a6904b9
-      internalID: 6384850404701506732
+      spriteID: 0a09557156095814fae83950b451c358
+      internalID: -5591323211939203128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_2
+      name: blob minion death_2
       rect:
         serializedVersion: 2
         x: 160
@@ -214,14 +220,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2f88ecdcabfc4ae40b6c4ed3a4cd6a17
-      internalID: -3987707988396358275
+      spriteID: d638e1749a1f47442961c9c4a6ab79d1
+      internalID: -1748596797229513886
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_3
+      name: blob minion death_3
       rect:
         serializedVersion: 2
         x: 240
@@ -235,14 +241,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 38cb652528cdd2741804b7ad6680e4a7
-      internalID: 7020510795705785216
+      spriteID: 1284204fd66d430429529fe2f8bf94ae
+      internalID: 5597917747660099572
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_4
+      name: blob minion death_4
       rect:
         serializedVersion: 2
         x: 320
@@ -256,14 +262,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4642e784b5d89564499d97f6d4474598
-      internalID: 370223631202372579
+      spriteID: 691839a53ba1d0c46a9051533654d21b
+      internalID: 4788519775655755193
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_5
+      name: blob minion death_5
       rect:
         serializedVersion: 2
         x: 400
@@ -277,14 +283,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfad6e4a6b4646a4b8cb8f4760c68864
-      internalID: -8012592800478544740
+      spriteID: 4fb24df334b53164e96b1648a1529672
+      internalID: -4571096612840384268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_6
+      name: blob minion death_6
       rect:
         serializedVersion: 2
         x: 480
@@ -298,14 +304,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e7f28b27fec1949afc3c726f189b41
-      internalID: -7058924086534126899
+      spriteID: 67d61fefb81e9794ab2071a420f7b635
+      internalID: -4469390802759046827
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: blob minion walk_7
+      name: blob minion death_7
       rect:
         serializedVersion: 2
         x: 560
@@ -319,8 +325,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60c461b134f374b479d78c6cc5eed05d
-      internalID: -8254870576524124302
+      spriteID: 8d18d287b279f0f4280f6b5138b0a088
+      internalID: -7301086300161180458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blob minion death_8
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9ee58762b736394d8f4a7eb2274ec9a
+      internalID: 1445886781553722407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blob minion death_9
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76019981cebbfa543b3a71ce83f0c780
+      internalID: -4988992896443518785
       vertices: []
       indices: 
       edges: []
