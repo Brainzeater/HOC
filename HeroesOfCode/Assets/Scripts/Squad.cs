@@ -108,7 +108,8 @@ public class Squad : MonoBehaviour
 
     void Die()
     {
-        numberOfUnitsText.SetText("0");
+//        numberOfUnitsText.SetText("0");
+        numberOfUnitsText.enabled = false;
 //        StartCoroutine(DeathAnimation());
 //        gameObject.SetActive(false);
 

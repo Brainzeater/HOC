@@ -229,6 +229,11 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6083984269418750915, guid: 9eeee50e181858844bb277ea42b2c486,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4deae2cb575621e4faa3f97987fa07eb, type: 2}
     - target: {fileID: 503139069469063611, guid: 9eeee50e181858844bb277ea42b2c486,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -253,11 +258,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6083984269418750915, guid: 9eeee50e181858844bb277ea42b2c486,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9eeee50e181858844bb277ea42b2c486, type: 3}
