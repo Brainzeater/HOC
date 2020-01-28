@@ -59,6 +59,7 @@ public class Squad : MonoBehaviour
             }
             else
             {
+                Debug.Log($"{this} is taking hit {damage}");
                 TakeHit();
             }
         }
@@ -99,7 +100,6 @@ public class Squad : MonoBehaviour
 
     void TakeHit()
     {
-        Debug.Log($"{this} is taking hit");
         CalculateNumberOfUnitsFromHP();
         CalculateDealingDamage();
         DisplayNumberOfUnits();
@@ -115,6 +115,7 @@ public class Squad : MonoBehaviour
     }
     void Die()
     {
+        Debug.Log($"{this} is dead");
         numberOfUnitsText.enabled = false;
         animator.SetBool("IsDead", true);
         IsDead = true;

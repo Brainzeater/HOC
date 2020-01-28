@@ -71,12 +71,11 @@ public class BattleSystem : MonoBehaviour
 
         increased = false;
         damageAll = false;
-        
 
         state = BattleState.Start;
         SetupBattle();
     }
-    
+
     void SetupBattle()
     {
         int i = 1;
@@ -165,7 +164,7 @@ public class BattleSystem : MonoBehaviour
 
         currentPlayerSquad.DealingDamage = currentDealingDamage;
         currentPlayerSquad.Opponent = currentEnemySquad;
-        Debug.Log("Player attacks");
+        Debug.Log($"Player {currentPlayerSquad}\n attacks {currentEnemySquad}");
         if (!increased)
         {
             currentPlayerSquad.Attack();
@@ -194,9 +193,9 @@ public class BattleSystem : MonoBehaviour
     // Activates when the player presses Active Skill button
     public void OnActiveSkill()
     {
-        // Display correct button
-        currentPlayerSquad.EnableRegularHitButton();
-        currentPlayerSquad.DisableActiveSkillButton();
+        // Display correct button as selected
+        currentPlayerSquad.SetPressedRegular(false);
+        currentPlayerSquad.SetPressedActive(true);
 
         state = BattleState.PlayerActiveSkill;
 
@@ -217,9 +216,9 @@ public class BattleSystem : MonoBehaviour
     // Activates when the player exits Active Skill without using it
     public void OnRegularHit()
     {
-        // Display correct button
-        currentPlayerSquad.EnableActiveSkillButton();
-        currentPlayerSquad.DisableRegularHitButton();
+        // Display correct button as selected
+        currentPlayerSquad.SetPressedRegular(true);
+        currentPlayerSquad.SetPressedActive(false);
 
         switch (currentPlayerSquad.GetUnit.activeSkill)
         {
@@ -310,7 +309,8 @@ public class BattleSystem : MonoBehaviour
                     state = NextBattleStateForPlayerTurn(squad);
                 }
 
-                StartCoroutine(WaitAfterDamageAll(1.2f));
+                // TODO: this is very unreliable
+                StartCoroutine(WaitAfterDamageAll(2f));
                 break;
             case BattleState.Lost:
                 EndBattle();
@@ -346,7 +346,6 @@ public class BattleSystem : MonoBehaviour
         enemyArmyQueue.Enqueue(currentEnemySquad);
 
         // TODO: AI or minimal strategy
-//        Squad playerSquadToHit = currentPlayerSquad;
         playerSquadToHit = currentPlayerSquad;
 
         currentEnemySquad.Opponent = playerSquadToHit;

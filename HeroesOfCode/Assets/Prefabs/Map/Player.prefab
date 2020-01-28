@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultSpeed: 4
-  increasedSpeed: 6
+  increasedSpeed: 5
   decreasedSpeed: 2
   roadMask:
     serializedVersion: 2

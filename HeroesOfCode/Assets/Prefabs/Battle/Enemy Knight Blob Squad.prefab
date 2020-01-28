@@ -108,6 +108,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1.30266
       objectReference: {fileID: 0}
+    - target: {fileID: 7428669154653801059, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 19.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1529951073347674362, guid: c10fc3e95b76cf04b92b867f189d0dd5,
         type: 3}
       propertyPath: m_IsActive

@@ -15,6 +15,6 @@ MonoBehaviour:
   name: KnightHuman
   hp: 10
   damage: 3
-  defaultNumber: 25
+  defaultNumber: 50
   hasActiveSkill: 1
   activeSkill: 1

@@ -26,7 +26,7 @@ public class PlayerSquad : Squad
         switch (base.GetUnit.activeSkill)
         {
             case ActiveSkill.IncreasedDamage:
-                activeSkillText.text = "Heavy Hit";
+                activeSkillText.text = "Crit";
                 break;
             case ActiveSkill.DamageAll:
                 activeSkillText.text = "Hit All";
@@ -47,18 +47,23 @@ public class PlayerSquad : Squad
         {
             if (!UsedActiveSkill)
             {
-                if (base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0)
+                if ((base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0) || !enabled)
                 {
                     DisableActiveSkillButton();
+                    DisableRegularHitButton();
                 }
-                else
+                else if (enabled)
                 {
-                    activeSkillButton.SetActive(enabled);
+                    EnableActiveSkillButton();
+                    EnableRegularHitButton();
+                    SetPressedRegular(true);
+                    SetPressedActive(false);
                 }
             }
             else
             {
                 DisableActiveSkillButton();
+                DisableRegularHitButton();
             }
         }
     }
@@ -83,6 +88,16 @@ public class PlayerSquad : Squad
         regularHitButton.SetActive(true);
     }
 
+    public void SetPressedRegular(bool enable)
+    {
+        regularHitButton.GetComponentInChildren<UseActiveSkillButton>().SetPressed(enable);
+    }
+
+    public void SetPressedActive(bool enable)
+    {
+        activeSkillButton.GetComponentInChildren<UseActiveSkillButton>().SetPressed(enable);
+    }
+
     public override void DealDamage()
     {
         Opponent.ReceiveDamage(this.DealingDamage);
@@ -90,9 +105,10 @@ public class PlayerSquad : Squad
         // Because it might be improved by Increased Damage
         CalculateDealingDamage();
     }
+
     public override void FinishMoveOfSquadWhoHitMe()
     {
-        if(!FindObjectOfType<BattleSystem>().damageAll)
+        if (!FindObjectOfType<BattleSystem>().damageAll)
         {
             Debug.Log($"{this} finishes enemy's move");
             FindObjectOfType<BattleSystem>().FinishEnemyTurn();
@@ -111,11 +127,5 @@ public class PlayerSquad : Squad
     public void Heal()
     {
         animator.SetTrigger("Heal");
-    }
-
-
-    public void DamageAll()
-    {
-        animator.SetTrigger("DamageAll");
     }
 }
