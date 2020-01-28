@@ -57,8 +57,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadBattleScene()
     {
-        ConfirmCellMenu.confirmCellMenuIsOn = false;
-        // TODO: There's other stuff to be finished here before loading. Save player's position!
         StartCoroutine(PlayTransition(2));
         StartCoroutine(
             AudioManager.FadeAudioSource.StartFade(audioManager.currentBackgroundMusic.source, fadeOutSpeed, 0));

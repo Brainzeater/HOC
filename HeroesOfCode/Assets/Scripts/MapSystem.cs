@@ -21,7 +21,6 @@ public class MapSystem : MonoBehaviour
         GameObject player = Instantiate(playerPrefab, gameData.playerSpawnPosition.position, Quaternion.identity);
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>().Target = player.transform;
         GameObject.FindGameObjectWithTag("Grid").GetComponent<Pathfinding>().Seeker = player.transform;
-        GameObject.FindGameObjectWithTag("ConfirmCellMenu").GetComponent<ConfirmCellMenu>().Player = player;
 
 
         foreach (GameObject armyPrefab in gameData.enemyArmyList)
