@@ -63,8 +63,8 @@ public class Movement : MonoBehaviour
 
 //            print(currentWaypoint - transform.position);
             direction = (currentWaypoint - transform.position);
-            animator.SetFloat("HorizontalSpeed", detectDirection(direction.x) - animationSpeedModifier);
-            animator.SetFloat("VerticalSpeed", detectDirection(direction.y) - animationSpeedModifier);
+            animator.SetFloat("HorizontalSpeed", detectDirection(direction.x) * (1 - animationSpeedModifier));
+            animator.SetFloat("VerticalSpeed", detectDirection(direction.y) * (1 - animationSpeedModifier));
             transform.position =
                 Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 
@@ -77,7 +77,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         speed = defaultSpeed;
-        animationSpeedModifier = 0.25f;
+        animationSpeedModifier = 0.39f;
     }
 
     void Update()
@@ -90,12 +90,12 @@ public class Movement : MonoBehaviour
         else if (Physics2D.OverlapCircle(gameObject.transform.position, radius, iceMask))
         {
             speed = decreasedSpeed;
-            animationSpeedModifier = 0.5f;
+            animationSpeedModifier = 0.4f;
         }
         else
         {
             speed = defaultSpeed;
-            animationSpeedModifier = 0.25f;
+            animationSpeedModifier = 0.3f;
         }
     }
 
