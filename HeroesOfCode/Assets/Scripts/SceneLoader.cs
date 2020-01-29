@@ -21,6 +21,10 @@ public class SceneLoader : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         StartCoroutine(loadCurrentScene());
         isReady = false;
+        if (audioManager.currentBackgroundMusic != null)
+            audioManager.FinishAudioSource();
+        
+        audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
 
     }
 
@@ -28,10 +32,6 @@ public class SceneLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         transition.enabled = true;
-        if (audioManager.currentBackgroundMusic != null)
-            audioManager.FinishAudioSource();
-
-        audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
     }
 
     public void LoadStartScene()

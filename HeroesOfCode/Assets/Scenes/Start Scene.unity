@@ -5553,12 +5553,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: GoodEnding
     clip: {fileID: 8300000, guid: b164293a7ad3ec54d936cd8faa8cf600, type: 3}
-    volume: 0.5
+    volume: 0.7
     loop: 0
     source: {fileID: 0}
   - name: BadEnding
     clip: {fileID: 8300000, guid: 991639828747bb9408183d8045da9ac7, type: 3}
-    volume: 0.5
+    volume: 0.7
     loop: 0
     source: {fileID: 0}
   - name: Click

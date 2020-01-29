@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public enum BattleState
@@ -44,6 +45,9 @@ public class BattleSystem : MonoBehaviour
     private bool increased;
     public bool damageAll;
 
+    public GameObject pauseMenu;
+    public bool paused;
+
 
     void Start()
     {
@@ -71,6 +75,8 @@ public class BattleSystem : MonoBehaviour
 
         increased = false;
         damageAll = false;
+
+        paused = false;
 
         state = BattleState.Start;
         SetupBattle();
@@ -132,7 +138,7 @@ public class BattleSystem : MonoBehaviour
         }
 
         // Highlight current squad
-        currentPlayerSquad.HighlightSquad(true, currentPlayerSquad.LastDealtDamage);
+        currentPlayerSquad.HighlightSquad(true);
     }
 
     // Activates when the player selects the target enemy to deal regular hit or active skill "Increased Damage"
@@ -150,8 +156,14 @@ public class BattleSystem : MonoBehaviour
                 // When the player chose to use "Increased Damage"
                 currentPlayerSquad.DisableRegularHitButton();
                 currentPlayerSquad.UsedActiveSkill = true;
+
+                // One of squad's previous damages is chosen randomly for "Increased Damage"
+                int randomPreviousDamage =
+                    currentPlayerSquad.LastDealtDamage[Random.Range(0, currentPlayerSquad.LastDealtDamage.Count)];
+                
                 currentDealingDamage = Unit.increasedConstant +
-                                       Unit.increasedCoefficient * currentPlayerSquad.LastDealtDamage;
+                                       Unit.increasedCoefficient * randomPreviousDamage;
+                
                 increased = true;
             }
         else
@@ -164,7 +176,7 @@ public class BattleSystem : MonoBehaviour
         ToggleArmyToSelect(enemyArmyList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
-        currentPlayerSquad.HighlightSquad(false, 0);
+        currentPlayerSquad.HighlightSquad(false);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
         // Find an enemy squad that takes damage
@@ -258,7 +270,7 @@ public class BattleSystem : MonoBehaviour
         ToggleArmyToSelect(playerSquadsToHealList, false);
 
         // Unhighlight current squad and put it at the end of the Queue
-        currentPlayerSquad.HighlightSquad(false, 0);
+        currentPlayerSquad.HighlightSquad(false);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
         currentPlayerSquad.Heal();
@@ -296,7 +308,7 @@ public class BattleSystem : MonoBehaviour
         currentDealingDamage = Unit.fixedDamageAll;
 
         // Unhighlight current squad and put it at the end of the Queue
-        currentPlayerSquad.HighlightSquad(false, 0);
+        currentPlayerSquad.HighlightSquad(false);
         playerArmyQueue.Enqueue(currentPlayerSquad);
 
         damageAll = true;
@@ -371,11 +383,14 @@ public class BattleSystem : MonoBehaviour
                 holyRandom = Random.Range(0, 2);
                 switch (holyRandom)
                 {
+                    // 25%
+                    // Hit the weakest squad
                     case 1:
-                        PlayerSquad pss = playerArmyList[Random.Range(0, playerArmyList.Count)];
-                        Debug.Log($"I chose at random: {pss}");
-                        return pss;
+                        PlayerSquad theLowestHPPlayerSquad = playerArmyList.Find(item => item.HP == playerArmyList.Min(squad => squad.HP));
+                        Debug.Log($"I chose the weakest: {theLowestHPPlayerSquad}");
+                        return theLowestHPPlayerSquad;
 
+                    // 25%
                     // Hit the squad back
                     case 0:
                         Debug.Log($"I chose the last one to move: {currentPlayerSquad}");
@@ -383,13 +398,13 @@ public class BattleSystem : MonoBehaviour
                 }
 
                 break;
-
-            // Hit the weakest squad
+            // 50%
+            // Hit the strongest squad
             case 0:
-//                return playerArmyList.Min(item => item.HP);
-                PlayerSquad ps = playerArmyList.Find(item => item.HP == playerArmyList.Min(squad => squad.HP));
-                Debug.Log($"I chose the weakest: {ps}");
-                return playerArmyList.Find(item => item.HP == playerArmyList.Min(squad => squad.HP));
+                PlayerSquad theStrongestPlayerSquad = playerArmyList.Find(item =>
+                    item.DealingDamage == playerArmyList.Max(squad => squad.DealingDamage));
+                Debug.Log($"I chose the strongest: {theStrongestPlayerSquad}");
+                return theStrongestPlayerSquad;
         }
 
         return null;
@@ -531,5 +546,30 @@ public class BattleSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         ChangeStateAfterDamageAll();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (FindObjectOfType<SceneLoader>().isReady && !damageAll)
+            {
+                if (!paused)
+                {
+                    // to unhighlight selected targets
+                    BattleEvents.current.Unhighlight();
+                    paused = true;
+                    Time.timeScale = 0f;
+                    pauseMenu.SetActive(true);
+                }
+                else
+                {
+                    paused = false;
+                    Time.timeScale = 1f;
+                    FindObjectOfType<GuideButtons>().CloseGuide();
+                    pauseMenu.SetActive(false);
+                }
+            }
+        }
     }
 }
