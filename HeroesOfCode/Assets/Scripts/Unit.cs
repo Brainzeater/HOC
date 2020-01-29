@@ -14,6 +14,7 @@ public class Unit : ScriptableObject
     public int hp;
     public int damage;
     public int defaultNumber;
+    public int initiative;
     public bool hasActiveSkill;
     public ActiveSkill activeSkill;
 

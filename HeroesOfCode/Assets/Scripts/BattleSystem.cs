@@ -78,25 +78,31 @@ public class BattleSystem : MonoBehaviour
 
     void SetupBattle()
     {
+        // Sort player army squads by initiative
+        gameData.playerArmy =
+            gameData.playerArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative).ToList();
+
         int i = 1;
         foreach (GameData.UnitSquad squad in gameData.playerArmy)
         {
             GameObject playerGO = Instantiate(squad.squadUnitPrefab, playerSquadPositionsArray[i]);
             currentPlayerSquad = playerGO.GetComponent<PlayerSquad>();
             currentPlayerSquad.ID = squad.SquadID;
-            // TODO: This is just ridiculous!
             currentPlayerSquad.SetSquadHP(squad.SquadHp);
             playerArmyQueue.Enqueue(currentPlayerSquad);
             i++;
         }
 
+        // Sort enemy army squads by initiative
+        List<GameData.UnitSquad> enemyArmy = gameData.GetCurrentEnemyArmy().army;
+        enemyArmy = enemyArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative).ToList();
+        
         i = 1;
-        foreach (GameData.UnitSquad squad in gameData.GetCurrentEnemyArmy().army)
+        foreach (GameData.UnitSquad squad in enemyArmy)
         {
             GameObject enemyGO = Instantiate(squad.squadUnitPrefab, enemySquadPositionsArray[i]);
             currentEnemySquad = enemyGO.GetComponent<Squad>();
             currentEnemySquad.ID = squad.SquadID;
-            // TODO: This is just ridiculous!
             currentEnemySquad.SetSquadHP(squad.SquadHp);
             enemyArmyQueue.Enqueue(currentEnemySquad);
             i++;
