@@ -22,6 +22,8 @@
   * If your army dies from that skill, you lose
   * You can win the battle using this skill
 
+### Note: Enemies are not using the skills!
+
 ### Resources:
 1. Music:
    1. Main Theme: https://www.serpentsoundstudios.com/royalty-free-music/celtic-fantasy
