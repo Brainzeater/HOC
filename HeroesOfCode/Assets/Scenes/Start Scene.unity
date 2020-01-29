@@ -5553,12 +5553,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: GoodEnding
     clip: {fileID: 8300000, guid: b164293a7ad3ec54d936cd8faa8cf600, type: 3}
-    volume: 0.7
+    volume: 1
     loop: 0
     source: {fileID: 0}
   - name: BadEnding
     clip: {fileID: 8300000, guid: 991639828747bb9408183d8045da9ac7, type: 3}
-    volume: 0.7
+    volume: 1
     loop: 0
     source: {fileID: 0}
   - name: Click
@@ -5643,12 +5643,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Snow1
     clip: {fileID: 8300000, guid: cc2757ca43957a84292ea466ff67d1dc, type: 3}
-    volume: 0.6
+    volume: 0.4
     loop: 0
     source: {fileID: 0}
   - name: Snow2
     clip: {fileID: 8300000, guid: 55113af4b52fd8b439f0b5d1213ff571, type: 3}
-    volume: 0.6
+    volume: 0.4
     loop: 0
     source: {fileID: 0}
   - name: Road1
@@ -5663,12 +5663,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Ice1
     clip: {fileID: 8300000, guid: 8d23b8f28ac641743ba6fb0e2be7aea5, type: 3}
-    volume: 0.6
+    volume: 0.4
     loop: 0
     source: {fileID: 0}
   - name: Ice2
     clip: {fileID: 8300000, guid: 3921e7169b416bc4594b00c332434bbb, type: 3}
-    volume: 0.6
+    volume: 0.4
     loop: 0
     source: {fileID: 0}
   currentBackgroundMusic:
