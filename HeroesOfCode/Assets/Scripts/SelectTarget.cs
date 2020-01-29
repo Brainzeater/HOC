@@ -83,6 +83,10 @@ public class SelectTarget : MonoBehaviour
 
     void HighlightAll()
     {
-        highlight.enabled = !highlight.enabled;
+        // Highlight only alive squads
+        if(!GetComponentInParent<Squad>().IsDead)
+        {
+            highlight.enabled = !highlight.enabled;
+        }
     }
 }

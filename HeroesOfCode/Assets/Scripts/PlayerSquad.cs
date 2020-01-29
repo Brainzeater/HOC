@@ -10,8 +10,11 @@ public class PlayerSquad : Squad
 
     public GameObject highlightBackground;
     public GameObject activeSkillButton;
+    public TMP_Text activeSkillText;
+
     public GameObject regularHitButton;
     public bool UsedActiveSkill { get; set; }
+    public int LastDealtDamage { get; set; }
 
     public override void Awake()
     {
@@ -19,7 +22,19 @@ public class PlayerSquad : Squad
         unitHPText.text = unit.hp.ToString();
         unitDamageText.text = unit.damage.ToString();
         UsedActiveSkill = false;
-        //        if(GetUnit.hasActiveSkill)
+        LastDealtDamage = 0;
+        switch (base.GetUnit.activeSkill)
+        {
+            case ActiveSkill.IncreasedDamage:
+                activeSkillText.text = "Crit";
+                break;
+            case ActiveSkill.DamageAll:
+                activeSkillText.text = "Hit All";
+                break;
+            case ActiveSkill.Heal:
+                activeSkillText.text = "Heal";
+                break;
+        }
     }
 
     // Activates Squad's background highlight and "Active Skill" button
@@ -32,18 +47,23 @@ public class PlayerSquad : Squad
         {
             if (!UsedActiveSkill)
             {
-                if (base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0)
+                if ((base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0) || !enabled)
                 {
                     DisableActiveSkillButton();
+                    DisableRegularHitButton();
                 }
-                else
+                else if (enabled)
                 {
-                    activeSkillButton.SetActive(enabled);
+                    EnableActiveSkillButton();
+                    EnableRegularHitButton();
+                    SetPressedRegular(true);
+                    SetPressedActive(false);
                 }
             }
             else
             {
                 DisableActiveSkillButton();
+                DisableRegularHitButton();
             }
         }
     }
@@ -66,5 +86,46 @@ public class PlayerSquad : Squad
     public void EnableRegularHitButton()
     {
         regularHitButton.SetActive(true);
+    }
+
+    public void SetPressedRegular(bool enable)
+    {
+        regularHitButton.GetComponentInChildren<UseActiveSkillButton>().SetPressed(enable);
+    }
+
+    public void SetPressedActive(bool enable)
+    {
+        activeSkillButton.GetComponentInChildren<UseActiveSkillButton>().SetPressed(enable);
+    }
+
+    public override void DealDamage()
+    {
+        Opponent.ReceiveDamage(this.DealingDamage);
+        this.LastDealtDamage = this.DealingDamage;
+        // Because it might be improved by Increased Damage
+        CalculateDealingDamage();
+    }
+
+    public override void FinishMoveOfSquadWhoHitMe()
+    {
+        if (!FindObjectOfType<BattleSystem>().damageAll)
+        {
+            Debug.Log($"{this} finishes enemy's move");
+            FindObjectOfType<BattleSystem>().FinishEnemyTurn();
+        }
+        else
+        {
+            Debug.Log($"{this} waits for damage all to finish");
+        }
+    }
+
+    public void DealIncreasedDamage()
+    {
+        animator.SetTrigger("Increased");
+    }
+
+    public void Heal()
+    {
+        animator.SetTrigger("Heal");
     }
 }

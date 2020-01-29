@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Squad : MonoBehaviour
@@ -15,20 +16,28 @@ public class Squad : MonoBehaviour
 
     public int ID { get; set; }
 
+    [HideInInspector] public Animator animator;
+
+    public Squad Opponent { get; set; }
+
     public virtual void Awake()
     {
         DisplayNumberOfUnits();
         IsDead = false;
         CalculateDealingDamage();
         CalculateSquadHP();
+        animator = GetComponentInChildren<Animator>();
+        // Makes animations start from a random frame
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
+        animator.Play(state.fullPathHash, -1, Random.Range(0f, 1f));
     }
 
-    void DisplayNumberOfUnits()
+    protected void DisplayNumberOfUnits()
     {
         numberOfUnitsText.text = numberOfUnits.ToString();
     }
 
-    void CalculateDealingDamage()
+    protected void CalculateDealingDamage()
     {
         DealingDamage = numberOfUnits * unit.damage;
     }
@@ -50,9 +59,8 @@ public class Squad : MonoBehaviour
             }
             else
             {
-                CalculateNumberOfUnitsFromHP();
-                CalculateDealingDamage();
-                DisplayNumberOfUnits();
+                Debug.Log($"{this} is taking hit {damage}");
+                TakeHit();
             }
         }
     }
@@ -60,7 +68,7 @@ public class Squad : MonoBehaviour
     // Shows the number of alive units in the squad.
     // Used to update the number of units after taking damage
     // and before loading any battle.
-    void CalculateNumberOfUnitsFromHP()
+    protected void CalculateNumberOfUnitsFromHP()
     {
         int survivedUnits = HP / unit.hp;
         if (HP % unit.hp != 0)
@@ -90,14 +98,56 @@ public class Squad : MonoBehaviour
         get { return unit; }
     }
 
+    void TakeHit()
+    {
+        CalculateNumberOfUnitsFromHP();
+        CalculateDealingDamage();
+        DisplayNumberOfUnits();
+        animator.SetTrigger("Hit");
+    }
+
+    public void IncreaseHP(int hp)
+    {
+        HP += hp;
+        CalculateNumberOfUnitsFromHP();
+        CalculateDealingDamage();
+        DisplayNumberOfUnits();
+    }
     void Die()
     {
-        gameObject.SetActive(false);
+        Debug.Log($"{this} is dead");
+        numberOfUnitsText.enabled = false;
+        animator.SetBool("IsDead", true);
         IsDead = true;
     }
 
     public override string ToString()
     {
         return unit.name + " " + numberOfUnits + " " + HP + " " + ID;
+    }
+
+    public void Attack()
+    {
+        animator.SetTrigger("Attack");
+    }
+
+    public virtual void DealDamage()
+    {
+        Opponent.ReceiveDamage(this.DealingDamage);
+        // Because it might be improved by Increased Damage
+        CalculateDealingDamage();
+    }
+
+    public virtual void FinishMoveOfSquadWhoHitMe()
+    {
+        if (!FindObjectOfType<BattleSystem>().damageAll)
+        {
+            Debug.Log($"{this} finishes player's move");
+            FindObjectOfType<BattleSystem>().FinishPlayerTurn();
+        }
+        else
+        {
+            Debug.Log($"{this} waits for damage all to finish");
+        }
     }
 }

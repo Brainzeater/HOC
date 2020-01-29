@@ -67,7 +67,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3928393433361870768, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+    - target: {fileID: 4506363870238745412, guid: c10fc3e95b76cf04b92b867f189d0dd5,
         type: 3}
       propertyPath: unit
       value: 
@@ -119,7 +119,12 @@ PrefabInstance:
       propertyPath: m_FlipX
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4506363870238745412, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+    - target: {fileID: 1596164173787217826, guid: c10fc3e95b76cf04b92b867f189d0dd5,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4deae2cb575621e4faa3f97987fa07eb, type: 2}
+    - target: {fileID: 3928393433361870768, guid: c10fc3e95b76cf04b92b867f189d0dd5,
         type: 3}
       propertyPath: unit
       value: 
