@@ -13,6 +13,7 @@ public class PlayerCollisionDetector : MonoBehaviour
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
         gameData.CurrentEnemyArmyIndex = gameObject.GetComponentInParent<EnemyArmy>().armyIndex;
         gameData.InitializeBattleArmies();
+        FindObjectOfType<AudioManager>().Play("Drum");
         FindObjectOfType<SceneLoader>().LoadBattleScene();
     }
 }

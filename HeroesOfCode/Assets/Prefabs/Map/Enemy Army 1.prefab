@@ -234,12 +234,15 @@ MonoBehaviour:
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
     squadUnits: 25
+    unitName: 0
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
     squadUnits: 25
+    unitName: 0
   - squadUnitPrefab: {fileID: 4653501285523920420, guid: c10fc3e95b76cf04b92b867f189d0dd5,
       type: 3}
     squadUnits: 25
+    unitName: 0
 --- !u!1 &6423403691535572588
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +255,7 @@ GameObject:
   - component: {fileID: 6423403691535572587}
   - component: {fileID: 6423403691535572586}
   - component: {fileID: 6423403691535572584}
+  - component: {fileID: 5465242268503633131}
   m_Layer: 9
   m_Name: EnemyCollider
   m_TagString: Untagged
@@ -268,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 6423403691535572588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.98, y: 2.98, z: 1}
+  m_LocalScale: {x: 2.98, y: 3.98, z: 1}
   m_Children: []
   m_Father: {fileID: 6423403691248980485}
   m_RootOrder: 1
@@ -329,7 +333,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6423403691535572588}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -350,6 +354,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6eb7384509dbe748ad6f79073c1a991, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &5465242268503633131
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423403691535572588}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.9, y: 0.9}
+  m_Direction: 0
 --- !u!1 &8056516287402677907
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,8 +396,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8056516287402677907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
+  m_LocalPosition: {x: 0, y: 0.318, z: 0}
+  m_LocalScale: {x: 0.9, y: 1.5359399, z: 1}
   m_Children: []
   m_Father: {fileID: 6423403691248980485}
   m_RootOrder: 3

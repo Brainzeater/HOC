@@ -5391,7 +5391,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - name: Theme
-    clip: {fileID: 8300000, guid: 208a760f3633a6748a8e6a9a509bd3c0, type: 3}
+    clip: {fileID: 8300000, guid: cf6f2e6a7938b07468bae4ad67c74842, type: 3}
     volume: 1
     loop: 1
     source: {fileID: 0}
@@ -5488,6 +5488,11 @@ MonoBehaviour:
   - name: Heal
     clip: {fileID: 8300000, guid: 3e02d1a9dfa5ff34896027e1c806597f, type: 3}
     volume: 0.9
+    loop: 0
+    source: {fileID: 0}
+  - name: Drum
+    clip: {fileID: 8300000, guid: e9685bf4df4daa146a85a47c4ae3b60e, type: 3}
+    volume: 0.6
     loop: 0
     source: {fileID: 0}
   currentBackgroundMusic:
