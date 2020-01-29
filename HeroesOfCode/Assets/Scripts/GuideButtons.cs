@@ -13,9 +13,21 @@ public class GuideButtons : MonoBehaviour
         guide.SetActive(true);
     }
 
+    public void OpenGuideKeepMenu()
+    {
+        guide.SetActive(true);
+    }
+
     public void CloseGuide()
     {
         guide.SetActive(false);
         mainMenu.SetActive(true);
+    }
+
+    public void LoadMainMenu()
+    {
+        Time.timeScale = 1f;
+        FindObjectOfType<GameData>().GameOver();
+        FindObjectOfType<SceneLoader>().LoadStartScene();
     }
 }
