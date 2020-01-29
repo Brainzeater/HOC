@@ -37,4 +37,9 @@ public class UnitButton : MonoBehaviour
     {
         FindObjectOfType<ArmyManager>().AddSquad(UnitNames.ShootingBlob);
     }
+
+    public void Response()
+    {
+        FindObjectOfType<AudioManager>().Play("Click");
+    }
 }

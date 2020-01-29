@@ -29,4 +29,9 @@ public class DeleteSquadButton : MonoBehaviour
     {
         FindObjectOfType<ArmyManager>().RemoveSquad(ID);
     }
+
+    public void Response()
+    {
+        FindObjectOfType<AudioManager>().Play("Click");
+    }
 }
