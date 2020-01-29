@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum Surface
+{
+    Snow,
+    Road,
+    Ice
+}
+
 // A script that makes the player object move along the path.
 public class Movement : MonoBehaviour
 {
@@ -23,9 +30,14 @@ public class Movement : MonoBehaviour
     private Animator animator;
     private float animationSpeedModifier;
 
+    private Surface surface;
+    private AudioManager audioManager;
+
     void Awake()
     {
+        surface = Surface.Snow;
         animator = GetComponentInChildren<Animator>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Starts a coroutine that moves the player object.
@@ -86,16 +98,19 @@ public class Movement : MonoBehaviour
         {
             speed = increasedSpeed;
             animationSpeedModifier = 0f;
+            surface = Surface.Road;
         }
         else if (Physics2D.OverlapCircle(gameObject.transform.position, radius, iceMask))
         {
             speed = decreasedSpeed;
             animationSpeedModifier = 0.4f;
+            surface = Surface.Ice;
         }
         else
         {
             speed = defaultSpeed;
             animationSpeedModifier = 0.3f;
+            surface = Surface.Snow;
         }
     }
 
@@ -112,6 +127,38 @@ public class Movement : MonoBehaviour
         else
         {
             return 0;
+        }
+    }
+
+    public void PlayRightLeg()
+    {
+        switch (surface)
+        {
+            case Surface.Snow:
+                audioManager.Play("Snow1");
+                break;
+            case Surface.Ice:
+                audioManager.Play("Ice1");
+                break;
+            case Surface.Road:
+                audioManager.Play("Road1");
+                break;
+        }
+    }
+
+    public void PlayLeftLeg()
+    {
+        switch (surface)
+        {
+            case Surface.Snow:
+                audioManager.Play("Snow2");
+                break;
+            case Surface.Ice:
+                audioManager.Play("Ice2");
+                break;
+            case Surface.Road:
+                audioManager.Play("Road2");
+                break;
         }
     }
 }
