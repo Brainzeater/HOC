@@ -98,4 +98,9 @@ public class SceneLoader : MonoBehaviour
             yield return null;
         }
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
