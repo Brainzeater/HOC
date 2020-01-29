@@ -80,7 +80,8 @@ public class BattleSystem : MonoBehaviour
     {
         // Sort player army squads by initiative
         gameData.playerArmy =
-            gameData.playerArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative).ToList();
+            gameData.playerArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative)
+                .ToList();
 
         int i = 1;
         foreach (GameData.UnitSquad squad in gameData.playerArmy)
@@ -95,8 +96,9 @@ public class BattleSystem : MonoBehaviour
 
         // Sort enemy army squads by initiative
         List<GameData.UnitSquad> enemyArmy = gameData.GetCurrentEnemyArmy().army;
-        enemyArmy = enemyArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative).ToList();
-        
+        enemyArmy = enemyArmy.OrderByDescending(item => item.squadUnitPrefab.GetComponent<Squad>().GetUnit.initiative)
+            .ToList();
+
         i = 1;
         foreach (GameData.UnitSquad squad in enemyArmy)
         {
@@ -352,10 +354,45 @@ public class BattleSystem : MonoBehaviour
         enemyArmyQueue.Enqueue(currentEnemySquad);
 
         // TODO: AI or minimal strategy
-        playerSquadToHit = currentPlayerSquad;
+        playerSquadToHit = enemyAI();
 
         currentEnemySquad.Opponent = playerSquadToHit;
         currentEnemySquad.Attack();
+    }
+
+    // This is game's AI
+    // ¯\_(ツ)_/¯
+    PlayerSquad enemyAI()
+    {
+        int holyRandom = Random.Range(0, 2);
+        switch (holyRandom)
+        {
+            case 1:
+                holyRandom = Random.Range(0, 2);
+                switch (holyRandom)
+                {
+                    case 1:
+                        PlayerSquad pss = playerArmyList[Random.Range(0, playerArmyList.Count)];
+                        Debug.Log($"I chose at random: {pss}");
+                        return pss;
+
+                    // Hit the squad back
+                    case 0:
+                        Debug.Log($"I chose the last one to move: {currentPlayerSquad}");
+                        return currentPlayerSquad;
+                }
+
+                break;
+
+            // Hit the weakest squad
+            case 0:
+//                return playerArmyList.Min(item => item.HP);
+                PlayerSquad ps = playerArmyList.Find(item => item.HP == playerArmyList.Min(squad => squad.HP));
+                Debug.Log($"I chose the weakest: {ps}");
+                return playerArmyList.Find(item => item.HP == playerArmyList.Min(squad => squad.HP));
+        }
+
+        return null;
     }
 
     public void FinishEnemyTurn()
