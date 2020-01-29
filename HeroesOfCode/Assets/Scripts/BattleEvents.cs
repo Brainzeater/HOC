@@ -50,4 +50,10 @@ public class BattleEvents : MonoBehaviour
     {
         OnDamageAllSquads?.Invoke();
     }
+
+    public event Action OnUnhighlight;
+    public void Unhighlight()
+    {
+        OnUnhighlight?.Invoke();
+    }
 }

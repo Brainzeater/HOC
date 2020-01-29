@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,9 @@ public class PlayerSquad : Squad
 
     public GameObject regularHitButton;
     public bool UsedActiveSkill { get; set; }
-    public int LastDealtDamage { get; set; }
+
+    // For "Increased Damage" skill
+    public List<int> LastDealtDamage { get; set; }
 
     public override void Awake()
     {
@@ -22,7 +25,7 @@ public class PlayerSquad : Squad
         unitHPText.text = unit.hp.ToString();
         unitDamageText.text = unit.damage.ToString();
         UsedActiveSkill = false;
-        LastDealtDamage = 0;
+        LastDealtDamage = new List<int>();
         switch (base.GetUnit.activeSkill)
         {
             case ActiveSkill.IncreasedDamage:
@@ -38,7 +41,7 @@ public class PlayerSquad : Squad
     }
 
     // Activates Squad's background highlight and "Active Skill" button
-    public void HighlightSquad(bool enabled, int lastDealtDamage)
+    public void HighlightSquad(bool enabled)
     {
         highlightBackground.SetActive(enabled);
         unitHPText.gameObject.SetActive(enabled);
@@ -47,7 +50,7 @@ public class PlayerSquad : Squad
         {
             if (!UsedActiveSkill)
             {
-                if ((base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && lastDealtDamage == 0) || !enabled)
+                if ((base.GetUnit.activeSkill == ActiveSkill.IncreasedDamage && !LastDealtDamage.Any()) || !enabled)
                 {
                     DisableActiveSkillButton();
                     DisableRegularHitButton();
@@ -101,7 +104,8 @@ public class PlayerSquad : Squad
     public override void DealDamage()
     {
         Opponent.ReceiveDamage(this.DealingDamage);
-        this.LastDealtDamage = this.DealingDamage;
+        this.LastDealtDamage.Add(this.DealingDamage);
+
         // Because it might be improved by Increased Damage
         CalculateDealingDamage();
     }

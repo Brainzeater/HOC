@@ -23,14 +23,12 @@ public class UseActiveSkillButton : MonoBehaviour
 
     void OnMouseEnter()
     {
-//        if (!highlight.enabled && !pressed)
         if (!pressed)
             highlight.color = highlightColor;
     }
 
     void OnMouseExit()
     {
-//        if (highlight.enabled && !pressed)
         if (!pressed)
             highlight.color = disabledColor;
     }
@@ -52,7 +50,6 @@ public class UseActiveSkillButton : MonoBehaviour
         if (enable)
         {
             pressed = true;
-//            highlight.color = disabledColor;
             highlight.enabled = false;
         }
         else

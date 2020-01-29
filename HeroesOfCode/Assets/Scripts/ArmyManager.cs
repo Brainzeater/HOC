@@ -125,6 +125,13 @@ public class ArmyManager : MonoBehaviour
 
     public void DisableArmyMenu()
     {
+        // Cancel erases the chosen army
+        foreach (GameObject prefab in squadPrefabs)
+        {
+            Destroy(prefab);
+        }
+        squadPrefabs.Clear();
+        army.Clear();
         armyMenu.SetActive(false);
         mainMenu.SetActive(true);
     }

@@ -8,6 +8,7 @@ public class SelectTarget : MonoBehaviour
     [HideInInspector] public bool DamageAll { get; set; }
     private Color defaultColor;
     private Color damageAllColor;
+    private BattleSystem battleSystem;
 
     void Awake()
     {
@@ -18,12 +19,14 @@ public class SelectTarget : MonoBehaviour
         damageAllColor = Color.red;
         damageAllColor.a = .4f;
         BattleEvents.current.OnDamageAllHighlight += HighlightAll;
+        BattleEvents.current.OnUnhighlight += Unhighlight;
         DamageAll = false;
+        battleSystem = FindObjectOfType<BattleSystem>();
     }
 
     void OnMouseEnter()
     {
-        if (Active)
+        if (Active && !battleSystem.paused)
             if (DamageAll)
             {
                 BattleEvents.current.HighlightAll();
@@ -34,10 +37,10 @@ public class SelectTarget : MonoBehaviour
 
     void OnMouseExit()
     {
-        if (Active)
+        if (Active && !battleSystem.paused)
             if (DamageAll)
             {
-                BattleEvents.current.HighlightAll();
+                BattleEvents.current.Unhighlight();
             }
             else if (highlight.enabled)
                 highlight.enabled = false;
@@ -45,14 +48,18 @@ public class SelectTarget : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Active)
-            if (!highlight.enabled)
+        if (Active && !battleSystem.paused)
+            if (DamageAll)
+            {
+                BattleEvents.current.HighlightAll();
+            }
+            else if (!highlight.enabled)
                 highlight.enabled = true;
     }
 
     void OnMouseDown()
     {
-        if (Active)
+        if (Active && !battleSystem.paused)
         {
             highlight.enabled = false;
             if (!DamageAll)
@@ -83,10 +90,24 @@ public class SelectTarget : MonoBehaviour
 
     void HighlightAll()
     {
-        // Highlight only alive squads
-        if(!GetComponentInParent<Squad>().IsDead)
+        if (!battleSystem.paused)
         {
-            highlight.enabled = !highlight.enabled;
+            // Highlight only alive squads
+            if (!GetComponentInParent<Squad>().IsDead)
+            {
+                if (!highlight.enabled)
+                {
+                    highlight.enabled = true;
+                }
+            }
+        }
+    }
+
+    void Unhighlight()
+    {
+        if (highlight.enabled)
+        {
+            highlight.enabled = false;
         }
     }
 }

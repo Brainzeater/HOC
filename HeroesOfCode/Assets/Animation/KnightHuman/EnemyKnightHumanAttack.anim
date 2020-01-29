@@ -38,41 +38,41 @@ AnimationClip:
     - time: 0
       value: {fileID: -9158457060527270344, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.1
+    - time: 0.071428575
       value: {fileID: -1295911254268373496, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.2
+    - time: 0.14285715
       value: {fileID: -7739209358166263462, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.3
+    - time: 0.21428572
       value: {fileID: -8448781657103606196, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.4
+    - time: 0.2857143
       value: {fileID: -3797272791973470426, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.5
+    - time: 0.35714287
       value: {fileID: 6570240404334464838, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.6
+    - time: 0.42857143
       value: {fileID: -5817041472855642434, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.7
+    - time: 0.5
       value: {fileID: -4980697531072786328, guid: c9841a812ccefbd4a8aeea773e90c43c,
         type: 3}
-    - time: 0.8
+    - time: 0.5714286
       value: {fileID: -6906189458860662513, guid: 315979ecbdac86b47979e64cdec66777,
         type: 3}
-    - time: 0.9
+    - time: 0.64285713
       value: {fileID: 7808964264411770892, guid: 315979ecbdac86b47979e64cdec66777,
         type: 3}
-    - time: 1
+    - time: 0.71428573
       value: {fileID: 1926329443062723655, guid: 315979ecbdac86b47979e64cdec66777,
         type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 10
+  m_SampleRate: 14
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -110,7 +110,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.1
+    m_StopTime: 0.7857143
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -187,7 +187,14 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.6
+  - time: 0
+    functionName: PlaySword
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.42857143
     functionName: DealDamage
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -11,24 +11,21 @@ public class SceneLoader : MonoBehaviour
     public string backgroundMusicName;
 
     private AudioManager audioManager;
-
-    //    void Awake()
-    [HideInInspector] public bool FinalBattle;
+    
+    [HideInInspector] public bool isReady;
 
     void Start()
     {
         transition.SetFloat("FadeInMultiplier", fadeInSpeed);
         transition.SetFloat("FadeOutMultiplier", fadeOutSpeed);
-        StartCoroutine(loadCurrentScene());
         audioManager = FindObjectOfType<AudioManager>();
-
-//        Debug.Log(audioManager.currentBackgroundMusic.name);
-        // TODO: CHECK
+        StartCoroutine(loadCurrentScene());
+        isReady = false;
         if (audioManager.currentBackgroundMusic != null)
             audioManager.FinishAudioSource();
-
-        audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
         
+        audioManager.SetBackgroundMusicAndPlayIt(backgroundMusicName);
+
     }
 
     IEnumerator loadCurrentScene()
@@ -50,9 +47,6 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(PlayTransition(1));
         StartCoroutine(
             AudioManager.FadeAudioSource.StartFade(audioManager.currentBackgroundMusic.source, fadeOutSpeed, 0));
-        //        StartCoroutine(LoadSceneAsynchronously(1));
-
-        //        SceneManager.LoadScene(1);
     }
 
     public void LoadBattleScene()
@@ -84,6 +78,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator PlayTransition(int sceneIndex)
     {
+        isReady = false;
         transition.SetTrigger("EndScene");
         yield return new WaitForSeconds(fadeOutSpeed);
         Debug.Log("Played");
@@ -99,5 +94,10 @@ public class SceneLoader : MonoBehaviour
         {
             yield return null;
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

@@ -68,11 +68,9 @@ public class GameData : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
-//        gameIsOver = false;
+        
         DontDestroyOnLoad(this.gameObject);
-
-//        SceneManager.sceneLoaded += OnSceneLoaded;
+        
 
         // TODO: This might be called to load custom army during development
         //        InitArmy(playerArmy);

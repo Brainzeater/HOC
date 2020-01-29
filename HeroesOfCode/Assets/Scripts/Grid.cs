@@ -91,7 +91,7 @@ public class Grid : MonoBehaviour
     void OnMouseOver()
     {
         // Ignored when when the player object is moving
-        if (MovementFinished)
+        if (MovementFinished && !FindObjectOfType<MapSystem>().paused)
         {
             // Instantiate a cell prefab to highlight the target cell
             Vector3 mousePosition = GetMousePosition();

@@ -10,8 +10,12 @@ public class MapSystem : MonoBehaviour
 
     public Transform playerSpawnPosition;
 
+    public GameObject pauseMenu;
+    public bool paused;
+
     void Awake()
     {
+        paused = false;
         gameData = GameObject.FindWithTag("GameData").GetComponent<GameData>();
         if(gameData.playerSpawnPosition == null)
         {
@@ -28,6 +32,29 @@ public class MapSystem : MonoBehaviour
             EnemyArmy currentArmy = armyPrefab.GetComponent<EnemyArmy>();
 
             Instantiate(currentArmy, currentArmy.spawnPosition.position, Quaternion.identity);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(FindObjectOfType<SceneLoader>().isReady)
+            {
+                if (!paused)
+                {
+                    paused = true;
+                    Time.timeScale = 0f;
+                    pauseMenu.SetActive(true);
+                }
+                else
+                {
+                    paused = false;
+                    Time.timeScale = 1f;
+                    FindObjectOfType<GuideButtons>().CloseGuide();
+                    pauseMenu.SetActive(false);
+                }
+            }
         }
     }
 }

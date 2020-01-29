@@ -16,5 +16,6 @@ MonoBehaviour:
   hp: 10
   damage: 3
   defaultNumber: 50
+  initiative: 2
   hasActiveSkill: 1
   activeSkill: 1
