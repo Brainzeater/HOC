@@ -1,6 +1,9 @@
 # Heroes of Code
 ## A simplified HOMM 3 game
 
+### Link for the WebGL version on GitHub Pages:
+https://brainzeater.github.io/HOC-WebGL/
+
 ### Challenge yourself to beat the game with the default army!
 
 ### Controls:
