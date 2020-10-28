@@ -35,7 +35,7 @@ https://brainzeater.github.io/HOC-WebGL/
 2. Sound Effects:
    1. https://freesound.org/
    2. https://www.zapsplat.com/
-3. Tiles: https://elthen.itch.io/2d-pixel-art-forest-tileset
+3. Tiles: https://stealthix.itch.io/rpg-nature-tileset/devlog/115461/snow-and-autumn
 4. UI: https://kicked-in-teeth.itch.io/button-ui
 5. "You won" Sunset: https://www.deviantart.com/kizunaken/art/Pixel-Sunset-791281487
 6. Animations:
