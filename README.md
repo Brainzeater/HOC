@@ -29,7 +29,7 @@ https://brainzeater.github.io/HOC-WebGL/
 
 ### Resources:
 1. Music:
-   1. Main Theme: https://www.serpentsoundstudios.com/royalty-free-music/celtic-fantasy
+   1. Main Theme: https://www.serpentsoundstudios.com/royalty-free-music/celtic-fantasy ([Epic Fantasy] Dungeons and Dragons)
    2. Epic: https://www.bensound.com/royalty-free-music/track/epic
    3. Duel: https://www.bensound.com/royalty-free-music/track/the-duel
 2. Sound Effects:
